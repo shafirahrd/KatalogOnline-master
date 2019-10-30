@@ -1,0 +1,227 @@
+body {
+    font-family: Open Sans;
+}
+
+.header {
+    background-color: #f9f9f9;
+    color: grey;
+    height: 2.7em;
+    width: 100%;
+    padding: 0 1em;
+    font-size: 1.5em;
+    position: fixed;
+    z-index: 1000;
+}
+
+section {
+    overflow-x: hidden;
+}
+
+#logo {
+    margin-top: 0.6em;
+    width: 12em;
+}
+
+#nav-trigger {
+    margin-top: 1em;
+    height: 1em;
+}
+
+#headline {
+    background-image:url(../img/pattern-panjang.jpg);
+    width: 100%;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: white;
+}
+
+footer {
+    width: 100%;
+    background-color: #404040;
+    color: white;
+}
+
+footer a {
+    color: white;
+    transition: 0.15s;
+}
+
+footer a:hover {
+    color: white;
+    opacity: 0.6;
+    transition: 0.15s;
+}
+
+.bottom-footer {
+    background-image: url(../img/pattern-panjang.jpg);
+    background-size: cover;
+    padding: 0.5em 0;
+    margin-top: 2em;
+    color: white;
+    text-align: center;
+}
+
+.anim {
+    transition: 0.2s;
+}
+
+.anim:hover {
+    transition: 0.2s;
+}
+
+.nofade:hover, .nofade:active, .nofade:visited, .nofade:link {
+    opacity: 1;
+}
+
+.btn {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.btn-sch-white-inv {
+    border: 3px solid white;
+    color: white;
+}
+
+.btn-sch-white-inv:hover {
+    background-color: white;
+    color: #404040;
+}
+
+.btn-sch-grey-inv {
+    border: 3px solid #404040;
+    color: #404040;
+    background-color: transparent;
+}
+
+.btn-sch-grey-inv:hover {
+    border: 3px solid rgba(0,0,0,0);
+    background-color: #404040;
+    color: white;
+}
+
+.btn-sch-white {
+    border: 3px solid white;
+    color: #404040;
+}
+
+.btn-sch-white:hover {
+    background-color: transparent;
+    color: white;
+}
+
+.btn-sch-grey {
+    border: 3px solid #404040;
+    background-color: #404040;
+    color: white;
+}
+
+.btn-sch-grey:hover {
+    color: #404040;
+    background-color: transparent;
+}
+
+.btn-sch-color {
+    background: url('../img/pattern-panjang.jpg') no-repeat center left;
+    transition: 0.5s;
+    color: white;
+}
+
+.btn-sch-color:hover {
+    background: url('../img/pattern-panjang.jpg') no-repeat center right;
+    color: white;
+    transition: 0.5s;
+}
+
+.socmeds {
+    width: 35px;
+    margin-right: 3px;
+}
+
+.panel-heading, .panel {
+    border: none;
+}
+
+.panel {
+    box-shadow: none;
+    background-color: rgba(255,255,255,1);
+}
+
+.underlined-title {
+    border-bottom: solid 4px #404040; display: inline; font-weight: 700; padding-bottom: 0.4em;
+}
+
+.chip {
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+    padding: 0 0.5em;
+    background-color: black;
+}
+
+.progress-info.active {
+    display: block;
+}
+
+.progress-info {
+    display: none;
+}
+
+.progress-container {
+    color: lightgrey;
+    text-align: center;
+    background-color: #404040;
+    padding: 0.7em 0; /*position:fixed; z-index: 1;*/
+    width:100%;
+    margin-top: 3.5em;
+}
+
+
+.tl-title {
+    font-size: 1.2em;
+}
+
+.tl-date {
+    font-size: 1em;
+}
+
+.tl-desc {
+    display: none;
+}
+
+/*
+.form-kiri {
+    width:49.5%; float:left; margin-right:0.01%;
+}
+.form-kanan {
+    width:49.5%; float:right; margin-left:0.01%;
+}
+
+*/
+@media (min-width: 750px) {
+    .form-kiri {
+        width:49.5%; float:left; margin-right:0.01%;
+    }
+    .form-kanan {
+        width:49.5%; float:right; margin-left:0.01%
+    }
+    .progress-info, .progress-info.active {
+        display: inline;
+    }
+    
+    .tl-title {
+        font-size: 2em;
+    }
+
+    .tl-date {
+        font-size: 1.3em;
+    }
+
+    .tl-desc {
+        display: block;
+    }
+}
+
+.carousel-control.right, .carousel-control.left {
+    background: none;
+}

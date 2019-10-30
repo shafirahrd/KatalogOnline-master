@@ -1,0 +1,155 @@
+.faq-body{
+	font-family:"Open Sans";
+}
+.faq-header
+{
+	color:#404040;
+	width:100%;
+	text-align:center;
+}
+
+.faq-container{
+	margin-top:10%; /* apus aja */
+	padding-left:10%;
+	padding-right:10%;
+}
+
+.faq-menu-container
+{
+}
+
+.faq-answers-container
+{
+}
+
+.faq-menu{
+	color:#404040;
+	font-size:3vh;
+	font-weight:bold;
+	text-align:center;
+}
+
+.faq-menu > a > .list-group-item {
+	border:white;
+	margin-bottom:5px;
+}
+
+.faq-menu > a {
+	color:#404040;
+	text-decoration:none;
+}
+
+.faq-menu > a.nlc:hover {
+	color:#e2be22;
+}
+
+.faq-menu > a.nlc:active > li, .nlc.active > li{
+	background-color:#e2be22;
+	color:white;
+}
+
+.faq-menu > a.npc:hover {
+	color:#c84429;
+}
+
+.faq-menu > a.npc:active > li, .npc.active > li{
+	background-color:#c84429;
+	color:white;
+}
+
+.faq-menu > a.nst:hover {
+	color:#79b348;
+}
+
+.faq-menu > a.nst:active > li, .nst.active > li{
+	background-color:#79b348;
+	color:white;
+}
+
+.faq-menu > a.reeva:hover {
+	color:#5b7ab6;
+}
+
+.faq-menu > a.reeva:active > li, .reeva.active > li{
+	background-color:#5b7ab6;
+	color:white;
+}
+
+.event-nlc{
+	color:#e2be22;
+	border-color:#e2be22;
+}
+
+.event-npc{
+	color:#c84429;
+	border-color:#c84429;
+}
+
+.event-nst{
+	color:#79b348;
+	border-color:#79b348;
+}
+
+.event-reeva{
+	color:#5b7ab6;
+	border-color:#5b7ab6;
+}
+
+.faq-title 
+{
+	font-size:5vh;
+	font-weight:bold;
+	margin-bottom:20px;
+}
+
+.faq-questions{
+	color:#404040;
+	font-size:3vh;
+	font-weight:bold;
+	margin-bottom:10px;
+}
+
+.faq-questions.event-nlc{
+	border-bottom:solid 1px #e2be22;
+}
+
+.faq-questions.event-nst{
+	border-bottom:solid 1px #79b348;
+}
+
+.faq-questions.event-npc{
+	border-bottom:solid 1px #c84429;
+}
+
+.faq-questions.event-reeva{
+	border-bottom:solid 1px #5b7ab6;
+}
+
+.faq-answers{
+	padding:20px;
+}
+
+.faq-event-container
+{
+	margin-bottom:50px;
+}
+
+.question-container
+{
+	margin-bottom:10px;
+}
+
+hr{
+	border-color:#404040;
+	border-width: 5px;
+}
+
+.width-5
+{
+	width:5%;
+}
+
+.width-100
+{
+	width:100%;
+}
