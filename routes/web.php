@@ -11,15 +11,31 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+// Route::get('/', function () {
+//     return view('dashboard');
+// });
+Route::get('/','DashboardController@index');
 
+
+// DASHBOARD
 Route::get('/search','DashboardController@searchAll');
+Route::get('/searchAdvanced','DashboardController@searchBy');
+Route::get('/searchLokasi/{lokasis}','LokasiController@searchByLokasi');
 
+// KOLEKSI
 Route::resource('koleksi','KoleksiController');
+Route::get('/searchKoleksi/{koleksis}','KoleksiController@searchByKoleksi');
+
 Route::resource('katalog','KatalogController');
 Route::resource('lokasi','LokasiController');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function ()
+{
+	Route::get('/home','HomeController@admin');
+	Route::get('/log','HomeController@log');
+	Route::get('/logout','Auth\LoginController@logout');
+
+	Route::post('/uploadExcel','HomeController@upload');
+});

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password','user_lokasi'
+        'nama', 'email', 'password','user_lokasi'
     ];
 
     /**
@@ -36,4 +36,11 @@ class User extends Authenticatable
     // protected $casts = [
     //     'email_verified_at' => 'datetime',
     // ];
+    public function log(){
+        return $this->belongsTo('App\Log','email');
+    }
+
+    public function user_lokasi(){
+        return $this->hasOne('App\Lokasi','id_lokasi','user_lokasi');
+    }
 }

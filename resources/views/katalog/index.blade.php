@@ -1,36 +1,11 @@
 @extends('layouts.app')
 
 @section('link')
-<link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- animation CSS -->
-<link href="css/animate.css" rel="stylesheet">
-<!-- Menu CSS -->
-<link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
-<!-- toast CSS -->
-<link href="plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
-<!-- morris CSS -->
-<link href="plugins/bower_components/morrisjs/morris.css" rel="stylesheet">
-<!-- chartist CSS -->
-<link href="plugins/bower_components/chartist-js/dist/chartist.min.css" rel="stylesheet">
-<link href="plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
-<!-- Calendar CSS -->
-<link href="plugins/bower_components/calendar/dist/fullcalendar.css" rel="stylesheet" />
-<link rel="stylesheet" href="plugins/bower_components/dropify/dist/css/dropify.min.css">
-<!-- Custom CSS -->
-<link href="css/animate.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<!-- color CSS -->
-<link href="css/colors/default.css" id="theme" rel="stylesheet">
-<!-- CSS tambahan -->
-<link href="css/mystyle.css" rel="stylesheet">
-<!-- CSS Khusus pricing table-->
-<link href="css/pricing.css" rel="stylesheet">
-<!-- Toggle CSS -->
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<!--alerts CSS -->
-<link href="plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-{{-- Datatable --}}
-<link rel="stylesheet" type="text/css" href="plugins/datatables/dataTables.bootstrap4.min.css"/>
+<link href="{{asset('css/search.css')}}" rel="stylesheet">
+
+{{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 @endsection
 
 @section('content')
@@ -41,17 +16,16 @@
                 <div class="white-box">
                     <div class="table-responsive">
                         <table class="table color-table danger-table example">
-                            {{-- <thead>
+                            <thead>
                                 <tr>
                                     <th colspan=6>ADVANCED SEARCH</th>
                                 </tr>
-                                <tr>
-                                    <th class="text-center" style="background-color: white; color: black;"></th>
-                                </tr>
-                            </thead> --}}
-                            
+                            </thead>
+                        </table><br>
+                        <table class="table color-table danger-table example">                            
                             <tbody>
-                                <form class="form-horizontal" action="/cari_katalog.php">
+                                <form class="form-horizontal" action="/searchAdvanced" method="GET">
+                                {{ csrf_field() }}
                                     <tr>
                                         <div class="form-group">
                                           <label class="control-label col-sm-2" for="judul">Judul:</label>
@@ -94,28 +68,29 @@
                                     </tr><br><br>
 
                                     <div class="col-md-3">
-                                      <select class="md-form mdb-select colorful-select dropdown-primary">
+                                      <select class="md-form mdb-select colorful-select dropdown-primary" name="bahasa">
                                         <option value="" disabled selected>Bahasa</option>
-                                        <option value="1">Indonesia</option>
-                                        <option value="2">Inggris</option>
+                                        @foreach($bahasa as $b)
+                                            <option value="{{$b->bahasa}}">{{$b->bahasa}}</option>
+                                        @endforeach
                                       </select>
                                     </div>
 
                                     <div class="col-md-4">
-                                      <select class="md-form mdb-select colorful-select dropdown-primary">
+                                      <select class="md-form mdb-select colorful-select dropdown-primary" name="lokasi">
                                         <option value="" disabled selected>Lokasi Ruang Baca</option>
-                                        <option value="1">Informatika</option>
-                                        <option value="2">Desain Produk</option>
-                                        <option value="3">Sistem Informasi</option> 
+                                        @foreach($lokasi as $l)
+                                            <option value="{{$l->departemen}}">{{$l->departemen}}</option>
+                                        @endforeach
                                       </select>
                                     </div>
 
                                     <div class="col-md-3">
-                                      <select class="md-form mdb-select colorful-select dropdown-primary">
+                                      <select class="md-form mdb-select colorful-select dropdown-primary" name="koleksi">
                                         <option value="" disabled selected>Jenis Koleksi</option>
-                                        <option value="1">Buku Teks</option>
-                                        <option value="2">Buku Referensi</option>
-                                        <option value="3">Buku Tugas Akhir</option>
+                                        @foreach($koleksi as $k)
+                                            <option value="{{$k->jenis_koleksi}}">{{$k->jenis_koleksi}}</option>
+                                        @endforeach
                                       </select>
                                     </div><br><br>
 
@@ -137,29 +112,129 @@
                 </div>
                 <div class="white-box">
                     <div class="table-responsive">
-                        <table class="table color-table primary-table example">
+                        <table class="table color-table primary-table results">
                             <thead>
                                 <tr>
-                                    <th colspan=6>KATALOG</th>
+                                    <th colspan=7>DAFTAR KATALOG</th>
+                                </tr>
+                                <div class="form-group pull-right">
+                                    <input type="text" class="search form-control" placeholder="Cari...">
+                                </div>
+                                <span class="counter pull-right"></span>
+                                <tr>
+                                    <th class="text-center" style="background-color: white; color: black;">No.</th>
+                                    <th class="text-center" style="background-color: white; color: black;">Judul</th>
+                                    <th class="text-center" style="background-color: white; color: black;">Jenis Koleksi</th>
+                                    <th class="text-center" style="background-color: white; color: black;">Penulis</th>
+                                    <th class="text-center" style="background-color: white; color: black;">Tahun Terbit</th>
+                                    <th class="text-center" style="background-color: white; color: black;">Lokasi</th>
+                                    <th class="text-center" style="background-color: white; color: black;">Lihat Detail</th>
+                                </tr>
+                                <tr class="warning no-result">
+                                    <td colspan="4"><i class="fa fa-warning"></i> No result</td>
                                 </tr>
                             </thead>
+                            <tbody class="text-center">
+                                @foreach($katalog as $kg)
+                                <tr class="fuckOffPadding">
+                                    <td style="vertical-align: middle;">{{$kg->id_katalog}}</td>
+                                    <td style="text-align: left;">{{$kg->judul}}</td>
+                                    <td style="vertical-align: middle;">{{$kg->jenis_koleksi}}</td>
+                                    <td style="text-align: left;">{{$kg->penulis}}</td>
+                                    <td style="vertical-align: middle;">{{$kg->tahun_terbit}}</td>
+                                    <td style="vertical-align: middle;">Departemen {{$kg->departemen}}</td>
+                                    <td style="vertical-align: middle;">
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#Detail-{{$kg->id_katalog}}" data-placement="top" title="Lihat Detail Pengajuan" ><i class="fa fa-folder-open"></i></button>
+                                    </td>
+                                    <div class="modal fade" id="Detail-{{$kg->id_katalog}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true",>
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <center><h2 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">{{$kg->judul}}</h2></center>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <ul class="nav nav-pills m-b-30 ">
+                                                                <li class="active">
+                                                                    <a href="#viewdetail-{{$kg->id_katalog}}" data-toggle="tab" aria-expanded="false">Detail Koleksi</a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="tab-content br-n pn">
+                                                                <div class="tab-pane">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-6">
+                                                                            <table class="table table-borderless" style="table-layout: fixed">
+                                                                                <tbody class="detail-text text-left">
+                                                                                    <tr>
+                                                                                        <td style="width: 1%"><span class="text-muted" style="font-weight: 500;">Judul Koleksi</span></td>
+                                                                                        <td style="width: 0%"><span class="text-muted" style="font-weight: 500;">:</span></td>
+                                                                                        <td style="width: 1%"><span>{{$kg->judul}}</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">Jenis Koleksi</span></td>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td>{{$kg->jenis}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">Penulis</span></td>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td>{{$kg->penulis}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">Penerbit</span></td>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td>{{$kg->penerbit}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">Kota Penerbit</span></td>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td>{{$kg->kota_penerbit}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">Tahun Terbit</span></td>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td>{{$kg->tahun_terbit}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">Bahasa</span></td>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td>{{$kg->bahasa}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-lg-6">
+                                                                            <table class="table table-borderless">
+                                                                                <tbody class="detail-text text-left">
+                                                                                    <tr>
+                                                                                        <td style="width: 39%"><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
+                                                                                        <td style="width: 0%"><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td><span>{{$kg->deskripsi}}</span></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
+                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
+                                                                                        <td>{{$kg->lokasi}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            {{ $katalog->links() }}
                         </table>
-                    </div>
-                    <div class="price-table-wrapper">
-                        <?php $x=1; ?>
-                        @foreach($katalog as $kg)
-                        <div class="pricing-table">
-                            <h2 class="pricing-table__header">{{$kg->judul}}</h2>
-                            <img src="asset/image/logo_its.png" alt="Judul" />
-                            <a class="pricing-table__button" href="#Detail" data-toggle="modal">Lihat Detail</a>
-                            <ul class="pricing-table__list">
-                                <li>{{$kg->penulis}}</li>
-                                <li>{{$kg->jenis}}</li>
-                                <li>{{$kg->tahun_terbit}}</li>
-                                <li>Departemen {{$kg->lokasi}}</li>
-                            </ul>
-                        </div>
-                        @endforeach
                     </div>
                 </div>
             </div>
@@ -168,4 +243,45 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+@endsection
+
+@section('script')
+
+{{-- <script type="text/javascript">
+    function ShowModal(id)
+    {
+      var modal = document.getElementById(id);
+      modal.style.display = "block";
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $(".search").keyup(function () {
+        var searchTerm = $(".search").val();
+        var listItem = $('.results tbody').children('tr');
+        var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+        
+      $.extend($.expr[':'], {'containsi': function(elem, i, match, array){
+            return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+        }
+      });
+        
+      $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e){
+        $(this).attr('visible','false');
+      });
+
+      $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e){
+        $(this).attr('visible','true');
+      });
+
+      var jobCount = $('.results tbody tr[visible="true"]').length;
+        $('.counter').text(jobCount + ' item');
+
+      if(jobCount == '0') {$('.no-result').show();}
+        else {$('.no-result').hide();}
+              });
+    });
+</script> --}}
+
 @endsection

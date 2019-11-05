@@ -9,6 +9,36 @@
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="pelanggan/assets/img/favicon.png">
     <title>Katalog Online</title>
+
+    <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="{{asset('plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css')}}" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="{{asset('plugins/bower_components/toast-master/css/jquery.toast.css')}}" rel="stylesheet">
+    <!-- morris CSS -->
+    <link href="{{asset('plugins/bower_components/morrisjs/morris.css')}}" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="{{asset('plugins/bower_components/chartist-js/dist/chartist.min.css')}}" rel="stylesheet">
+    <link href="{{asset('plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">
+    <!-- Calendar CSS -->
+    <link href="{{asset('plugins/bower_components/calendar/dist/fullcalendar.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset('plugins/bower_components/dropify/dist/css/dropify.min.css')}}">
+    <!-- Custom CSS -->
+    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="{{asset('css/colors/default.css')}}" id="theme" rel="stylesheet">
+    <!-- CSS tambahan -->
+    <link href="{{asset('css/mystyle.css')}}" rel="stylesheet">
+    <!-- Toggle CSS -->
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!--alerts CSS -->
+    <link href="{{asset('plugins/bower_components/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
+    {{-- Datatable --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/datatables/dataTables.bootstrap4.min.css')}}"/>
+
     @yield('link')
 </head>
 
@@ -63,11 +93,11 @@
         <!-- ============================================================== -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav slimscrollsidebar">
-                <div class="user-profile"><br>
+                <div class="user-profile">
                     <div>
-                        <img src="{{ asset('asset/image/logo_its.png') }}" alt="logo-its" style="width:60%; height:60%;">
+                        <img src="{{ asset('asset/image/logo_its.png') }}" alt="logo-its" style="width:50%; height:50%;">
                     </div>
-                </div><br>
+                </div>
                 <ul class="nav" id="side-menu">
                     <li class="devider"></li>
                     <li>
@@ -76,21 +106,71 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/lokasi" class="waves-effect active">
-                            <span class="hide-menu"> LOKASI RUANG BACA </span>
+                        @if(Request::path() == 'katalog')
+                        <a href="/katalog" class="waves-effect active">
+                            <span class="hide-menu"> KATALOG </span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="/koleksi" class="waves-effect">
-                            <span class="hide-menu"> JENIS KOLEKSI </span>
-                        </a>
-                    </li>
-                    <li>
+                        @else
                         <a href="/katalog" class="waves-effect">
                             <span class="hide-menu"> KATALOG </span>
                         </a>
+                        @endif
+                    </li>
+                    <li>
+                        @if(Request::path() == 'koleksi')
+                        <a href="/koleksi" class="waves-effect active">
+                            <span class="hide-menu"> JENIS KOLEKSI </span>
+                        </a>
+                        @else
+                        <a href="/koleksi" class="waves-effect">
+                            <span class="hide-menu"> JENIS KOLEKSI </span>
+                        </a>
+                        @endif
+                    </li>
+                    <li>
+                        @if(Request::path() == 'lokasi')
+                        <a href="/lokasi" class="waves-effect active">
+                            <span class="hide-menu"> RUANG BACA TERINTEGRASI </span>
+                        </a>
+                        @else
+                        <a href="/lokasi" class="waves-effect">
+                            <span class="hide-menu"> RUANG BACA TERINTEGRASI </span>
+                        </a>
+                        @endif
                     </li>
                     <li class="devider"></li>
+                    @if(Auth::check())
+                        <br>
+                        <li><center><b>ADMIN</b></center></li>
+                        <li>
+                            @if(Request::path() == 'home')
+                            <a href="/home" class="waves-effect active">
+                                <span class="hide-menu"> UNGGAH DATA KOLEKSI </span>
+                            </a>
+                            @else
+                            <a href="/home" class="waves-effect">
+                                <span class="hide-menu"> UNGGAH DATA KOLEKSI </span>
+                            </a>
+                            @endif
+                        </li>
+                        <li>
+                            @if(Request::path() == 'log')
+                            <a href="/log" class="waves-effect active">
+                                <span class="hide-menu"> RIWAYAT UNGGAHAN </span>
+                            </a>
+                            @else
+                            <a href="/log" class="waves-effect">
+                                <span class="hide-menu"> RIWAYAT UNGGAHAN </span>
+                            </a>
+                            @endif
+                        </li>
+                        <li class="devider"></li><br>
+                        <li>
+                        <a href="/logout" class="waves-effect">
+                                <span class="hide-menu" style="float: right;">LOGOUT <i class="fa fa-sign-out ml-2" aria-hidden="true"></i></span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>

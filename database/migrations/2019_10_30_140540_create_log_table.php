@@ -15,14 +15,14 @@ class CreateLogTable extends Migration
     {
         Schema::create('log', function (Blueprint $table) {
             $table->increments('id_log');
-            $table->string('id_uname');
+            $table->string('email')->nullable();
             $table->string('log_change',1000);
             $table->timestamps();
         });
 
-        Schema::table('log',function($table){
-            $table->foreign('id_uname')->references('username')->on('users')->onUpdate('cascade')->onDelete('set null');
-        });
+        // Schema::table('log',function($table){
+        //     $table->foreign('email')->references('email')->on('users')->onUpdate('cascade')->onDelete('set null');
+        // });
     }
 
     /**

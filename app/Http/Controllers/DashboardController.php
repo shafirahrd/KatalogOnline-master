@@ -3,38 +3,102 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\katalog;
-use App\koleksi;
-use App\lokasi;
+use App\Katalog;
+use App\Koleksi;
+use App\Lokasi;
+use App\User;
+use App\Log;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $koleksi = DB::table('koleksis')->get();
-
-        $lokasi = DB::table('lokasis')->get();
-
+        $koleksi = Koleksi::all();
+        $lokasi = Lokasi::all();
         $katalog = DB::table('katalogs')
-        	->leftjoin('koleksis','id_koleksi','=','katalogs.jenis')
+        	->leftjoin('koleksis','id_koleksi','=','jenis')
         	->leftjoin('lokasis','id_lokasi','=','lokasi')
         	->get();
+        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
 
-        return view('dashboard', ['koleksi'=>$koleksi,'lokasi'=>$lokasi,'katalog'=>$katalog]);
+        return view('dashboard', ['koleksi'=>$koleksi,'lokasi'=>$lokasi,'katalog'=>$katalog,'bahasa'=>$bahasa]);
     }
 
     public function searchAll(Request $request)
     {
     	$keyword = $request->input('search');
 
-    	$katalog = katalog::find($keyword);
+        $query = DB::table('katalogs')
+            ->leftjoin('koleksis','id_koleksi','=','jenis')
+            ->leftjoin('lokasis','id_lokasi','=','lokasi');
+        $katalog = $query->where('judul','LIKE','%'.$keyword.'%')
+            ->orWhere('penulis','LIKE','%'.$keyword.'%')
+            ->orWhere('penerbit','LIKE','%'.$keyword.'%')
+            ->orWhere('tahun_terbit','LIKE','%'.$keyword.'%')
+            ->orWhere('bahasa','LIKE','%'.$keyword.'%')
+            ->orWhere('deskripsi','LIKE','%'.$keyword.'%')
+            ->orWhere('jenis_koleksi','LIKE','%'.$keyword.'%')
+            ->orWhere('departemen','LIKE','%'.$keyword.'%')
+            ->paginate(15);
 
-    	return view('katalog.index',compact('katalog'));
+        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
+        $lokasi = Lokasi::select('departemen')->get();
+        $koleksi = Koleksi::select('jenis_koleksi')->get();
+
+    	return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }
 
-    public function searchBy()
-    {
+    public function searchBy(Request $request)
+    {   
+        $query = DB::table('katalogs')
+            ->leftjoin('koleksis','id_koleksi','=','jenis')
+            ->leftjoin('lokasis','id_lokasi','=','lokasi');
 
+        $judul = $request->input('judul');
+        $penulis = $request->input('penulis');
+        $penerbit = $request->input('penerbit');
+        $kota = $request->input('kota');
+        $tahun = $request->input('tahun');
+        $bahasas = $request->input('bahasa');
+        $lokasis = $request->input('lokasi');
+        $koleksis = $request->input('koleksi');
+        // $deskripsi = $request->input('deskripsi');
+
+        if($judul){
+            $query->where('judul','LIKE','%'.$judul.'%');
+        }
+        if($penulis){
+            $query->where('penulis','LIKE','%'.$penulis.'%');
+        }
+        if($penerbit){
+            $query->where('penerbit','LIKE','%'.$penerbit.'%');
+        }
+        if($kota){
+            $query->where('kota_terbit','LIKE','%'.$kota.'%');
+        }
+        if($tahun){
+            $query->where('tahun_terbit','LIKE','%'.$tahun.'%');
+        }
+        if($bahasas){
+            $query->where('bahasa','LIKE','%'.$bahasas.'%');
+        }
+        if($lokasis){
+            $query->where('departemen','LIKE','%'.$lokasis.'%');
+        }
+        if($koleksis){
+            $query->where('jenis_koleksi','LIKE','%'.$koleksis.'%');
+        }
+        // if($deskripsi){
+        //     $query->where('deskripsi','LIKE','%'.$deskripsi.'%');
+        // }
+
+        $katalog = $query->paginate(15);
+
+        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
+        $lokasi = Lokasi::select('departemen')->get();
+        $koleksi = Koleksi::select('jenis_koleksi')->get();
+
+        return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }
 }

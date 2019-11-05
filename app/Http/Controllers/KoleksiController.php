@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\koleksi;
+use DB;
+use App\Katalog;
+use App\Koleksi;
+use App\Lokasi;
 use Illuminate\Http\Request;
 
 class KoleksiController extends Controller
@@ -14,7 +17,7 @@ class KoleksiController extends Controller
      */
     public function index()
     {
-        $koleksi = koleksi::all();
+        $koleksi = Koleksi::all();
 
         return view('koleksi.index',compact('koleksi'));
     }
@@ -83,5 +86,24 @@ class KoleksiController extends Controller
     public function destroy(koleksi $koleksi)
     {
         //
+    }
+
+    public function searchByKoleksi($koleksi)
+    {
+        // $katalog = Katalog::whereHas('koleksi',function($q) use($koleksi){
+        //         $q->where('jenis_koleksi','=',$koleksi);
+        //     })->paginate(15);
+
+        $katalog = DB::table('katalogs')
+            ->leftjoin('koleksis','id_koleksi','=','jenis')
+            ->leftjoin('lokasis','id_lokasi','=','lokasi')
+            ->where('jenis_koleksi','=',$koleksi)
+            ->paginate(15);
+
+        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
+        $lokasi = Lokasi::select('departemen')->get();
+        $koleksi = Koleksi::select('jenis_koleksi')->get();
+
+        return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }
 }

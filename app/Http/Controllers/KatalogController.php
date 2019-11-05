@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\katalog;
+use DB;
+use App\Katalog;
+use App\Koleksi;
+use App\Lokasi;
 use Illuminate\Http\Request;
 
 class KatalogController extends Controller
@@ -14,9 +17,16 @@ class KatalogController extends Controller
      */
     public function index()
     {
-        $katalog = katalog::all();
+        $katalog = DB::table('katalogs')
+            ->leftjoin('koleksis','id_koleksi','=','jenis')
+            ->leftjoin('lokasis','id_lokasi','=','lokasi')
+            ->paginate(15);
 
-        return view('katalog.index',compact('katalog'));
+        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
+        $lokasi = Lokasi::select('departemen')->get();
+        $koleksi = Koleksi::select('jenis_koleksi')->get();
+
+        return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }
 
     /**
