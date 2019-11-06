@@ -135,91 +135,99 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
+                                <?php $x=1; ?>
                                 @foreach($katalog as $kg)
                                 <tr class="fuckOffPadding">
-                                    <td style="vertical-align: middle;">{{$kg->id_katalog}}</td>
+                                    <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
                                     <td style="text-align: left;">{{$kg->judul}}</td>
                                     <td style="vertical-align: middle;">{{$kg->jenis_koleksi}}</td>
                                     <td style="text-align: left;">{{$kg->penulis}}</td>
                                     <td style="vertical-align: middle;">{{$kg->tahun_terbit}}</td>
                                     <td style="vertical-align: middle;">Departemen {{$kg->departemen}}</td>
                                     <td style="vertical-align: middle;">
-                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#Detail-{{$kg->id_katalog}}" data-placement="top" title="Lihat Detail Pengajuan" ><i class="fa fa-folder-open"></i></button>
-                                    </td>
-                                    <div class="modal fade" id="Detail-{{$kg->id_katalog}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true",>
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                    <center><h2 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">{{$kg->judul}}</h2></center>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-body">
-                                                            <ul class="nav nav-pills m-b-30 ">
-                                                                <li class="active">
-                                                                    <a href="#viewdetail-{{$kg->id_katalog}}" data-toggle="tab" aria-expanded="false">Detail Koleksi</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tab-content br-n pn">
-                                                                <div class="tab-pane">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-12 col-lg-6">
-                                                                            <table class="table table-borderless" style="table-layout: fixed">
-                                                                                <tbody class="detail-text text-left">
-                                                                                    <tr>
-                                                                                        <td style="width: 1%"><span class="text-muted" style="font-weight: 500;">Judul Koleksi</span></td>
-                                                                                        <td style="width: 0%"><span class="text-muted" style="font-weight: 500;">:</span></td>
-                                                                                        <td style="width: 1%"><span>{{$kg->judul}}</span></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">Jenis Koleksi</span></td>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td>{{$kg->jenis}}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">Penulis</span></td>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td>{{$kg->penulis}}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">Penerbit</span></td>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td>{{$kg->penerbit}}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">Kota Penerbit</span></td>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td>{{$kg->kota_penerbit}}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">Tahun Terbit</span></td>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td>{{$kg->tahun_terbit}}</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">Bahasa</span></td>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td>{{$kg->bahasa}}</td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                        <div class="col-sm-12 col-lg-6">
-                                                                            <table class="table table-borderless">
-                                                                                <tbody class="detail-text text-left">
-                                                                                    <tr>
-                                                                                        <td style="width: 39%"><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
-                                                                                        <td style="width: 0%"><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td><span>{{$kg->deskripsi}}</span></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
-                                                                                        <td><span class="text-muted" style="font-weight: 500">:</span></td>
-                                                                                        <td>{{$kg->lokasi}}</td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
+                                        <span data-toggle="modal" data-target="#Detail-{{$kg->id_katalog}}">
+                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Lihat Detail Koleksi"><i class="fa fa-folder-open"></i></button>
+                                        </span>
+                                        <div class="modal fade" id="Detail-{{$kg->id_katalog}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true",>
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <center><h2 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">{{$kg->judul}}</h2></center>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-body">
+                                                                <div class="tab-content br-n pn">
+                                                                    <div class="tab-pane active">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12 col-lg-10">
+                                                                                <table class="table table-borderless" style="table-layout: fixed">
+                                                                                    <tbody class="detail-text text-left">
+                                                                                        <tr>
+                                                                                            <td style="width: 1%"><span class="text-muted" style="font-weight: 500;">Judul Koleksi</span></td>
+                                                                                            <td style="width: 0%"><span class="text-muted" style="font-weight: 500;">: </span></td>
+                                                                                            <td style="width: 1%"><span style="margin-left: 5%;"> {{$kg->judul}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Jenis Koleksi</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->jenis_koleksi}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Penulis</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->penulis}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Penerbit</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->penerbit}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Kota Penerbit</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->kota_penerbit}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Tahun Terbit</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->tahun_terbit}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Bahasa</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->bahasa}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->deskripsi}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->departemen}}</span></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            {{-- <div class="col-sm-12 col-lg-6">
+                                                                                <table class="table table-borderless">
+                                                                                    <tbody class="detail-text text-left">
+                                                                                        <tr>
+                                                                                            <td style="width: 39%"><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
+                                                                                            <td style="width: 0%"><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td><span> {{$kg->deskripsi}}</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
+                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                            <td> {{$kg->departemen}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -229,7 +237,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
