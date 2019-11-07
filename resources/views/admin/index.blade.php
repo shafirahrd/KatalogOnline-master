@@ -33,7 +33,7 @@
                                       </div>
                                     </div>
                                     <div class="file-upload-content">
-                                      <img class="file-upload-image" src="#" alt="your image" />
+                                      <img class="file-upload-image" src="#" alt="your file" />
                                       <div class="image-title-wrap">
                                         <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded File</span></button>
                                       </div>

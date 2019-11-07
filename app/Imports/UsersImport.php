@@ -18,6 +18,7 @@ class UsersImport implements ToModel, WithHeadingRow
         return new Katalog([
             'judul' => $row['judul'],
             'jenis' => $row['jenis'],
+            'penulis' => $row['penulis'] == '-' ? NULL : $row['penulis'],
             'penerbit' => $row['penerbit'] == '-' ? NULL : $row['penerbit'],
             'kota_penerbit' => $row['kota_penerbit'] == '-' ? NULL : $row['kota_penerbit'],
             'tahun_terbit' => $row['tahun'] == '-' ? NULL : $row['tahun'],

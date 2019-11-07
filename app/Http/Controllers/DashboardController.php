@@ -75,7 +75,7 @@ class DashboardController extends Controller
             $query->where('penerbit','LIKE','%'.$penerbit.'%');
         }
         if($kota){
-            $query->where('kota_terbit','LIKE','%'.$kota.'%');
+            $query->where('kota_penerbit','LIKE','%'.$kota.'%');
         }
         if($tahun){
             $query->where('tahun_terbit','LIKE','%'.$tahun.'%');

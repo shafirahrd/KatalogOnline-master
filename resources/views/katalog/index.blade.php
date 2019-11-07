@@ -69,7 +69,7 @@
 
                                     <div class="col-md-3">
                                       <select class="md-form mdb-select colorful-select dropdown-primary" name="bahasa">
-                                        <option value="" disabled selected>Bahasa</option>
+                                        <option value="" selected>Bahasa</option>
                                         @foreach($bahasa as $b)
                                             <option value="{{$b->bahasa}}">{{$b->bahasa}}</option>
                                         @endforeach
@@ -78,7 +78,7 @@
 
                                     <div class="col-md-4">
                                       <select class="md-form mdb-select colorful-select dropdown-primary" name="lokasi">
-                                        <option value="" disabled selected>Lokasi Ruang Baca</option>
+                                        <option value="" selected>Lokasi Ruang Baca</option>
                                         @foreach($lokasi as $l)
                                             <option value="{{$l->departemen}}">{{$l->departemen}}</option>
                                         @endforeach
@@ -87,7 +87,7 @@
 
                                     <div class="col-md-3">
                                       <select class="md-form mdb-select colorful-select dropdown-primary" name="koleksi">
-                                        <option value="" disabled selected>Jenis Koleksi</option>
+                                        <option value="" selected>Jenis Koleksi</option>
                                         @foreach($koleksi as $k)
                                             <option value="{{$k->jenis_koleksi}}">{{$k->jenis_koleksi}}</option>
                                         @endforeach

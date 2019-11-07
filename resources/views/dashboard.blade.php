@@ -58,7 +58,8 @@
                                         <span class="icon-bar"></span>
                                         <span class="icon-bar"></span>
                                     </button>
-                                    <a class="navbar-brand our_logo" href="#"><img src="{{ asset('pelanggan/assets/images/logo.png') }}" alt="" /></a>
+                                    <a class="navbar-brand our_logo" href="#"><img src="{{ asset('pelanggan/assets/images/logo.png') }}" alt="" />
+                                    </a>
                                 </div>
 
                                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -100,10 +101,10 @@
                             </div>
                             <div style="text-align: left;">
                                 <a href="/login">
-                                    <img src="{{ asset('images/loginAdmin.png') }}" alt="Login Admin" style="width: 13%; height: 13%;" />
+                                    <img src="{{ asset('images/loginAdmin.png') }}" alt="Login Admin" style="width: 8%; height: 8%;" />
                                 </a>
                                 <a href="#ModalPencarian" data-toggle="modal" style="justify-content: right;">
-                                    <img src="{{ asset('pelanggan/assets/images/advanced4.png') }}" alt="Advanced Search" style="margin-left: 71%; width: 15%; height: 15%;" />
+                                    <img src="{{ asset('pelanggan/assets/images/advanced4.png') }}" alt="Advanced Search" style="margin-left: 76%; width: 15%; height: 15%;" />
                                 </a>
                             </div><br><br>
 
@@ -190,7 +191,7 @@
                                               <div class="row">
                                                 <div class="col-md-3">
                                                   <select class="md-form mdb-select colorful-select dropdown-primary" name="bahasa">
-                                                    <option value="" disabled selected>Bahasa</option>
+                                                    <option value="" selected>Bahasa</option>
                                                     @foreach($bahasa as $b)
                                                         <option value="{{$b->bahasa}}">{{$b->bahasa}}</option>
                                                     @endforeach
@@ -199,7 +200,7 @@
 
                                                 <div class="col-md-6">
                                                   <select class="md-form mdb-select colorful-select dropdown-primary" name="lokasi">
-                                                    <option value="" disabled selected>Lokasi Ruang Baca</option>
+                                                    <option value="" selected>Lokasi Ruang Baca</option>
                                                     @foreach($lokasi as $l)
                                                         <option value="{{$l->departemen}}">{{$l->departemen}}</option>
                                                     @endforeach
@@ -208,7 +209,7 @@
 
                                                 <div class="col-md-3">
                                                   <select class="md-form mdb-select colorful-select dropdown-primary" name="koleksi">
-                                                    <option value="" disabled selected>Jenis Koleksi</option>
+                                                    <option value="" selected>Jenis Koleksi</option>
                                                     @foreach($koleksi as $k)
                                                         <option value="{{$k->jenis_koleksi}}">{{$k->jenis_koleksi}}</option>
                                                     @endforeach
@@ -276,7 +277,7 @@
                             <div class="price-table-wrapper">
                                 @foreach($lokasi as $lk)
                                 <div class="pricing-table">
-                                    <h2 class="pricing-table__header">Departemen {{$lk->departemen}}</h2>
+                                    <h2 class="pricing-table__header">Departemen<br>{{$lk->departemen}}</h2>
                                     <img src="{{ asset('asset/image/logo_its.png') }}" alt="Judul" />
                                     <a class="pricing-table__button" href="{{ url('searchLokasi/'.$lk->departemen) }}">Lihat Koleksi Lokasi</a>
                                     <ul class="pricing-table__list">
