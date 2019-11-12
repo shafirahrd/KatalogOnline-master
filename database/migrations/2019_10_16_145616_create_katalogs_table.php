@@ -26,7 +26,7 @@ class CreateKatalogsTable extends Migration
             $table->text('deskripsi',30)->nullable();
             $table->integer('lokasi')->unsigned()->nullable();
             $table->string('foto',100)->nullable();
-            $table->string('att_value',1000)->nullable();
+            $table->json('att_value')->nullable();
             $table->timestamps();
         });
 

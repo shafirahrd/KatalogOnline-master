@@ -17,7 +17,7 @@ class CreateKoleksisTable extends Migration
             $table->increments('id_koleksi');
             $table->string('jenis_koleksi',30)->nullable();
             $table->text('deskripsi_koleksi',500)->nullable();
-            $table->string('att_khusus',1000)->nullable();
+            $table->json('att_khusus')->nullable();
             $table->timestamps();
         });
     }

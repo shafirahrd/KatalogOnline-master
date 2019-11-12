@@ -9,7 +9,7 @@ class katalog extends Model
     protected $primaryKey = 'id_katalog';
     public $incrementing = true;
     protected $fillable = ['judul','jenis','penulis','penerbit','kota_penerbit','tahun_terbit','bahasa','deskripsi','lokasi','foto'];
-    protected $casts = ['att_value'];
+    protected $casts = ['att_value' => 'array'];
 
     public function lokasi(){
     	return $this->belongsTo('App\Lokasi','lokasi','id_lokasi');
