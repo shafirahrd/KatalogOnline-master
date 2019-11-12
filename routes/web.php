@@ -38,4 +38,11 @@ Route::group(['middleware' => ['auth']], function ()
 	Route::get('/logout','Auth\LoginController@logout');
 
 	Route::post('/uploadExcel','HomeController@upload');
+	Route::post('/uploadKoleksi','HomeController@uploadKoleksi');
+
+	// Route::get('/insert',function(Request $request){
+	// 	$judul = $request->judul;
+
+	// 	$katalog = DB::select('call insertKatalog(?)',[$judul]);
+	// });
 });

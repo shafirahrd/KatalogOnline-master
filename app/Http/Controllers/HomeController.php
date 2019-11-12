@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Imports\KatalogImport;
+use App\Imports\KoleksiImport;
 use Illuminate\Http\Request;
 use Excel;
 
@@ -43,6 +44,13 @@ class HomeController extends Controller
     public function upload()
     {
         Excel::import(new KatalogImport, request()->file('fileExcel'));
+
+        return redirect('/log')->with('success','File berhasil diunggah');
+    }
+
+    public function uploadKoleksi()
+    {
+        Excel::import(new KoleksiImport, request()->file('fileExcel'));
 
         return redirect('/log')->with('success','File berhasil diunggah');
     }

@@ -149,12 +149,14 @@
                                             <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Lihat Detail Koleksi"><i class="fa fa-folder-open"></i></button>
                                         </span>
 
+                                        @if(Auth::check())
                                         <form class="form-horizontal form-material" action="{{ route('katalog.destroy', ['katalog'=>$kg->id_katalog]) }}" method = "POST">
                                             <button type="submit" class="btn btn-danger" title="Hapus Katalog"><i class="ti-trash"></i></button>
                                             <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
                                             @method('delete')
                                             @csrf
                                         </form>
+                                        @endif
 
                                         <div class="modal fade" id="Detail-{{$kg->id_katalog}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true",>
                                             <div class="modal-dialog modal-lg">

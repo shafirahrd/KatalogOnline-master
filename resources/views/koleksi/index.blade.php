@@ -22,6 +22,7 @@
                             <tbody class="text-center">
                                 <?php $x=1; ?>
                                 @foreach($koleksi as $ks)
+                                {{-- {{dd($ks->formatted_column[0])}} --}}
                                 <tr class="fuckOffPadding">
                                     <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
                                     <td style="vertical-align: middle;">{{$ks->jenis_koleksi}}</td>

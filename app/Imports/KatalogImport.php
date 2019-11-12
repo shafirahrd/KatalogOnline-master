@@ -3,10 +3,11 @@
 namespace App\Imports;
 
 use App\Katalog;
+use App\Koleksi;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class UsersImport implements ToModel, WithHeadingRow
+class KatalogImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -15,6 +16,15 @@ class UsersImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
+        $koleksi = Koleksi::find($row['jenis']);
+        $temp=[];
+        // dd($koleksi);
+        if(!is_null($koleksi)){
+                foreach ($koleksi->formatted_column as $value) {
+                $temp[$value] = $row[strtolower($value)] ?? '-';
+            }
+        }
+
         return new Katalog([
             'judul' => $row['judul'],
             'jenis' => $row['jenis'],
@@ -25,6 +35,7 @@ class UsersImport implements ToModel, WithHeadingRow
             'bahasa' => $row['bahasa'] == '-' ? NULL : $row['bahasa'],
             'deskripsi' => $row['deskripsi'] == '-' ? NULL : $row['deskripsi'],
             'lokasi' => $row['lokasi'],
+            'att_value' => json_encode($temp),
         ]);
     }
 }
