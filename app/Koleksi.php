@@ -12,6 +12,6 @@ class koleksi extends Model
     protected $casts = ['att_khusus' => 'array'];
 
     public function koleksi(){
-    	return $this->hasMany('App\Koleksi','jenis','id_koleksi');
+    	return $this->hasMany('App\Koleksi','id_koleksi','jenis');
     }
 }

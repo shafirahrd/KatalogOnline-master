@@ -13,16 +13,21 @@ class CreateLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('log', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table) {
             $table->increments('id_log');
-            $table->string('email')->nullable();
-            $table->string('log_change',1000);
+            $table->integer('id_user')->unsigned();
+            $table->string('log_change',100);
+            $table->integer('id_katalog')->unsigned();
             $table->timestamps();
         });
 
-        // Schema::table('log',function($table){
-        //     $table->foreign('email')->references('email')->on('users')->onUpdate('cascade')->onDelete('set null');
-        // });
+        Schema::table('logs',function($table){
+            $table->foreign('id_katalog')->references('id_katalog')->on('katalogs');
+        });
+
+        Schema::table('logs',function($table){
+            $table->foreign('id_user')->references('id')->on('users');
+        });
     }
 
     /**
@@ -32,6 +37,6 @@ class CreateLogTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log');
+        Schema::dropIfExists('logs');
     }
 }

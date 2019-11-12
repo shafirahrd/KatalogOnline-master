@@ -8,9 +8,13 @@ class log extends Model
 {
     protected $primaryKey = 'id_log';
     public $incrementing = true;
-    protected $fillable = ['id_uname','log_change'];
+    protected $fillable = ['id_user','log_change','id_katalog'];
 
-    public function log(){
-    	return $this->hasMany('App\User','username','id_uname');
+    // public function user(){
+    // 	return $this->belongsTo('App\User','id_user');
+    // }
+
+    public function katalog(){
+    	return $this->belongsTo('App\Katalog','id_katalog');
     }
 }

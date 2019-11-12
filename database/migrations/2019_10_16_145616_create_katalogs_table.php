@@ -28,6 +28,7 @@ class CreateKatalogsTable extends Migration
             $table->string('foto',100)->nullable();
             $table->json('att_value')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('katalogs',function($table){

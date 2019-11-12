@@ -140,14 +140,22 @@
                                 <tr class="fuckOffPadding">
                                     <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
                                     <td style="text-align: left;">{{$kg->judul}}</td>
-                                    <td style="vertical-align: middle;">{{$kg->jenis_koleksi}}</td>
+                                    <td style="vertical-align: middle;">{{$kg->koleksi->jenis_koleksi ?? '-'}}</td>
                                     <td style="text-align: left;">{{$kg->penulis}}</td>
                                     <td style="vertical-align: middle;">{{$kg->tahun_terbit}}</td>
-                                    <td style="vertical-align: middle;">Departemen {{$kg->departemen}}</td>
+                                    <td style="vertical-align: middle;">Departemen {{$kg->lokasis->departemen ?? '-'}}</td>
                                     <td style="vertical-align: middle;">
                                         <span data-toggle="modal" data-target="#Detail-{{$kg->id_katalog}}">
                                             <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Lihat Detail Koleksi"><i class="fa fa-folder-open"></i></button>
                                         </span>
+
+                                        <form class="form-horizontal form-material" action="{{ route('katalog.destroy', ['katalog'=>$kg->id_katalog]) }}" method = "POST">
+                                            <button type="submit" class="btn btn-danger" title="Hapus Katalog"><i class="ti-trash"></i></button>
+                                            <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
+                                            @method('delete')
+                                            @csrf
+                                        </form>
+
                                         <div class="modal fade" id="Detail-{{$kg->id_katalog}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true",>
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
@@ -172,7 +180,7 @@
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Jenis Koleksi</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->jenis_koleksi}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->koleksi->jenis_koleksi ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Penulis</span></td>
@@ -207,27 +215,11 @@
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->departemen}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->lokasis->departemen ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div>
-                                                                            {{-- <div class="col-sm-12 col-lg-6">
-                                                                                <table class="table table-borderless">
-                                                                                    <tbody class="detail-text text-left">
-                                                                                        <tr>
-                                                                                            <td style="width: 39%"><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
-                                                                                            <td style="width: 0%"><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span> {{$kg->deskripsi}}</span></td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
-                                                                                            <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td> {{$kg->departemen}}</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -251,45 +243,4 @@
     </div>
     <!-- /.container-fluid -->
 </div>
-@endsection
-
-@section('script')
-
-{{-- <script type="text/javascript">
-    function ShowModal(id)
-    {
-      var modal = document.getElementById(id);
-      modal.style.display = "block";
-    }
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-      $(".search").keyup(function () {
-        var searchTerm = $(".search").val();
-        var listItem = $('.results tbody').children('tr');
-        var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
-        
-      $.extend($.expr[':'], {'containsi': function(elem, i, match, array){
-            return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
-        }
-      });
-        
-      $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e){
-        $(this).attr('visible','false');
-      });
-
-      $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e){
-        $(this).attr('visible','true');
-      });
-
-      var jobCount = $('.results tbody tr[visible="true"]').length;
-        $('.counter').text(jobCount + ' item');
-
-      if(jobCount == '0') {$('.no-result').show();}
-        else {$('.no-result').hide();}
-              });
-    });
-</script> --}}
-
 @endsection

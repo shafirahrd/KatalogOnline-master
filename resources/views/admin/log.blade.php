@@ -25,10 +25,10 @@
                                 @foreach($log as $lg)
                                 <tr class="fuckOffPadding">
                                     <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
-                                    <td style="vertical-align: middle;">{{$lg->username}}</td>
+                                    <td style="vertical-align: middle;">{{$lg->nama}}</td>
                                     <td style="vertical-align: middle;">{{$lg->departemen}}</td>
-                                    <td style="text-align: left;">{{$lg->log_change}}</td>
-                                    <td style="vertical-align: middle;">{{$lg->created_at}}</td>
+                                    <td style="text-align: left;">{{$lg->log_change}}, {{$lg->judul}}</td>
+                                    <td style="vertical-align: middle;">{{ date('d-F-Y',strtotime($lg->created_at)) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

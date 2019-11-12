@@ -11,7 +11,7 @@ class lokasi extends Model
     protected $fillable = ['departemen','fakultas','alamat','tautan'];
 
     public function lokasi(){
-    	return $this->hasMany('App\Lokasi','lokasi','id_lokasi');
+    	return $this->hasMany('App\Lokasi','id_lokasi','lokasi');
     }
 
     public function user_lokasi(){

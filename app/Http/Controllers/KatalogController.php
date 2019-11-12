@@ -6,6 +6,7 @@ use DB;
 use App\Katalog;
 use App\Koleksi;
 use App\Lokasi;
+use App\Temp;
 use Illuminate\Http\Request;
 
 class KatalogController extends Controller
@@ -17,10 +18,12 @@ class KatalogController extends Controller
      */
     public function index()
     {
-        $katalog = DB::table('katalogs')
-            ->leftjoin('koleksis','id_koleksi','=','jenis')
-            ->leftjoin('lokasis','id_lokasi','=','lokasi')
-            ->paginate(15);
+        // $katalog = DB::table('katalogs')
+        //     ->leftjoin('koleksis','id_koleksi','=','jenis')
+        //     ->leftjoin('lokasis','id_lokasi','=','lokasi')
+        //     ->paginate(15);
+
+        $katalog = Katalog::with('koleksi','lokasis')->paginate(15);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
@@ -34,9 +37,9 @@ class KatalogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(temp $temp)
     {
-        //
+        // $katalog = Katalog::firstOrCreate(['judul' => $temp['judul']],['jenis']);
     }
 
     /**
@@ -90,9 +93,13 @@ class KatalogController extends Controller
      * @param  \App\katalog  $katalog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(katalog $katalog)
+    public function destroy(Request $request, katalog $katalog)
     {
-        //
+        $data = Katalog::find($request->id);
+        $data->delete();
+
+        return back();
+
     }
 
     // public function limit($value, $limit)

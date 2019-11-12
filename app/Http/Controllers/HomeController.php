@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\Imports\UsersImport;
+use App\Imports\KatalogImport;
 use Illuminate\Http\Request;
 use Excel;
 
@@ -31,9 +31,10 @@ class HomeController extends Controller
 
     public function log()
     {   
-        $log = DB::table('log')
-            ->leftjoin('users','log.email','=','users.email')
+        $log = DB::table('logs')
+            ->leftjoin('users','logs.id_user','=','users.id')
             ->leftjoin('lokasis','id_lokasi','=','user_lokasi')
+            ->leftjoin('katalogs','katalogs.id_katalog','=','logs.id_katalog')
             ->get();
 
         return view('admin.log',compact('log'));
@@ -41,7 +42,7 @@ class HomeController extends Controller
 
     public function upload()
     {
-        Excel::import(new UsersImport, request()->file('fileExcel'));
+        Excel::import(new KatalogImport, request()->file('fileExcel'));
 
         return redirect('/log')->with('success','File berhasil diunggah');
     }

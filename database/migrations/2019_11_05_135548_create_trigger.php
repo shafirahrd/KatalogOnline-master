@@ -13,13 +13,13 @@ class CreateTrigger extends Migration
      */
     public function up()
     {
-        DB::unprepared('
-        CREATE TRIGGER tr_User_Insert AFTER INSERT ON `katalogs` FOR EACH ROW
-            BEGIN
-                INSERT INTO log (`email`, `log_change`, `created_at`, `updated_at`) 
-                VALUES (3, NEW.id, now(), null);
-            END
-        ');
+        // DB::unprepared('
+        // CREATE TRIGGER tr_User_Insert AFTER INSERT ON `katalogs` FOR EACH ROW
+        //     BEGIN
+        //         INSERT INTO log (`email`, `log_change`, `created_at`, `updated_at`) 
+        //         VALUES (3, NEW.id, now(), null);
+        //     END
+        // ');
     }
 
     /**
