@@ -33,6 +33,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{$log->links()}}
                     </div>
                 </div>
             </div>

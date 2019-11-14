@@ -36,7 +36,7 @@ class HomeController extends Controller
             ->leftjoin('users','logs.id_user','=','users.id')
             ->leftjoin('lokasis','id_lokasi','=','user_lokasi')
             ->leftjoin('katalogs','katalogs.id_katalog','=','logs.id_katalog')
-            ->get();
+            ->paginate(15);
 
         return view('admin.log',compact('log'));
     }
