@@ -16,10 +16,7 @@ class DashboardController extends Controller
     {
         $koleksi = Koleksi::all();
         $lokasi = Lokasi::all();
-        $katalog = DB::table('katalogs')
-        	->leftjoin('koleksis','id_koleksi','=','jenis')
-        	->leftjoin('lokasis','id_lokasi','=','lokasi')
-        	->get();
+        $katalog = Katalog::with('koleksi','lokasis');
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
 
         return view('dashboard', ['koleksi'=>$koleksi,'lokasi'=>$lokasi,'katalog'=>$katalog,'bahasa'=>$bahasa]);

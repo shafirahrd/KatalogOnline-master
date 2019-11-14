@@ -90,15 +90,16 @@ class LokasiController extends Controller
 
     public function searchByLokasi($lokasi)
     {
-        // $katalog = Katalog::whereHas('lokasi',function($q) use($lokasi){
-        //         $q->where('departemen','=',$lokasi);
-        //     })->paginate(15);
+        // $katalog = DB::table('katalogs')
+        //     ->leftjoin('koleksis','id_koleksi','=','jenis')
+        //     ->leftjoin('lokasis','id_lokasi','=','lokasi')
+        //     ->where('departemen','=',$lokasi)
+        //     ->paginate(15);
 
-        $katalog = DB::table('katalogs')
-            ->leftjoin('koleksis','id_koleksi','=','jenis')
-            ->leftjoin('lokasis','id_lokasi','=','lokasi')
-            ->where('departemen','=',$lokasi)
-            ->paginate(15);
+        $katalog = Katalog::whereHas('koleksi')
+        ->whereHas('lokasis', function($query) use($lokasi){
+            $query->where('departemen','=',$lokasi);
+        })->paginate(15);
             
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();

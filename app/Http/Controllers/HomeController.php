@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use DB;
+// use App\Log;
+// use App\Katalog;
+// use App\koleksi;
+// use App\Lokasi;
+// use App\User;
 use App\Imports\KatalogImport;
 use App\Imports\KoleksiImport;
 use Illuminate\Http\Request;
@@ -32,6 +37,7 @@ class HomeController extends Controller
 
     public function log()
     {   
+        // $logs = Log::with('katalog')->with('lokasis')->with('user_lokasi')->get();
         $log = DB::table('logs')
             ->leftjoin('users','logs.id_user','=','users.id')
             ->leftjoin('lokasis','id_lokasi','=','user_lokasi')
