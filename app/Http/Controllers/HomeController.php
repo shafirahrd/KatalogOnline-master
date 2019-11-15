@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 // use App\Log;
 // use App\Katalog;
-// use App\koleksi;
+// use App\Koleksi;
 // use App\Lokasi;
 // use App\User;
 use App\Imports\KatalogImport;
@@ -42,6 +42,7 @@ class HomeController extends Controller
             ->leftjoin('users','logs.id_user','=','users.id')
             ->leftjoin('lokasis','id_lokasi','=','user_lokasi')
             ->leftjoin('katalogs','katalogs.id_katalog','=','logs.id_katalog')
+            ->leftjoin('koleksis','katalogs.jenis','=','koleksis.id_koleksi')
             ->paginate(15);
 
         return view('admin.log',compact('log'));

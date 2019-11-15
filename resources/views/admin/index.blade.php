@@ -12,6 +12,22 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <div class="table-responsive">
+                        <div class="white-box">
+                            <div class="table-responsive">
+                                <h3>PENGANTAR</h3>
+                                <p>
+                                    Tata cara unggah data katalog<br>
+                                    [Persyaratan, format file yang dapat diunggah yaitu .xlsx, .sql, dan .csv]<br>
+                                    1. Tekan kotak hijau dibawah dan pilih file yang akan diunggah atau <i>Drag and drop</i> file<br>
+                                    {{-- 2. Akan muncul form yang berisi data header/atribut data. Cocokkan dengan atribut yang ada pada sistem Katalog Online. --}}
+                                    2. Tekan tombol <i>Upload</i><br>
+                                    3. Sistem akan secara otomatis mengecek data yang sudah ada untuk menghindari redundansi dan memasukkan data yang telah diunggah ke basis data Katalog Online.
+                                </p><hr>
+                                <h4>
+                                    Admin bebas mengubah atau menghapus data katalog yang telah diunggah melalui halaman katalog, dan dapat melihat riwayat perubahan yang telah dilakukan pada halaman riwayat unggahan.
+                                </h4>
+                            </div>
+                        </div>
                         <table class="table color-table success-table example">
                             <thead>
                                 <tr>
@@ -29,7 +45,7 @@
                                     <div class="image-upload-wrap">
                                       <input class="file-upload-input" type='file' onchange="readURL(this);" name="fileExcel" />
                                       <div class="drag-text">
-                                        <h3>Drag and drop a file or select add file</h3>
+                                        <h3>Drag and drop a file or click this box</h3>
                                       </div>
                                     </div>
                                     <div class="file-upload-content">
@@ -44,7 +60,7 @@
                                     </button>
                                   </form>
                             </tbody>
-                            <thead>
+                            <br><br><thead>
                                 <tr>
                                     <th colspan=6></th>
                                 </tr>

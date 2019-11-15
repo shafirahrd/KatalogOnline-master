@@ -35,7 +35,7 @@ body {
   color: #ffffff;
 }
 .navbar-header {
-  background: #d51100;
+  background: #034a72;
 }
 .navbar-top-links > li > a {
   color: #ffffff;
@@ -79,7 +79,7 @@ body {
 #side-menu > li > a.active {
   background: transperant;
   color: black;
-  border-left: 3px solid #d51100;
+  border-left: 3px solid #77cd4a;
   font-weight: 500;
 }
 #side-menu ul > li > a:hover {

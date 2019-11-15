@@ -29,7 +29,7 @@
                                     <td style="text-align: left;">{{$lk->departemen}}</td>
                                     <td style="vertical-align: middle;">{{$lk->fakultas}}</td>
                                     <td style="text-align: left;">{{$lk->alamat}}</td>
-                                    <td style="vertical-align: middle;"><a href="http://{{$lk->tautan}}">{{$lk->tautan}}</td>
+                                    <td style="vertical-align: middle;"><a href="http://{{$lk->tautan}}" target="_blank">{{$lk->tautan}}</td>
                                     <td style="vertical-align: middle;">
                                         <a href="{{ url('searchLokasi/'.$lk->departemen) }}" class="btn btn-default"><i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Lihat Berdasarkan Lokasi"></i></a>
                                     </td>

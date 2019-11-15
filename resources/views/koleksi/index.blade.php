@@ -7,7 +7,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <div class="table-responsive">
-                        <table class="table color-table warning-table example">
+                        <table class="table color-table success-table example">
                             <thead>
                                 <tr>
                                     <th colspan=6>DAFTAR KOLEKSI</th>

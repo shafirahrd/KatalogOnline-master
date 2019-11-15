@@ -15,14 +15,14 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <div class="table-responsive">
-                        <table class="table color-table danger-table example">
+                        <table class="table color-table success-table example">
                             <thead>
                                 <tr>
                                     <th colspan=6>ADVANCED SEARCH</th>
                                 </tr>
                             </thead>
                         </table><br>
-                        <table class="table color-table danger-table example">                            
+                        <table class="table color-table success-table example">                            
                             <tbody>
                                 <form class="form-horizontal" action="/searchAdvanced" method="GET">
                                 {{ csrf_field() }}
@@ -112,7 +112,7 @@
                 </div>
                 <div class="white-box">
                     <div class="table-responsive">
-                        <table class="table color-table primary-table results">
+                        <table class="table color-table success-table results">
                             <thead>
                                 <tr>
                                     <th colspan=7>DAFTAR KATALOG</th>
@@ -235,8 +235,8 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                            {{ $katalog->links() }}
                         </table>
+                        {{ $katalog->links() }}
                     </div>
                 </div>
             </div>
