@@ -190,7 +190,7 @@
                                             <div class="card-body">
                                               <div class="row">
                                                 <div class="col-md-3">
-                                                  <select class="md-form mdb-select colorful-select dropdown-primary" name="bahasa">
+                                                  <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="bahasa">
                                                     <option value="" selected>Bahasa</option>
                                                     @foreach($bahasa as $b)
                                                         <option value="{{$b->bahasa}}">{{$b->bahasa}}</option>
@@ -199,7 +199,7 @@
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                  <select class="md-form mdb-select colorful-select dropdown-primary" name="lokasi">
+                                                  <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="lokasi">
                                                     <option value="" selected>Lokasi Ruang Baca</option>
                                                     @foreach($lokasi as $l)
                                                         <option value="{{$l->departemen}}">{{$l->departemen}}</option>
@@ -208,7 +208,7 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                  <select class="md-form mdb-select colorful-select dropdown-primary" name="koleksi">
+                                                  <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="koleksi">
                                                     <option value="" selected>Jenis Koleksi</option>
                                                     @foreach($koleksi as $k)
                                                         <option value="{{$k->jenis_koleksi}}">{{$k->jenis_koleksi}}</option>

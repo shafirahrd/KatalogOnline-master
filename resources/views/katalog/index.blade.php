@@ -6,6 +6,11 @@
 {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script src="{{asset('asset/js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{asset('pelanggan/assets/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('pelanggan/assets/js/bootstrap.js')}}"></script>
+        
 @endsection
 
 @section('content')
@@ -68,7 +73,7 @@
                                     </tr><br><br>
 
                                     <div class="col-md-3">
-                                      <select class="md-form mdb-select colorful-select dropdown-primary" name="bahasa">
+                                      <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="bahasa">
                                         <option value="" selected>Bahasa</option>
                                         @foreach($bahasa as $b)
                                             <option value="{{$b->bahasa}}">{{$b->bahasa}}</option>
@@ -77,7 +82,7 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                      <select class="md-form mdb-select colorful-select dropdown-primary" name="lokasi">
+                                      <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="lokasi">
                                         <option value="" selected>Lokasi Ruang Baca</option>
                                         @foreach($lokasi as $l)
                                             <option value="{{$l->departemen}}">{{$l->departemen}}</option>
@@ -86,14 +91,28 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                      <select class="md-form mdb-select colorful-select dropdown-primary" name="koleksi">
+                                      <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="koleksi" id="koleksi">
                                         <option value="" selected>Jenis Koleksi</option>
                                         @foreach($koleksi as $k)
-                                            <option value="{{$k->jenis_koleksi}}">{{$k->jenis_koleksi}}</option>
+                                            <option value="{{$k->jenis_koleksi}}" data-id="{{$k->id_koleksi}}">{{$k->jenis_koleksi}}</option>
                                         @endforeach
                                       </select>
-                                    </div><br><br>
+                                    </div><br><br><br>
+                                    @foreach($koleksi as $kg)
+                                        @if(is_null($kg->formatted_column))
+                                            @continue
+                                        @endif
+                                        @foreach($kg->formatted_column as $kfc)
+                                            <div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none; margin-bottom: 5%;">
+                                              <label class="control-label col-sm-2" for="{{$kfc}}">{{$kfc}} :</label>
+                                              <div class="col-sm-9">          
+                                                <input type="text" class="form-control" id="{{$kfc}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
+                                              </div>
+                                            </div>
+                                        @endforeach
+                                    @endforeach
 
+                                    <br>
                                     <div class="text-center">
                                         <button class="btn btn-primary">Cari
                                         <i class="fa fa-search-plus ml-2" aria-hidden="true"></i>
@@ -118,7 +137,7 @@
                                     <th colspan=7>DAFTAR KATALOG</th>
                                 </tr>
                                 <div class="form-group pull-right">
-                                    <input type="text" class="search form-control" placeholder="Cari...">
+                                    <input type="text" id="cari" class="search form-control" placeholder="Cari...">
                                 </div>
                                 <span class="counter pull-right"></span>
                                 <tr>
@@ -245,4 +264,27 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+@endsection
+
+@section('script')
+<script>
+    $(function() {
+        // run on change for the selectbox
+        $( "#koleksi" ).change(function() {  
+            $('.atribut-khusus').hide();
+              
+            var divKey = $(this).find('option:selected').data('id');
+            // console.log(divKey);
+            $('.form-atribut-'+divKey).show();
+        });
+    });
+</script>
+
+{{-- <script>
+    $(function(){
+        $( '#cari').change(function(){
+            $()
+        });
+    });
+</script> --}}
 @endsection

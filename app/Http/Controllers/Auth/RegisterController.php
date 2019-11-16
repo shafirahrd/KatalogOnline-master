@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use DB;
 use App\User;
+use App\UserValidation;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
 {
@@ -49,10 +52,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'username' => ['required', 'string', 'min:6', 'max:20'],
             'nama' => ['required', 'string', 'max:255'],
+            'nip' => ['required', 'string', 'min:18'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'lokasi' => ['required','integer'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'lokasi' => ['required'],
         ]);
     }
 
@@ -64,11 +69,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $nip = DB::table('user_validations')->where('nip','=',$data['nip'])->first();
+        // UserValidation::find($data['nip'])->tosql();
+        // dd($nip);
+        if($nip){
+            return User::create([
+            'username' => $data['username'],
             'nama' => $data['nama'],
+            'nip' => $data['nip'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'user_lokasi' => $data['lokasi']
-        ]);
+            'user_lokasi' => $data['lokasi'],
+            'user_role' => 1,
+            ]);
+        }
+        else{
+            return back();
+        }
     }
 }

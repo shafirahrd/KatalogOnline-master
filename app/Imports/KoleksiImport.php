@@ -15,7 +15,12 @@ class KoleksiImport implements ToModel
     public function model(array $row)
     {
         // dd($row);
-        $row['atribut_khusus'] = json_encode(explode(';', $row[2]));
+        if($row['atribut_khusus'] == '-'){
+            $row['atribut_khusus'] == NULL;
+        }
+        else{
+            $row['atribut_khusus'] = json_encode(explode(';', $row[2]));
+        }
         // dd(json_decode($row['atribut_khusus']));
         return new Koleksi([
             'jenis_koleksi' => $row[0],

@@ -52,13 +52,15 @@ class DashboardController extends Controller
             ->leftjoin('koleksis','id_koleksi','=','jenis')
             ->leftjoin('lokasis','id_lokasi','=','lokasi');
 
+        // $query = Katalog::query()->whereHas('koleksi')->whereHas('lokasis');
+
         $judul = $request->input('judul');
         $penulis = $request->input('penulis');
         $penerbit = $request->input('penerbit');
         $kota = $request->input('kota');
         $tahun = $request->input('tahun');
         $bahasas = $request->input('bahasa');
-        $lokasis = $request->input('lokasi');
+        $lokasix = $request->input('lokasi');
         $koleksis = $request->input('koleksi');
         // $deskripsi = $request->input('deskripsi');
 
@@ -80,8 +82,8 @@ class DashboardController extends Controller
         if($bahasas){
             $query->where('bahasa','LIKE','%'.$bahasas.'%');
         }
-        if($lokasis){
-            $query->where('departemen','LIKE','%'.$lokasis.'%');
+        if($lokasix){
+            $query->where('departemen','LIKE','%'.$lokasix.'%');
         }
         if($koleksis){
             $query->where('jenis_koleksi','LIKE','%'.$koleksis.'%');

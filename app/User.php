@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nama', 'email', 'password','user_lokasi'
+        'username', 'nama', 'nip', 'email', 'password','user_lokasi'
     ];
 
     /**
@@ -42,5 +42,9 @@ class User extends Authenticatable
 
     public function user_lokasi(){
         return $this->hasOne('App\Lokasi','id_lokasi','user_lokasi');
+    }
+
+    public function role(){
+        return $this->hasOne('App\UserRole','id','user_role');
     }
 }

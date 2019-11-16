@@ -24,4 +24,7 @@ class katalog extends Model
     public function log(){
         return $this->hasMany('App\Log','id_katalog','id_katalog');
     }
+    public function getFormattedValueAttribute(){
+        return json_decode($this->att_value);
+    }
 }
