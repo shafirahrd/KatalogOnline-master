@@ -111,82 +111,46 @@
                             <!-- START MODAL ADVANCED SEARCH -->
                             <div class="modal fade" id="ModalPencarian" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                               aria-hidden="true">
-                              <div class="modal-dialog modal-lg" role="document">
+                              <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-body">
                                     <div class="row">
-                                      <div class="col-lg-4" style="margin-top: 8%;">
-                                        <!--Carousel Wrapper-->
-                                        <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails"
-                                          data-ride="carousel">
-                                          <!--Slides-->
-                                          <div class="carousel-inner" role="listbox">
-                                            <div class="carousel-item active">
-                                              <img class="d-block w-100" src="{{ asset('images/buku1.jpg') }}" alt="First slide">
-                                            </div>
-                                          </div>
-                                          <!--/.Slides-->
-                                          <!--Controls-->
-                                          <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                          </a>
-                                          <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                          </a>
-                                          <!--/.Controls-->
-                                          <ol class="carousel-indicators">
-                                            <li data-target="#carousel-thumb" data-slide-to="0" class="active">
-                                              <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/img%20(23).jpg" width="60">
-                                            </li>
-                                            <li data-target="#carousel-thumb" data-slide-to="1">
-                                              <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/img%20(24).jpg" width="60">
-                                            </li>
-                                            <li data-target="#carousel-thumb" data-slide-to="2">
-                                              <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/img%20(25).jpg" width="60">
-                                            </li>
-                                          </ol>
-                                        </div>
-                                        <!--/.Carousel Wrapper-->
-                                      </div>
-                                      <div class="col-lg-8">
+                                      <div class="col-lg-12" style="margin-left: 4%">
                                         <h3>Pencarian Lanjut</h3><hr>
-
+                                        {{csrf_field()}}
                                         <form class="form-horizontal" action="/searchAdvanced" method="GET">
                                             <div class="form-group">
                                               <label class="control-label col-sm-2" for="judul">Judul:</label>
-                                              <div class="col-sm-12">
+                                              <div class="col-lg-12">
                                                 <input type="text" class="form-control" id="judul" placeholder="Masukkan kata kunci judul" name="judul">
                                               </div>
                                             </div>
                                             <div class="form-group">
                                               <label class="control-label col-sm-2" for="penulis">Penulis:</label>
-                                              <div class="col-sm-12">
+                                              <div class="col-lg-12">
                                                 <input type="text" class="form-control" id="penulis" placeholder="Masukkan kata kunci penulis" name="penulis">
                                               </div>
                                             </div>
                                             <div class="form-group">
                                               <label class="control-label col-sm-2" for="penerbit">Penerbit:</label>
-                                              <div class="col-sm-12">          
+                                              <div class="col-lg-12">          
                                                 <input type="text" class="form-control" id="penerbit" placeholder="Masukkan kata kunci penerbit" name="penerbit">
                                               </div>
                                             </div>
                                             <div class="form-group">
                                               <label class="control-label col-sm-2" for="kota">Kota Terbit:</label>
-                                              <div class="col-sm-12">          
+                                              <div class="col-lg-12">          
                                                 <input type="text" class="form-control" id="kota" placeholder="Masukkan kata kunci Kota" name="kota">
                                               </div>
                                             </div>
                                             <div class="form-group">
                                               <label class="control-label col-sm-2" for="tahun">Tahun Terbit:</label>
-                                              <div class="col-sm-12">          
+                                              <div class="col-lg-12">          
                                                 <input type="text" class="form-control" id="tahun" placeholder="Masukkan tahun" name="tahun">
                                               </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4"></div>
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-12">
                                             <div class="card-body">
                                               <div class="row">
                                                 <div class="col-md-3">
@@ -208,23 +172,39 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                  <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="koleksi">
+                                                  <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="koleksi" id="koleksi">
                                                     <option value="" selected>Jenis Koleksi</option>
                                                     @foreach($koleksi as $k)
-                                                        <option value="{{$k->jenis_koleksi}}">{{$k->jenis_koleksi}}</option>
+                                                        <option value="{{$k->jenis_koleksi}}" data-id="{{$k->id_koleksi}}">{{$k->jenis_koleksi}}</option>
                                                     @endforeach
                                                   </select>
                                                 </div>
-                                              </div><br>
-                                              <div class="text-center">
+                                              </div>
+                                            </div>
+                                        </div><br>
+                                        <div class="col-lg-12" style="margin-left: 4%">
+                                              @foreach($koleksi as $kg)
+                                                  @if(is_null($kg->formatted_column))
+                                                      @continue
+                                                  @endif
+                                                  @foreach($kg->formatted_column as $kfc)
+                                                      <div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none;">
+                                                        <label class="control-label col-sm-2" for="{{$kfc}}">{{$kfc}}: </label>
+                                                        <div class="col-lg-12">          
+                                                          <input type="text" class="form-control" id="{{$kfc}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
+                                                        </div>
+                                                      </div>
+                                                  @endforeach
+                                              @endforeach
 
+                                              <br>  
+                                              <div class="text-center">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                                 <button class="btn btn-primary">Cari
                                                   <i class="fas fa-cart-plus ml-2" aria-hidden="true"></i>
                                                 </button>
                                               </div>
-                                            </div>
-                                        </div>
+                                          </div>
                                         </form>
                                       </div>
                                     </div>
@@ -334,11 +314,28 @@
             </div>
         </section>
 
+        {{-- <script src="{{asset('asset/js/jquery-3.3.1.min.js')}}"></script>
+        <script src="{{asset('pelanggan/assets/js/bootstrap.min.js')}}"></script> --}}
+        <script src="{{asset('pelanggan/assets/js/bootstrap.js')}}"></script>
+
         <script src="{{ asset('pelanggan/assets/js/vendor/jquery-1.11.2.min.js') }}"></script>
         <script src="{{ asset('pelanggan/assets/js/vendor/bootstrap.min.js') }}"></script>
         <script src="{{ asset('pelanggan/assets/js/jquery-easing/jquery.easing.1.3.js') }}"></script>
         <script src="{{ asset('pelanggan/assets/js/wow/wow.min.js') }}"></script>
         <script src="{{ asset('pelanggan/assets/js/plugins.js') }}"></script>
         <script src="{{ asset('pelanggan/assets/js/main.js') }}"></script>
+
+        <script>
+            $(document).on('show.bs.modal','#ModalPencarian',function() {
+                // run on change for the selectbox
+                $( "#koleksi" ).change(function() {  
+                    $('.atribut-khusus').hide();
+                      
+                    var divKey = $(this).find('option:selected').data('id');
+                    // console.log(divKey);
+                    $('.form-atribut-'+divKey).show();
+                });
+            });
+        </script>
     </body>
 </html>
