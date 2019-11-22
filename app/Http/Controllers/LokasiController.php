@@ -103,7 +103,7 @@ class LokasiController extends Controller
             
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
-        $koleksi = Koleksi::select('jenis_koleksi')->get();
+        $koleksi = Koleksi::get();
 
         return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }

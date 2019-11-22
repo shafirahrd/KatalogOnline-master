@@ -25,13 +25,12 @@ class KatalogImport implements ToModel, WithHeadingRow
 
              // dd($koleksi);
             if(!is_null($koleksi)){
-                if(!is_null($koleksi->att_khusus){
-                    foreach ($koleksi->formatted_column as $value) {
+                if(!is_null($koleksi->att_khusus)){
+                    foreach($koleksi->formatted_column as $value){
                         $temp[$value] = $row[strtolower($value)] ?? '-';
                     }
                     $temp = json_encode($temp);
-                }
-                else{
+                }else{
                     $temp = NULL;
                 }
             }

@@ -41,7 +41,7 @@ class DashboardController extends Controller
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
-        $koleksi = Koleksi::select('jenis_koleksi')->get();
+        $koleksi = Koleksi::get();
 
     	return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }
@@ -52,6 +52,9 @@ class DashboardController extends Controller
             ->leftjoin('koleksis','id_koleksi','=','jenis')
             ->leftjoin('lokasis','id_lokasi','=','lokasi');
 
+        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
+        $lokasi = Lokasi::select('departemen')->get();
+        $koleksi = Koleksi::get();
         // $query = Katalog::query()->whereHas('koleksi')->whereHas('lokasis');
 
         $judul = $request->input('judul');
@@ -62,6 +65,9 @@ class DashboardController extends Controller
         $bahasas = $request->input('bahasa');
         $lokasix = $request->input('lokasi');
         $koleksis = $request->input('koleksi');
+
+        // if($request->input(''))
+        // foreach()
         // $deskripsi = $request->input('deskripsi');
 
         if($judul){
@@ -93,10 +99,6 @@ class DashboardController extends Controller
         // }
 
         $katalog = $query->paginate(15);
-
-        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
-        $lokasi = Lokasi::select('departemen')->get();
-        $koleksi = Koleksi::select('jenis_koleksi')->get();
 
         return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }
