@@ -154,14 +154,15 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <?php $x=1; ?>
+                                <?php $x=1;?>
+
                                 @foreach($katalog as $kg)
                                 <tr class="fuckOffPadding">
                                     <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
                                     <td style="text-align: left;">{{$kg->judul}}</td>
                                     <td style="vertical-align: middle;">{{$kg->koleksi->jenis_koleksi ?? '-'}}</td>
-                                    <td style="text-align: left;">{{$kg->penulis}}</td>
-                                    <td style="vertical-align: middle;">{{$kg->tahun_terbit}}</td>
+                                    <td style="text-align: left;">{{$kg->penulis ?? '-'}}</td>
+                                    <td style="vertical-align: middle;">{{$kg->tahun_terbit ?? '-'}}</td>
                                     <td style="vertical-align: middle;">Departemen {{$kg->lokasis->departemen ?? '-'}}</td>
                                     <td style="vertical-align: middle;">
                                         <span data-toggle="modal" data-target="#Detail-{{$kg->id_katalog}}">
@@ -196,7 +197,7 @@
                                                                                         <tr>
                                                                                             <td style="width: 1%"><span class="text-muted" style="font-weight: 500;">Judul Koleksi</span></td>
                                                                                             <td style="width: 0%"><span class="text-muted" style="font-weight: 500;">: </span></td>
-                                                                                            <td style="width: 1%"><span style="margin-left: 5%;"> {{$kg->judul}}</span></td>
+                                                                                            <td style="width: 1%"><span style="margin-left: 5%;"> {{$kg->judul ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Jenis Koleksi</span></td>
@@ -206,32 +207,43 @@
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Penulis</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->penulis}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->penulis ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Penerbit</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->penerbit}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->penerbit ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Kota Penerbit</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->kota_penerbit}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->kota_penerbit ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Tahun Terbit</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->tahun_terbit}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->tahun_terbit ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Bahasa</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->bahasa}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->bahasa ?? '-'}}</span></td>
                                                                                         </tr>
+                                                                                        @foreach(json_decode($kg->att_value) as $ak=>$as)
+                                                                                            @if(!is_null($ak))
+                                                                                                <tr>
+                                                                                                    <td><span class="text-muted" style="font-weight: 500">{{$ak ?? '-'}}</span></td>
+                                                                                                    <td><span class="text-muted" style="font-weight: 500">: </span></td>
+                                                                                                    <td><span style="margin-left: 5%;">{{$as ?? '-'}}</span></td>
+                                                                                                </tr>
+                                                                                            @else
+                                                                                                @continue
+                                                                                            @endif
+                                                                                        @endforeach
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->deskripsi}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">{{$kg->deskripsi ?? '-'}}</span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
