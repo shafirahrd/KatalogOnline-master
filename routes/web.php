@@ -26,6 +26,7 @@ Route::get('/searchLokasi/{lokasis}','LokasiController@searchByLokasi');
 Route::resource('koleksi','KoleksiController');
 Route::get('/searchKoleksi/{koleksis}','KoleksiController@searchByKoleksi');
 
+Route::get('/katalog/action','KatalogController@action')->name('katalog.action');
 Route::resource('katalog','KatalogController');
 Route::resource('lokasi','LokasiController');
 

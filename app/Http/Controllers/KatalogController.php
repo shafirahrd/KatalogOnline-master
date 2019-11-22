@@ -102,6 +102,55 @@ class KatalogController extends Controller
 
     }
 
+    public function action(Request $request)
+    {
+        if($request->ajax()){
+            $output = '';
+            $query = $request->get('query');
+            if($query != ''){
+                $data = DB::table('katalogs')
+                            ->leftjoin('koleksis','id_koleksi','=','jenis')
+                            ->leftjoin('lokasis','id_lokasi','=','lokasi')
+                            ->where('judul','LIKE','%'.$query.'%')
+                            ->orWhere('jenis_koleksi','LIKE','%'.$query.'%')
+                            ->orWhere('penulis','LIKE','%'.$query.'%')
+                            ->orWhere('tahun_terbit','LIKE','%'.$query.'%')
+                            ->orWhere('departemen','LIKE','%'.$query.'%')
+                            ->get();
+            }else{
+                $data = Katalog::with('koleksi','lokasis')->get();
+            }
+
+            $total_row = $data->count();
+            if($total_row > 0){
+                foreach ($data as $row) {
+                    $output = '
+                    <tr>
+                        <td>'.$row->Judul.'</td>
+                        <td>'.$row->JenisKoleksi.'</td>
+                        <td>'.$row->Penulis.'</td>
+                        <td>'.$row->TahunTerbit.'</td>
+                        <td>'.$row->Lokasi.'</td>
+                    </tr>
+                    ';
+                }
+            }else{
+                $output = '
+                <tr>
+                    <td align="center" colspan="5"> Tidak ada data yang ditemukan</td>
+                </tr>
+                ';
+            }
+
+            $data = array(
+                'table_data'    => $output,
+                'total_data'    => $total_data
+            );
+
+            echo json_encode($data);
+        }
+    }
+
     // public function limit($value, $limit)
     // {
     //     if (mb_strwidth($value, 'UTF-8') <= $limit) {

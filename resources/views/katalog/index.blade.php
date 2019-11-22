@@ -4,8 +4,8 @@
 <link href="{{asset('css/search.css')}}" rel="stylesheet">
 
 {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> --}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> --}}
 
 <script src="{{asset('asset/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('pelanggan/assets/js/bootstrap.min.js')}}"></script>
@@ -280,11 +280,29 @@
     });
 </script>
 
-{{-- <script>
-    $(function(){
-        $( '#cari').change(function(){
-            $()
+<script>
+    $(document).ready(function(){
+
+        fetch_customer_data();
+
+        function fetch_customer_data(query = '')
+        {
+            $.ajax({
+                url:"{{ route('katalog.action') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data){
+                    $('tbody').html(data.table_data);
+                    $('#total_records').text(data.total_data);
+                }
+            })
+        }
+
+        $(document).on('keyup', '#cari', function(){
+            var query = $(this).val();
+            fetch_customer_data(query);
         });
     });
-</script> --}}
+</script>
 @endsection
