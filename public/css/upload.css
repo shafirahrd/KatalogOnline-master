@@ -54,9 +54,21 @@
   position: relative;
 }
 
+.image-upload-wrap-csv {
+  margin-top: 20px;
+  border: 4px dashed #EB982C;
+  position: relative;
+}
+
 .image-dropping,
 .image-upload-wrap:hover {
   background-color: #1FB264;
+  border: 4px dashed #ffffff;
+}
+
+.image-dropping-csv,
+.image-upload-wrap-csv:hover {
+  background-color: #EB982C;
   border: 4px dashed #ffffff;
 }
 

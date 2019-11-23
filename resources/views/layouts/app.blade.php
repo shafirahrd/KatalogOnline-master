@@ -143,7 +143,7 @@
                         <br>
                         <li><center><b>ADMIN</b></center></li>
                         <li>
-                            @if(Request::path() == 'home')
+                            @if(Request::path() == 'home' || (Request::path() == 'home/uploadcsv'))
                             <a href="/home" class="waves-effect active">
                                 <span class="hide-menu"> UNGGAH DATA KOLEKSI </span>
                             </a>

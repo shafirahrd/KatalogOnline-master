@@ -41,6 +41,9 @@ Route::group(['middleware' => ['auth']], function ()
 	Route::post('/uploadExcel','HomeController@upload');
 	Route::post('/uploadKoleksi','HomeController@uploadKoleksi');
 
+	Route::get('/home/uploadcsv','HomeController@csv')->name('uploadcsv');
+	Route::post('/importcsv_parse','HomeController@parse')->name('parsecsv');
+	Route::post('/importcsv','HomeController@process')->name('processcsv');
 	// Route::get('/insert',function(Request $request){
 	// 	$judul = $request->judul;
 
