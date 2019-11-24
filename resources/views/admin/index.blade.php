@@ -53,7 +53,7 @@
                                       </div>
                                     </div>
                                     <div class="file-upload-content">
-                                      {{-- <img class="file-upload-image" src="#" alt="your file" /> --}}
+                                      <img class="file-upload-image" src="{{ asset('images/icon-xlsx.png') }}" alt="your file" />
                                       <div class="image-title-wrap">
                                         <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded File</span></button>
                                       </div>
@@ -98,7 +98,7 @@ function readURL(input) {
     reader.onload = function(e) {
       $('.image-upload-wrap').hide();
 
-      $('.file-upload-image').attr('src', e.target.result);
+      // $('.file-upload-image').attr('src', e.target.result);
       $('.file-upload-content').show();
 
       $('.image-title').html(input.files[0].name);

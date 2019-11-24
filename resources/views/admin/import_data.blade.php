@@ -36,32 +36,37 @@
                                   <form action="{{ route('processcsv') }}" method="POST" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     {{-- <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">ADD FILE</button> --}}
+                                    
                                     <input type="hidden" name="csv_data_file" value="{{ $csv_data_file->id }}">
 
                                     <table class="table">
                                       @if(isset($csv_header_fields))
-                                      <tr>
-                                        @foreach($csv_header_fields as $headers)
-                                          <th>{{$headers}}</th>
-                                        @endforeach
-                                      </tr>
+                                        <tr>
+                                          @foreach($csv_header_fields as $headers)
+                                            <th>{{$headers}}</th>
+                                          @endforeach
+                                        </tr>
                                       @endif
 
                                       @foreach($csv_data as $data)
+                                        @if(isset($csv_header_fields))
+                                          @if($loop->first) @continue @endif
+                                        @endif
                                         <tr>
-                                          @foreach($data as $key => $value)
+                                          @foreach($data as $dt => $value)
                                             <td>{{$value}}</td>
                                           @endforeach
                                         </tr>
                                       @endforeach
 
                                       <tr>
+                                        
                                         @foreach($csv_data[0] as $key => $value)
                                           <td>
                                             <select name="fields[{{$key}}]">
                                               @foreach($column_katalog as $ckg)
                                                 <option value="{{ (\Request::has('header')) ? $ckg : $loop->index }}"
-                                                  @if($key === $ckg) selected @endif>{{ $ckg }}</option>
+                                                @if($key === $ckg) selected @endif>{{ $ckg }}</option>
                                               @endforeach
                                             </select>
                                           </td>
@@ -70,7 +75,7 @@
                                     </table>
 
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Import Data') }}
+                                      {{ __('Import Data') }}
                                     </button>
                                   </form>
                             </tbody>
