@@ -147,11 +147,7 @@
                                     <th class="text-center" style="background-color: white; color: black;">Penulis</th>
                                     <th class="text-center" style="background-color: white; color: black;">Tahun Terbit</th>
                                     <th class="text-center" style="background-color: white; color: black;">Lokasi</th>
-                                    @if(Auth::check())
-                                        <th class="text-center" style="background-color: white; color: black;">Aksi</th>
-                                    @else
-                                        <th class="text-center" style="background-color: white; color: black;">Lihat Detail</th>
-                                    @endif
+                                    <th class="text-center" style="background-color: white; color: black;">@if(Auth::check())Aksi @else Lihat Detail @endif</th>                                    
                                 </tr>
                                 <tr class="warning no-result">
                                     <td colspan="4"><i class="fa fa-warning"></i> No result</td>

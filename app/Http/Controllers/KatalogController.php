@@ -8,6 +8,7 @@ use App\Koleksi;
 use App\Lokasi;
 use App\Temp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class KatalogController extends Controller
 {
@@ -70,9 +71,20 @@ class KatalogController extends Controller
      * @param  \App\katalog  $katalog
      * @return \Illuminate\Http\Response
      */
-    public function edit(katalog $katalog)
+    public function edit($id)
     {
-        //
+        // $katalog = Katalog::with('koleksis','lokasi')->first();
+        $katalog = DB::table('katalogs')
+                    ->leftjoin('koleksis','id_koleksi','=','jenis')
+                    ->leftjoin('lokasis','id_lokasi','=','lokasi')
+                    ->where('id_katalog',$id)
+                    ->first();
+
+        $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
+        $lokasi = Lokasi::select('id_lokasi','departemen')->get();
+        $koleksi = Koleksi::get();
+
+        return view('katalog.edit',compact('katalog','bahasa','lokasi','koleksi'));
     }
 
     /**
@@ -82,9 +94,35 @@ class KatalogController extends Controller
      * @param  \App\katalog  $katalog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, katalog $katalog)
+    public function update(katalog $katalog)
     {
-        //
+        // dd(Input::all());
+
+        $data = Katalog::find($katalog->id_katalog);
+        $data->judul = Input::get('judul');
+        $data->jenis = Input::get('koleksi');
+        $data->penulis = Input::get('penulis');
+        $data->penerbit = Input::get('penerbit');
+        $data->kota_penerbit = Input::get('kota');
+        $data->tahun_terbit = Input::get('tahun');
+        $data->bahasa = Input::get('bahasa');
+        $data->deskripsi = Input::get('deskripsi');
+        $data->lokasi = Input::get('lokasi');
+        $data->save();
+
+        // DB::table('katalogs')->where('id_katalog',$katalog->id_katalog)->update([
+        //     'judul' => $katalog->judul,
+        //     'jenis' => $katalog->jenis,
+        //     'penulis' => $katalog->penulis,
+        //     'penerbit' => $katalog->penerbit,
+        //     'kota_penerbit' => $katalog->kota_penerbit,
+        //     'tahun_terbit' => $katalog->tahun_terbit,
+        //     'bahasa' => $katalog->bahasa,
+        //     'deskripsi' => $katalog->deskripsi,
+        //     'lokasi' => $katalog->lokasi
+        // ]);
+
+        return redirect('/katalog');
     }
 
     /**
