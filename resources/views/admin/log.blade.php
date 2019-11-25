@@ -15,7 +15,7 @@
                         <table class="table color-table success-table example">
                             <thead>
                                 <tr>
-                                    <th colspan=7>RIWAYAT PERUBAHAN DATA KOLEKSI</th>
+                                    <th colspan=7>RIWAYAT PERUBAHAN DATA KATALOG</th>
                                 </tr>
                                 <tr>
                                     <th class="text-center" style="background-color: white; color: black;">No.</th>

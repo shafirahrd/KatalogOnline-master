@@ -147,7 +147,11 @@
                                     <th class="text-center" style="background-color: white; color: black;">Penulis</th>
                                     <th class="text-center" style="background-color: white; color: black;">Tahun Terbit</th>
                                     <th class="text-center" style="background-color: white; color: black;">Lokasi</th>
-                                    <th class="text-center" style="background-color: white; color: black;">Lihat Detail</th>
+                                    @if(Auth::check())
+                                        <th class="text-center" style="background-color: white; color: black;">Aksi</th>
+                                    @else
+                                        <th class="text-center" style="background-color: white; color: black;">Lihat Detail</th>
+                                    @endif
                                 </tr>
                                 <tr class="warning no-result">
                                     <td colspan="4"><i class="fa fa-warning"></i> No result</td>
@@ -170,6 +174,10 @@
                                         </span>
 
                                         @if(Auth::check())
+                                        <form class="form-horizontal form-material" action="{{ route('katalog.edit', ['katalog'=>$kg->id_katalog]) }}" method = "GET">
+                                            <button type="submit" class="btn btn-warning" title="Ubah Katalog"><i class="ti-pencil-alt"></i></button>
+                                            <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
+                                        </form>
                                         <form class="form-horizontal form-material" action="{{ route('katalog.destroy', ['katalog'=>$kg->id_katalog]) }}" method = "POST">
                                             <button type="submit" class="btn btn-danger" title="Hapus Katalog"><i class="ti-trash"></i></button>
                                             <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
@@ -229,7 +237,7 @@
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
                                                                                             <td><span style="margin-left: 5%;">{{$kg->bahasa ?? '-'}}</span></td>
                                                                                         </tr>
-                                                                                        @foreach(json_decode($kg->att_value) as $ak=>$as)
+                                                                                        {{-- @foreach(json_decode($kg->att_value) as $ak=>$as)
                                                                                             @if(!is_null($ak))
                                                                                                 <tr>
                                                                                                     <td><span class="text-muted" style="font-weight: 500">{{$ak ?? '-'}}</span></td>
@@ -239,7 +247,7 @@
                                                                                             @else
                                                                                                 @continue
                                                                                             @endif
-                                                                                        @endforeach
+                                                                                        @endforeach --}}
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>

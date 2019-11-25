@@ -79,8 +79,7 @@ class RegisterController extends Controller
             'nip' => $data['nip'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'user_lokasi' => $data['lokasi'],
-            'user_role' => 1,
+            'user_lokasi' => $data['lokasi']
             ]);
         }
         else{

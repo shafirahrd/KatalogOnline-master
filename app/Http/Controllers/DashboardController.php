@@ -37,7 +37,7 @@ class DashboardController extends Controller
             ->orWhere('deskripsi','LIKE','%'.$keyword.'%')
             ->orWhere('jenis_koleksi','LIKE','%'.$keyword.'%')
             ->orWhere('departemen','LIKE','%'.$keyword.'%')
-            ->orWhere('JSON_CONTAINS(att_value)'.$keyword)
+            // ->orWhere('JSON_CONTAINS(att_value)'.$keyword)
             ->paginate(15);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();

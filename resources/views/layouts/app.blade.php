@@ -71,17 +71,18 @@
                         <span class="hidden-xs">
                             <img src="{{ asset('asset/image/logo.png') }}" alt="beranda" class="light-logo dark-logo" />
                         </span>
+
                     </a>
                 </div>
                 <!-- /Logo -->
                 <!-- Search input and Toggle icon -->
-                <ul class="nav navbar-top-links navbar-left">
+                {{-- <ul class="nav navbar-top-links navbar-left">
                     <li>
                         <a href="javascript:void(0)" class="open-close waves-effect waves-light">
                             <i class="ti-menu"></i>
                         </a>
                     </li>
-                </ul>
+                </ul> --}}
             </div>
             <!-- /.navbar-header -->
             <!-- /.navbar-top-links -->
@@ -98,6 +99,14 @@
                         <img src="{{ asset('asset/image/logo_its.png') }}" alt="logo-its" style="width:50%; height:50%;">
                     </div>
                 </div>
+                @if(Auth::check())
+                    @if(Auth::user()->user_role == 0)
+                        <center><p>Welcome, Admin <b>{{Auth::user()->nama}}</b></p></center>
+                    @endif
+                    @if(Auth::user()->user_role == 1)
+                        <center><p>Welcome, Super Admin <b>{{Auth::user()->nama}}</b></p></center>
+                    @endif
+                @endif
                 <ul class="nav" id="side-menu">
                     <li class="devider"></li>
                     <li>
@@ -145,11 +154,11 @@
                         <li>
                             @if(Request::path() == 'home' || (Request::path() == 'home/uploadcsv'))
                             <a href="/home" class="waves-effect active">
-                                <span class="hide-menu"> UNGGAH DATA KOLEKSI </span>
+                                <span class="hide-menu"> UNGGAH DATA KATALOG </span>
                             </a>
                             @else
                             <a href="/home" class="waves-effect">
-                                <span class="hide-menu"> UNGGAH DATA KOLEKSI </span>
+                                <span class="hide-menu"> UNGGAH DATA KATALOG </span>
                             </a>
                             @endif
                         </li>

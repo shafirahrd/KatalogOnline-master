@@ -65,34 +65,35 @@ class HomeController extends Controller
 
         return redirect('/log')->with('success','File berhasil diunggah');
     }
+    
     public function parse(CsvImportRequest $request)
     {
         $path = $request->file('csv_file')->getRealPath();
 
         if($request->has('header')){
             //automatically parse header to lowercase and change space into underscore
-
             $data = \Excel::toArray('', $path, null, \Maatwebsite\Excel\Excel::TSV)[0];
         }else{
             $data = array_map('str_getcsv', file($path));
         }
-
+        
         if(count($data) > 0){
             $length = 0;
             if($request->has('header')){
                 $csv_header_fields = [];
                 $length = 1;
+
                 foreach ($data[0] as $key) {
                     $csv_header_fields[] = $key;
                 }
             }
 
             $csv_data = array_slice($data,0,3+$length);
-            dd($data);
+            
             $csv_data_file = Csvdata::create([
                 'csv_filename' => $request->file('csv_file')->getClientOriginalName(),
                 'csv_header' => $request->has('header'),
-                'csv_data' => json_encode($data),
+                'csv_data' => json_encode($data)
             ]);
         }else{
             return redirect()->back();

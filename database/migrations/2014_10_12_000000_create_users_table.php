@@ -21,13 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('user_lokasi')->unsigned()->nullable();
-            $table->integer('user_role')->unsigned()->nullable();
+            $table->boolean('user_role')->default(0);
             // $table->rememberToken();
             $table->timestamps();
-        });
-
-        Schema::table('users',function($table){
-            $table->foreign('user_role')->references('id')->on('user_role')->onUpdate('cascade')->onDelete('set null');
         });
     }
 
