@@ -24,7 +24,7 @@ class KatalogController extends Controller
         //     ->leftjoin('lokasis','id_lokasi','=','lokasi')
         //     ->paginate(15);
 
-        $katalog = Katalog::with('koleksi','lokasis')->paginate(15);
+        $katalog = Katalog::with('koleksi','lokasis')->where('deleted_at',NULL)->paginate(15);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
@@ -83,7 +83,7 @@ class KatalogController extends Controller
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('id_lokasi','departemen')->get();
         $koleksi = Koleksi::get();
-
+        
         return view('katalog.edit',compact('katalog','bahasa','lokasi','koleksi'));
     }
 

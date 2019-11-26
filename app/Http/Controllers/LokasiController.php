@@ -7,6 +7,7 @@ use App\Katalog;
 use App\Koleksi;
 use App\Lokasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class LokasiController extends Controller
 {
@@ -49,7 +50,7 @@ class LokasiController extends Controller
      * @param  \App\koleksi  $koleksi
      * @return \Illuminate\Http\Response
      */
-    public function show(koleksi $koleksi)
+    public function show(lokasi $lokasi)
     {
         //
     }
@@ -60,7 +61,7 @@ class LokasiController extends Controller
      * @param  \App\koleksi  $koleksi
      * @return \Illuminate\Http\Response
      */
-    public function edit(koleksi $koleksi)
+    public function edit(koleksi $lokasi)
     {
         //
     }
@@ -72,9 +73,16 @@ class LokasiController extends Controller
      * @param  \App\koleksi  $koleksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, koleksi $koleksi)
+    public function update(Request $request, lokasi $lokasi)
     {
-        //
+        $data = Lokasi::find($lokasi->id_lokasi);
+        $data->departemen = Input::get('departemen');
+        $data->fakultas = Input::get('fakultas');
+        $data->alamat = Input::get('alamat');
+        $data->tautan = Input::get('tautan');
+        $data->save();
+
+        return back();
     }
 
     /**
@@ -83,23 +91,26 @@ class LokasiController extends Controller
      * @param  \App\koleksi  $koleksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(koleksi $koleksi)
+    public function destroy(Request $request)
     {
-        //
+        $data = Lokasi::find($request->id);
+        $data->delete();
+
+        return back();
     }
 
-    public function searchByLokasi($lokasi)
+    public function searchByLokasi($lokasis)
     {
-        // $katalog = DB::table('katalogs')
-        //     ->leftjoin('koleksis','id_koleksi','=','jenis')
-        //     ->leftjoin('lokasis','id_lokasi','=','lokasi')
-        //     ->where('departemen','=',$lokasi)
-        //     ->paginate(15);
+        $katalog = DB::table('katalogs')
+            ->leftjoin('koleksis','id_koleksi','=','jenis')
+            ->leftjoin('lokasis','id_lokasi','=','lokasi')
+            ->where('departemen',$lokasis)
+            ->paginate(15);
 
-        $katalog = Katalog::whereHas('koleksi')
-        ->whereHas('lokasis', function($query) use($lokasi){
-            $query->where('departemen','=',$lokasi);
-        })->paginate(15);
+        // $katalog = Katalog::whereHas('koleksi')
+        // ->whereHas('lokasis', function($query) use($lokasi){
+        //     $query->where('departemen','=',$lokasi);
+        // })->paginate(15);
             
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();

@@ -16,7 +16,7 @@ class DashboardController extends Controller
     {
         $koleksi = Koleksi::all();
         $lokasi = Lokasi::all();
-        $katalog = Katalog::with('koleksi','lokasis');
+        $katalog = Katalog::with('koleksi','lokasis')->where('deleted_at',NULL)->get();
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
 
         return view('dashboard', ['koleksi'=>$koleksi,'lokasi'=>$lokasi,'katalog'=>$katalog,'bahasa'=>$bahasa]);
@@ -26,8 +26,8 @@ class DashboardController extends Controller
     {
     	$keyword = $request->input('search');
 
-        $query = DB::table('katalogs')
-            ->leftjoin('koleksis','id_koleksi','=','jenis')
+        $q = Katalog::where('deleted_at',NULL);
+        $query = $q->leftjoin('koleksis','id_koleksi','=','jenis')
             ->leftjoin('lokasis','id_lokasi','=','lokasi');
         $katalog = $query->where('judul','LIKE','%'.$keyword.'%')
             ->orWhere('penulis','LIKE','%'.$keyword.'%')
@@ -99,7 +99,7 @@ class DashboardController extends Controller
         //     $query->where('deskripsi','LIKE','%'.$deskripsi.'%');
         // }
 
-        $katalog = $query->paginate(15);
+        $katalog = $query->where('deleted_at',NULL)->paginate(15);
 
         return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }

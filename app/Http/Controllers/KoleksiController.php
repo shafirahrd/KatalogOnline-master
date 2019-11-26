@@ -7,6 +7,7 @@ use App\Katalog;
 use App\Koleksi;
 use App\Lokasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class KoleksiController extends Controller
 {
@@ -74,7 +75,12 @@ class KoleksiController extends Controller
      */
     public function update(Request $request, koleksi $koleksi)
     {
-        //
+        $data = Koleksi::find($koleksi->id_koleksi);
+        $data->jenis_koleksi = Input::get('jenis_koleksi');
+        $data->deskripsi_koleksi = Input::get('deskripsi_koleksi');
+        $data->save();
+
+        return back();
     }
 
     /**
@@ -83,17 +89,25 @@ class KoleksiController extends Controller
      * @param  \App\koleksi  $koleksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(koleksi $koleksi)
+    public function destroy(Request $request)
     {
-        //
+        $data = Koleksi::find($request->id);
+        $data->delete();
+
+        return back();
     }
 
-    public function searchByKoleksi($koleksi)
+    public function searchByKoleksi($koleksis)
     {
-        $katalog = Katalog::whereHas('lokasis')
-        ->whereHas('koleksi', function($query) use($koleksi){
-            $query->where('jenis_koleksi','=',$koleksi);
-        })->paginate(15);
+        // $katalog = Katalog::whereHas('lokasis')
+        // ->whereHas('koleksi', function($query) use($koleksis){
+        //     $query->where('jenis_koleksi','=',$koleksis);
+        // })->paginate(15);
+
+        $katalog = DB::table('katalogs')
+            ->leftjoin('koleksis','id_koleksi','=','jenis')
+            ->leftjoin('lokasis','id_lokasi','=','lokasi')
+            ->where('jenis_koleksi',$koleksis)->paginate(15);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();

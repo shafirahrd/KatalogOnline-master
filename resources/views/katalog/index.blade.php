@@ -159,11 +159,23 @@
                                 @foreach($katalog as $kg)
                                 <tr class="fuckOffPadding">
                                     <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
-                                    <td style="text-align: left;">{{$kg->judul}}</td>
-                                    <td style="vertical-align: middle;">{{$kg->koleksi->jenis_koleksi ?? '-'}}</td>
-                                    <td style="text-align: left;">{{$kg->penulis ?? '-'}}</td>
+                                    <td style="vertical-align: middle; text-align: left;">{{$kg->judul}}</td>
+                                    <td style="vertical-align: middle;">
+                                        @if(Request::is('katalog'))
+                                            {{$kg->koleksi->jenis_koleksi ?? '-'}}
+                                        @else
+                                            {{$kg->jenis_koleksi ?? '-'}}
+                                        @endif
+                                    </td>
+                                    <td style="vertical-align: middle; text-align: left;">{{$kg->penulis ?? '-'}}</td>
                                     <td style="vertical-align: middle;">{{$kg->tahun_terbit ?? '-'}}</td>
-                                    <td style="vertical-align: middle;">Departemen {{$kg->lokasis->departemen ?? '-'}}</td>
+                                    <td style="vertical-align: middle;">Departemen 
+                                        @if(Request::is('katalog'))
+                                            {{$kg->lokasis->departemen ?? '-'}}
+                                        @else
+                                            {{$kg->departemen ?? '-'}}
+                                        @endif
+                                    </td>
                                     <td style="vertical-align: middle;">
                                         <span data-toggle="modal" data-target="#Detail-{{$kg->id_katalog}}">
                                             <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Lihat Detail Koleksi"><i class="fa fa-folder-open"></i></button>
@@ -174,12 +186,29 @@
                                             <button type="submit" class="btn btn-warning" title="Ubah Katalog"><i class="ti-pencil-alt"></i></button>
                                             <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
                                         </form>
-                                        <form class="form-horizontal form-material" action="{{ route('katalog.destroy', ['katalog'=>$kg->id_katalog]) }}" method = "POST">
-                                            <button type="submit" class="btn btn-danger" title="Hapus Katalog"><i class="ti-trash"></i></button>
-                                            <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
-                                            @method('delete')
-                                            @csrf
-                                        </form>
+
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-{{$kg->id_katalog}}" data-plaement="top" title="Hapus Data Katalog"><i class="ti-trash"></i></button>
+                                        <div class="modal fade" id="delete-{{$kg->id_katalog}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">Hapus {{$kg->judul}}</h4> 
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="form-horizontal form-material" action="{{ route('katalog.destroy', ['katalog'=>$kg->id_katalog]) }}" method = "POST">
+                                                        <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
+                                                        <h5> Apakah Anda yakin untuk menghapus data katalog "{{$kg->judul}}"? </h5>
+                                                            <div class="form-group m-b-0">
+                                                                <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
+                                                                <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Hapus</button>
+                                                            </div>
+                                                            @method('delete')
+                                                            @csrf
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @endif
 
                                         <div class="modal fade" id="Detail-{{$kg->id_katalog}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true",>
@@ -206,7 +235,13 @@
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Jenis Koleksi</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->koleksi->jenis_koleksi ?? '-'}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">
+                                                                                                @if(Request::is('katalog'))
+                                                                                                    {{$kg->koleksi->jenis_koleksi ?? '-'}}
+                                                                                                @else
+                                                                                                    {{$kg->jenis_koleksi ?? '-'}}
+                                                                                                @endif
+                                                                                            </span></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Penulis</span></td>
@@ -252,7 +287,13 @@
                                                                                         <tr>
                                                                                             <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
                                                                                             <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                                                            <td><span style="margin-left: 5%;">{{$kg->lokasis->departemen ?? '-'}}</span></td>
+                                                                                            <td><span style="margin-left: 5%;">
+                                                                                                @if(Request::is('katalog'))
+                                                                                                    {{$kg->lokasis->departemen ?? '-'}}
+                                                                                                @else
+                                                                                                    {{$kg->departemen ?? '-'}}
+                                                                                                @endif
+                                                                                            </span></td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -320,5 +361,4 @@
             fetch_customer_data(query);
         });
     });
-</script>
-@endsection
+</script>@endsection

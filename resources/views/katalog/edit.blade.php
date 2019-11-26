@@ -30,6 +30,7 @@
                                             <label class="control-label col-sm-2" for="koleksi">Jenis Koleksi:</label>
                                             <div class="col-md-3">
                                                 <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="koleksi">
+                                                    <option value="">Jenis Koleksi</option>
                                                     @foreach($koleksi as $ks)
                                                         <option value="{{$ks->id_koleksi}}"
                                                         @if($ks->jenis_koleksi == $katalog->jenis_koleksi)
@@ -78,7 +79,7 @@
                                             <label class="control-label col-sm-2" for="bahasa">Bahasa:</label>
                                             <div class="col-md-3">
                                                 <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="bahasa">
-                                                    <option value="{{$katalog->bahasa}}" selected>{{$katalog->bahasa}}</option>
+                                                    <option value="">Bahasa</option>
                                                     @foreach($bahasa as $b)
                                                         <option value="{{$b->bahasa}}" @if($b->bahasa == $katalog->bahasa) selected @endif >{{$b->bahasa}}</option>
                                                     @endforeach
@@ -99,7 +100,7 @@
                                             <label class="control-label col-sm-2" for="lokasi">Lokasi:</label>
                                             <div class="col-md-3">
                                                 <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="lokasi">
-                                                    <option value="{{$katalog->id_lokasi}}" selected>{{$katalog->departemen}}</option>
+                                                    <option value="">Lokasi</option>
                                                     @foreach($lokasi as $l)
                                                         <option value="{{$l->id_lokasi}}" @if($l->departemen == $katalog->departemen) selected @endif >{{$l->departemen}}</option>
                                                     @endforeach
