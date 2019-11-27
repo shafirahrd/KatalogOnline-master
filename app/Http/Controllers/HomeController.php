@@ -66,19 +66,23 @@ class HomeController extends Controller
 
         return redirect('/log')->with('success','File berhasil diunggah');
     }
-    
+
     public function parse(CsvImportRequest $request)
     {
         $path = $request->file('csv_file')->getRealPath();
-
-        if($request->has('header')){
-            //automatically parse header to lowercase and change space into underscore
-            $data = \Excel::toArray('', $path, null, \Maatwebsite\Excel\Excel::TSV)[0];
-        }else{
-            $data = array_map('str_getcsv', file($path));
-            // $data = csv_to_array();
-        }
+        // $fname = $request->file('csv_file')->getClientOriginalName();
         
+        $data = \Excel::toArray('', $path, null, \Maatwebsite\Excel\Excel::TSV)[0];
+        // if($request->has('header')){
+        //     //automatically parse header to lowercase and change space into underscore
+        // }else{
+        //     $data = \Excel::toArray('', $path, null, \Maatwebsite\Excel\Excel::TSV)[0];
+        //     // $json = json_encode($data,JSON_UNESCAPED_UNICODE);
+        //     // $error = json_last_error();
+        //     // var_dump($json, $error === JSON_ERROR_UTF8);
+        // }
+        // // dd($data);
+
         if(count($data) > 0){
             $length = 0;
             if($request->has('header')){
@@ -127,37 +131,16 @@ class HomeController extends Controller
 
             foreach ($column_katalog as $index => $field) {
                 if($index <= count($row)){
-                    if($data->csv_header){
-                        $katalog->$field = $row[$index-1] == '-' ? NULL : $row[$index-1];
-                    }else{
-                        $katalog->$field = $row[$index] == '-' ? NULL : $row[$index];
-                    }
+                    $katalog->$field = $row[$index-1] == '-' ? NULL : $row[$index-1];
+                    // if($data->csv_header){
+                    // }else{
+                    //     $katalog->$field = $row[$index-1] == '-' ? NULL : $row[$index-1];
+                    // }
                 }
             }
             $katalog->save();
         }
 
         return redirect('/log')->with('success','File berhasil diunggah');
-    }
-
-    public function csv_to_array($filename='', $delimiter=',')
-    {
-        if(!file_exists($filename) || !is_readable($filename))
-            return FALSE;
-        
-        $header = NULL;
-        $data = array();
-        if (($handle = fopen($filename, 'r')) !== FALSE)
-        {
-            while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE)
-            {
-                if(!$header)
-                    $header = $row;
-                else
-                    $data[] = array_combine($header, $row);
-            }
-            fclose($handle);
-        }
-        return $data;
     }
 }
