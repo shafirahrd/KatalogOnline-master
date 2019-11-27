@@ -19,7 +19,52 @@
                         <table class="table color-table info-table example">
                             <thead>
                                 <tr>
-                                    <th colspan=6>DAFTAR RUANG BACA ITS TERINTEGRASI</th>
+                                    <th colspan=5>DAFTAR RUANG BACA ITS TERINTEGRASI</th>
+                                    <th>
+                                        <button type="button" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#tambah-lokasi"><i class="fa fa-plus"></i>  Lokasi</button>
+                                        <div class="modal fade" id="tambah-lokasi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myLargeModalLabel" style="text-align: center; font-weight: 450;">Tambah Lokasi</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="form-horizontal form-material" action="{{ route('lokasi.store') }}" method = "POST">
+                                                            {{ csrf_field() }}
+                                                            <div class="form-group">
+                                                                <label for="departemen" class="col-sm-3 control-label">Departemen</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="departemen" placeholder="Departemen" name="departemen">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="fakultas" placeholder="Fakultas" name="fakultas">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="alamat" class="col-sm-3 control-label">Alamat</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="alamat" placeholder="Alamat" name="alamat">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="tautan" class="col-sm-3 control-label">Tautan</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="tautan" placeholder="Tautan" name="tautan">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group m-b-0">
+                                                                <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
+                                                                <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Simpan</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th class="text-center" style="background-color: white; color: black;">No.</th>

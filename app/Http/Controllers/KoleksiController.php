@@ -41,7 +41,11 @@ class KoleksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $koleksi = New Koleksi;
+        $koleksi->jenis_koleksi = $request->Input('jenis_koleksi');
+        $koleksi->deskripsi_koleksi = $request->Input('deskripsi_koleksi');
+        $koleksi->save();
+        return back();
     }
 
     /**

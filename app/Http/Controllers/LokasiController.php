@@ -41,7 +41,13 @@ class LokasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $lokasi = New Lokasi;
+        $lokasi->departemen = $request->Input('departemen');
+        $lokasi->fakultas = $request->Input('fakultas');
+        $lokasi->alamat = $request->Input('alamat');
+        $lokasi->tautan = $request->Input('tautan');
+        $lokasi->save();
+        return back();
     }
 
     /**
