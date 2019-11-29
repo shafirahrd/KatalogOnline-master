@@ -70,6 +70,14 @@
                                             <input type="text" class="form-control" id="tahun" placeholder="Masukkan tahun" name="tahun">
                                           </div>
                                         </div>
+                                    </tr><br>
+                                    <tr>
+                                        <div class="form-group">
+                                          <label class="control-label col-sm-2" for="deskripsi">Deskripsi:</label>
+                                          <div class="col-sm-9">          
+                                            <textarea type="text" class="form-control" id="deskripsi" placeholder="Masukkan Deskripsi" name="deskripsi"></textarea>
+                                          </div>
+                                        </div>
                                     </tr><br><br>
 
                                     <div class="col-md-3">
@@ -147,13 +155,13 @@
                                     <th class="text-center" style="background-color: white; color: black;">Penulis</th>
                                     <th class="text-center" style="background-color: white; color: black;">Tahun Terbit</th>
                                     <th class="text-center" style="background-color: white; color: black;">Lokasi</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@if(Auth::check())Aksi @else Lihat Detail @endif</th>                                    
+                                    <th class="text-center" style="background-color: white; color: black;">@if(Auth::check())Aksi @else Lihat Detail @endif</th>
                                 </tr>
                                 <tr class="warning no-result">
                                     <td colspan="4"><i class="fa fa-warning"></i> No result</td>
                                 </tr>
                             </thead>
-                            <tbody class="text-center">
+                            <tbody id="lookup" class="text-center">
                                 <?php $x=1;?>
 
                                 @foreach($katalog as $kg)
@@ -338,27 +346,24 @@
 </script>
 
 <script>
-    $(document).ready(function(){
+    function fetch_customer_data(query = '')
+    {
+        $.ajax({
+            url:"{{ route('katalog.action') }}",
+            method:'GET',
+            data:{query:query},
+            dataType:'json',
+            success:function(data){
+                $('#lookup').html(data.table_data);
+                // $('#total_records').text(data.total_data);
+            }
+        })
+    }
 
-        fetch_customer_data();
-
-        function fetch_customer_data(query = '')
-        {
-            $.ajax({
-                url:"{{ route('katalog.action') }}",
-                method:'GET',
-                data:{query:query},
-                dataType:'json',
-                success:function(data){
-                    $('tbody').html(data.table_data);
-                    $('#total_records').text(data.total_data);
-                }
-            })
-        }
-
-        $(document).on('keyup', '#cari', function(){
-            var query = $(this).val();
-            fetch_customer_data(query);
-        });
+    $(document).on('keyup', '#cari', function(){
+        var query = $(this).val();
+        fetch_customer_data(query);
     });
+    fetch_customer_data();
+
 </script>@endsection

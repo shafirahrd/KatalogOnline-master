@@ -23,9 +23,8 @@ class KatalogImport implements ToModel, WithHeadingRow
             $koleksi = Koleksi::find($row['jenis']);
             $temp=[];
 
-             // dd($koleksi);
             if(!is_null($koleksi)){
-                if(!is_null($koleksi->att_khusus)){
+                if(!is_null($koleksi->formatted_column)){
                     foreach($koleksi->formatted_column as $value){
                         $temp[$value] = $row[strtolower($value)] ?? '-';
                     }

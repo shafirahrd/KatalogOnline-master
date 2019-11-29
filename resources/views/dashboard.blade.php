@@ -149,6 +149,12 @@
                                                 <input type="text" class="form-control" id="tahun" placeholder="Masukkan tahun" name="tahun">
                                               </div>
                                             </div>
+                                            <div class="form-group">
+                                              <label class="control-label col-sm-2" for="deskripsi">Deskripsi:</label>
+                                              <div class="col-lg-12">          
+                                                <textarea type="text" class="form-control" id="deskripsi" placeholder="Masukkan Deskripsi" name="deskripsi"></textarea>
+                                              </div>
+                                            </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="card-body">

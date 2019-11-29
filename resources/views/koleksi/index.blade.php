@@ -20,6 +20,7 @@
                                 <tr>
                                     <th colspan=3>DAFTAR KOLEKSI</th>
                                     <th>
+                                        @if(Auth::user()->user_role == 1)
                                         <button type="button" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#tambah-koleksi"><i class="fa fa-plus"></i>  Koleksi</button>
                                         <div class="modal fade" id="tambah-koleksi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                                             <div class="modal-dialog modal-lg">
@@ -51,6 +52,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                     </th>
                                 </tr>
                                 <tr>
@@ -70,7 +72,7 @@
                                     <td style="vertical-align: middle; text-align: left;">{{$ks->deskripsi_koleksi}}</td>
                                     <td style="vertical-align: middle;">
                                         <a href="{{ url('searchKoleksi/'.$ks->jenis_koleksi) }}" class="btn btn-default"><i class="ti-search" data-toggle="tooltip" data-placement="top" title="Lihat Koleksi"></i></a>
-                                        @if(Auth::check())
+                                        @if(Auth::user()->user_role == 1)
                                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-{{$ks->id_koleksi}}" data-plaement="top" title="Ubah Data Koleksi"><i class="ti-pencil-alt"></i></button>
                                             <div class="modal fade" id="edit-{{$ks->id_koleksi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                                                 <div class="modal-dialog modal-lg">

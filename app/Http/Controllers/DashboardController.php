@@ -9,6 +9,7 @@ use App\Lokasi;
 use App\User;
 use App\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class DashboardController extends Controller
 {
@@ -57,7 +58,7 @@ class DashboardController extends Controller
         $lokasi = Lokasi::select('departemen')->get();
         $koleksi = Koleksi::get();
         // $query = Katalog::query()->whereHas('koleksi')->whereHas('lokasis');
-
+        // dd(input::all());
         $judul = $request->input('judul');
         $penulis = $request->input('penulis');
         $penerbit = $request->input('penerbit');
@@ -66,6 +67,7 @@ class DashboardController extends Controller
         $bahasas = $request->input('bahasa');
         $lokasix = $request->input('lokasi');
         $koleksis = $request->input('koleksi');
+        $deskripsi = $request->input('deskripsi');
 
         // if($request->input(''))
         // foreach()
@@ -95,9 +97,12 @@ class DashboardController extends Controller
         if($koleksis){
             $query->where('jenis_koleksi','LIKE','%'.$koleksis.'%');
         }
-        // if($deskripsi){
-        //     $query->where('deskripsi','LIKE','%'.$deskripsi.'%');
-        // }
+        if($pembimbing1){
+            $query->where('pembimbing1','LIKE','%'.$pembimbing1.'%');
+        }
+        if($deskripsi){
+            $query->where('deskripsi','LIKE','%'.$deskripsi.'%');
+        }
 
         $katalog = $query->where('deleted_at',NULL)->paginate(15);
 
