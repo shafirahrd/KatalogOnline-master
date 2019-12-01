@@ -20,10 +20,6 @@ class KatalogController extends Controller
      */
     public function index()
     {
-        // $katalog = DB::table('katalogs')
-        //     ->leftjoin('koleksis','id_koleksi','=','jenis')
-        //     ->leftjoin('lokasis','id_lokasi','=','lokasi')
-        //     ->paginate(15);
 
         if(Auth::check() && Auth::user()->user_role == 0){
             $katalog = Katalog::with('koleksi','lokasis')
@@ -117,18 +113,6 @@ class KatalogController extends Controller
         $data->lokasi = Input::get('lokasi');
         $data->save();
 
-        // DB::table('katalogs')->where('id_katalog',$katalog->id_katalog)->update([
-        //     'judul' => $katalog->judul,
-        //     'jenis' => $katalog->jenis,
-        //     'penulis' => $katalog->penulis,
-        //     'penerbit' => $katalog->penerbit,
-        //     'kota_penerbit' => $katalog->kota_penerbit,
-        //     'tahun_terbit' => $katalog->tahun_terbit,
-        //     'bahasa' => $katalog->bahasa,
-        //     'deskripsi' => $katalog->deskripsi,
-        //     'lokasi' => $katalog->lokasi
-        // ]);
-
         return redirect('/katalog');
     }
 
@@ -165,37 +149,7 @@ class KatalogController extends Controller
         }else{
             $data = Katalog::with('koleksi','lokasis')->get();
         }
-        
-        // if($data->count() > 0){
-        //     $x = 1;
-        //     foreach ($data as $row) {
-        //         $output .= '
-                
-        //         ';
-        //         $x += 1;
-        //     }
-        // }else{
-        //     $output .= '
-        //     <tr>
-        //         <td align="center" colspan="5"> Tidak ada data yang ditemukan</td>
-        //     </tr>
-        //     ';
-        // }
-
-        // $data = array(
-        //     'table_data'    => $output
-        //     // 'total_data'    => $total_data
-        // );
 
         echo json_encode($data);
     }
-
-    // public function limit($value, $limit)
-    // {
-    //     if (mb_strwidth($value, 'UTF-8') <= $limit) {
-    //         return $value;
-    //     }
-
-    //     return rtrim(mb_strimwidth($value, 0, $limit, '', 'UTF-8')).$end;
-    // }
 }

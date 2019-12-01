@@ -249,7 +249,6 @@
                 var tbody = $('#lookup')
                 var katalog_route = "{{ url('katalog') }}"
                 tbody.empty();
-                // console.log(data.length);
                 if(data.length>0){
                     data.forEach(function(item,index){
                         // console.log(item)
@@ -267,6 +266,5 @@
         var query = $(this).val();
         fetch_customer_data(query);
     });
-    fetch_customer_data();
 
 </script>@endsection

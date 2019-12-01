@@ -25,22 +25,23 @@ class DashboardController extends Controller
 
     public function searchAll(Request $request)
     {
-    	$keyword = $request->input('search');
-
+    	$keyword = strtolower($request->input('search'));
+        
         $query = Katalog::with('koleksi','lokasis');
         $katalog = $query->orWhereHas('koleksi',function($q) use($keyword){
-            $q->where('jenis_koleksi','LIKE','%'.$keyword.'%');
+            $q->where(DB::raw("lower(jenis_koleksi)"),'LIKE','%'.$keyword.'%');
         })->orWhereHas('lokasis',function($q) use($keyword){
-            $q->where('departemen','LIKE','%'.$keyword.'%');
-        })->orWhere('judul','LIKE','%'.$keyword.'%')
-            ->orWhere('penulis','LIKE','%'.$keyword.'%')
-            ->orWhere('penerbit','LIKE','%'.$keyword.'%')
-            ->orWhere('tahun_terbit','LIKE','%'.$keyword.'%')
-            ->orWhere('bahasa','LIKE','%'.$keyword.'%')
-            ->orWhere('deskripsi','LIKE','%'.$keyword.'%')
-            // ->orWhere('att_value','(?i)(edisi).*()')
+            $q->where(DB::raw("lower(departemen)"),'LIKE','%'.$keyword.'%');
+        })->orWhere(DB::raw("lower(judul)"),'LIKE','%'.$keyword.'%')
+            ->orWhere(DB::raw("lower(penulis)"),'LIKE','%'.$keyword.'%')
+            ->orWhere(DB::raw("lower(penerbit)"),'LIKE','%'.$keyword.'%')
+            ->orWhere(DB::raw("lower(tahun_terbit)"),'LIKE','%'.$keyword.'%')
+            ->orWhere(DB::raw("lower(bahasa)"),'LIKE','%'.$keyword.'%')
+            ->orWhere(DB::raw("lower(deskripsi)"),'LIKE','%'.$keyword.'%')
+            ->orWhere(DB::raw("lower(att_value)"),'LIKE','%'.$keyword.'%')
+            // ->orWhere(DB::SELECT("SELECT att_value FROM katalogs WHERE att_value REGEXP '(?i)((pembimbing1).*?( :keyword ))'",['keyword'=>$keyword]))
             ->paginate(15);
-
+        // dd($katalog);
         // $statement = DB::statement("SET @keyword=$keyword");
         // $q = "SELECT judul FROM katalogs WHERE judul LIKE :keyword"
         // $katalog = DB::select(DB::raw($q,['keyword'=>'%'.$keyword.'%']));
