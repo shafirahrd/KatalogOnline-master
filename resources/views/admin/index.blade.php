@@ -14,7 +14,7 @@
                     <div class="table-responsive">
                         <div class="white-box">
                             <div class="table-responsive">
-                                <h3>PENGANTAR</h3>
+                                <h3>PETUNJUK</h3>
                                 <p>
                                     Tata cara unggah data katalog<br>
                                     [Persyaratan, format file yang dapat diunggah yaitu .xlsx atau .csv]<br>

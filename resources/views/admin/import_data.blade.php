@@ -14,9 +14,9 @@
                     <div class="table-responsive">
                         <div class="white-box">
                             <div class="table-responsive">
-                                <h3>PENGANTAR</h3>
+                                <h3>PETUNJUK</h3>
                                 <p>
-                                    Pada bagian ini, sesuaikan nama header dengan data kolom
+                                    Pada halaman ini, sesuaikan data kolom dengan nama header (keterangan header ada di bagian bawah)<br>
                                 </p>
                             </div>
                             {{-- <a href="/home" class="btn btn-success">UNGGAH FILE EXCEL</a>
@@ -84,6 +84,56 @@
                                     <th colspan=6></th>
                                 </tr>
                             </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="white-box">
+                    <div class="table-responsive">
+                        <table class="table color-table info-table example">
+                            <thead>
+                                <tr>
+                                    <th colspan=6>Keterangan Header</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>judul</td>
+                                    <td>: judul koleksi</td>
+                                </tr>
+                                <tr>
+                                    <td>jenis</td>
+                                    <td>: jenis koleksi/GMD/media</td>
+                                </tr>
+                                <tr>
+                                    <td>penulis</td>
+                                    <td>: penulis koleksi</td>
+                                </tr>
+                                <tr>
+                                    <td>penerbit</td>
+                                    <td>: penerbit koleksi</td>
+                                </tr>
+                                <tr>
+                                    <td>kota_penerbit</td>
+                                    <td>: kota tempat koleksi diterbitkan</td>
+                                </tr>
+                                <tr>
+                                    <td>tahun_terbit</td>
+                                    <td>: tahun koleksi diterbitkan</td>
+                                </tr>
+                                <tr>
+                                    <td>bahasa</td>
+                                    <td>: bahasa koleksi</td>
+                                </tr>
+                                <tr>
+                                    <td>deskripsi</td>
+                                    <td>: deskripsi/abstrak koleksi</td>
+                                </tr>
+                                <tr>
+                                    <td>lokasi</td>
+                                    <td>: lokasi koleksi berada</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

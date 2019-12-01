@@ -27,19 +27,24 @@ class DashboardController extends Controller
     {
     	$keyword = $request->input('search');
 
-        $q = Katalog::where('deleted_at',NULL);
-        $query = $q->leftjoin('koleksis','id_koleksi','=','jenis')
-            ->leftjoin('lokasis','id_lokasi','=','lokasi');
-        $katalog = $query->where('judul','LIKE','%'.$keyword.'%')
+        $query = Katalog::with('koleksi','lokasis');
+        $katalog = $query->orWhereHas('koleksi',function($q) use($keyword){
+            $q->where('jenis_koleksi','LIKE','%'.$keyword.'%');
+        })->orWhereHas('lokasis',function($q) use($keyword){
+            $q->where('departemen','LIKE','%'.$keyword.'%');
+        })->orWhere('judul','LIKE','%'.$keyword.'%')
             ->orWhere('penulis','LIKE','%'.$keyword.'%')
             ->orWhere('penerbit','LIKE','%'.$keyword.'%')
             ->orWhere('tahun_terbit','LIKE','%'.$keyword.'%')
             ->orWhere('bahasa','LIKE','%'.$keyword.'%')
             ->orWhere('deskripsi','LIKE','%'.$keyword.'%')
-            ->orWhere('jenis_koleksi','LIKE','%'.$keyword.'%')
-            ->orWhere('departemen','LIKE','%'.$keyword.'%')
-            // ->orWhere('JSON_CONTAINS(att_value)'.$keyword)
+            // ->orWhere('att_value','(?i)(edisi).*()')
             ->paginate(15);
+
+        // $statement = DB::statement("SET @keyword=$keyword");
+        // $q = "SELECT judul FROM katalogs WHERE judul LIKE :keyword"
+        // $katalog = DB::select(DB::raw($q,['keyword'=>'%'.$keyword.'%']));
+        // dd($katalog);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
@@ -50,9 +55,10 @@ class DashboardController extends Controller
 
     public function searchBy(Request $request)
     {   
-        $query = DB::table('katalogs')
-            ->leftjoin('koleksis','id_koleksi','=','jenis')
-            ->leftjoin('lokasis','id_lokasi','=','lokasi');
+        // $query = DB::table('katalogs')
+        //     ->leftjoin('koleksis','id_koleksi','=','jenis')
+        //     ->leftjoin('lokasis','id_lokasi','=','lokasi');
+        $query = Katalog::with('koleksi','lokasis');
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
@@ -97,9 +103,9 @@ class DashboardController extends Controller
         if($koleksis){
             $query->where('jenis_koleksi','LIKE','%'.$koleksis.'%');
         }
-        if($pembimbing1){
-            $query->where('pembimbing1','LIKE','%'.$pembimbing1.'%');
-        }
+        // if($pembimbing1){
+        //     $query->where('pembimbing1','LIKE','%'.$pembimbing1.'%');
+        // }
         if($deskripsi){
             $query->where('deskripsi','LIKE','%'.$deskripsi.'%');
         }
