@@ -76,49 +76,74 @@ class DashboardController extends Controller
         $deskripsi = strtolower($request->input('deskripsi'));
         $edisi = strtolower($request->input('Edisi'));
         $pembimbing1 = strtolower($request->input('Pembimbing1'));
+        $pembimbing2 = strtolower($request->input('Pembimbing2'));
+        $subjek = strtolower($request->input('Subjek'));
+        $isbn_issn = strtolower($request->input('ISBN/ISSN'));
+        $bulan = strtolower($request->input('Bulan'));
+        $nomor = strtolower($request->input('Nomor'));
+        $volume = strtolower($request->input('Volume'));
 
+        $query = Katalog::with('koleksi','lokasis');
 
         if($judul){
-            $query = Katalog::where(DB::raw("lower(judul)"),'LIKE','%'.$judul.'%');
+            $query = $query->where(DB::raw("lower(judul)"),'LIKE','%'.$judul.'%');
         }
         if($penulis){
-            $query = Katalog::where(DB::raw("lower(penulis)"),'LIKE','%'.$penulis.'%');
+            $query = $query->where(DB::raw("lower(penulis)"),'LIKE','%'.$penulis.'%');
         }
         if($penerbit){
-            $query = Katalog::where(DB::raw("lower(penerbit)"),'LIKE','%'.$penerbit.'%');
+            $query = $query->where(DB::raw("lower(penerbit)"),'LIKE','%'.$penerbit.'%');
         }
         if($kota){
-            $query = Katalog::where(DB::raw("lower(kota_penerbit)"),'LIKE','%'.$kota.'%');
+            $query = $query->where(DB::raw("lower(kota_penerbit)"),'LIKE','%'.$kota.'%');
         }
         if($tahun){
-            $query = Katalog::where(DB::raw("lower(tahun_terbit)"),'LIKE','%'.$tahun.'%');
+            $query = $query->where(DB::raw("lower(tahun_terbit)"),'LIKE','%'.$tahun.'%');
         }
         if($bahasas){
-            $query = Katalog::where(DB::raw("lower(bahasa)"),'LIKE','%'.$bahasas.'%');
+            $query = $query->where(DB::raw("lower(bahasa)"),'LIKE','%'.$bahasas.'%');
         }
         if($deskripsi){
-            $query = Katalog::where(DB::raw("lower(deskripsi)"),'LIKE','%'.$deskripsi.'%');
+            $query = $query->where(DB::raw("lower(deskripsi)"),'LIKE','%'.$deskripsi.'%');
         }
         if($lokasix){
-            $query = Katalog::whereHas('lokasis',function($q) use($lokasix){
+            $query = $query->whereHas('lokasis',function($q) use($lokasix){
                 $q->where('departemen','LIKE','%'.$lokasix.'%');
             });
         }
         if($koleksis){
-            $query = Katalog::whereHas('koleksi',function($q) use($koleksis){
+            $query = $query->whereHas('koleksi',function($q) use($koleksis){
                 $q->where('jenis_koleksi','LIKE','%'.$koleksis.'%');
             });
         }
         if($edisi){
-            $query = DB::table("katalogs")->select("*")->whereraw("att_value REGEXP '(?i)((edisi).*?(".$edisi."))'");
-            // $query = DB::SELECT("SELECT id_katalog FROM katalogs WHERE att_value REGEXP '(?i)((edisi).*?(".$edisi."))'");
+            $query = $query->whereraw("att_value REGEXP '(?i)((edisi).*?(".$edisi."))'");
         }
         if($pembimbing1){
-            $query = DB::table("katalogs")->select("*")->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");  
-            // $query = DB::SELECT("SELECT att_value FROM katalogs WHERE att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");
+        }
+        if($pembimbing2){
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");
+        }
+        if($pembimbing2){
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing2."))'");
+        }
+        if($subjek){
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$subjek."))'");
+        }
+        if($isbn_issn){
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$isbn_issn."))'");
+        }
+        if($bulan){
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$bulan."))'");
+        }
+        if($nomor){
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$nomor."))'");
+        }
+        if($volume){
+            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$volume."))'");
         }
 
-        // dd($query);
         $katalog = $query->paginate(15);
 
         return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
