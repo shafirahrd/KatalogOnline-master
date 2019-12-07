@@ -43,8 +43,4 @@ class user extends Authenticatable
     public function user_lokasi(){
         return $this->hasOne('App\Lokasi','id_lokasi','user_lokasi');
     }
-
-    public function role(){
-        return $this->hasOne('App\UserRole','id','user_role');
-    }
 }
