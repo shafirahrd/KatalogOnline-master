@@ -7,9 +7,11 @@ use App\Katalog;
 use App\Koleksi;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\Importable;
 
 class KatalogImport implements ToModel, WithHeadingRow
 {
+    use Importable;
     /**
     * @param array $row
     *

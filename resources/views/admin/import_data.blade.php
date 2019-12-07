@@ -33,23 +33,23 @@
                         <table class="table color-table warning-table example">
                             <tbody class="text-center">
                                 <div class="file-upload">
-                                  <form action="{{ route('processcsv') }}" method="POST" enctype="multipart/form-data">
+                                  <form action="{{ route('processcsv') }}" method="POST" enctype="multipart/form-data" id="parseData">
                                     {{csrf_field()}}
                                     {{-- <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">ADD FILE</button> --}}
                                     
-                                    <input type="hidden" name="csv_data_file" value="{{ $csv_data_file->id }}">
+                                    <input type="hidden" name="csv_data_file" value="{{ $excel_data_file->id }}">
 
                                     <table class="table">
-                                      @if(isset($csv_header_fields))
+                                      @if(isset($excel_header_fields))
                                         <tr>
-                                          @foreach($csv_header_fields as $headers)
+                                          @foreach($excel_header_fields as $headers)
                                             <th>{{$headers}}</th>
                                           @endforeach
                                         </tr>
                                       @endif
 
-                                      @foreach($csv_data as $data)
-                                        @if(isset($csv_header_fields))
+                                      @foreach($excel_data as $data)
+                                        @if(isset($excel_header_fields))
                                           @if($loop->first) @continue @endif
                                         @endif
                                         <tr>
@@ -61,12 +61,13 @@
 
                                       <tr>
                                         
-                                        @foreach($csv_data[0] as $key => $value)
+                                        @foreach($excel_data[0] as $key => $value)
                                           <td>
                                             <select name="fields[{{$key}}]">
+                                                <option value="">null</option>
                                               @foreach($column_katalog as $ckg)
                                                 <option value="{{ (\Request::has('header')) ? $ckg : $loop->index }}"
-                                                @if($key === $ckg) selected @endif>{{ $ckg }}</option>
+                                                @if($value === $ckg) selected @endif>{{ $ckg }}</option>
                                               @endforeach
                                             </select>
                                           </td>

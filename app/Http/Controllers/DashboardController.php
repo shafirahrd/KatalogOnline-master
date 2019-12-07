@@ -39,7 +39,7 @@ class DashboardController extends Controller
             ->orWhere(DB::raw("lower(bahasa)"),'LIKE','%'.$keyword.'%')
             ->orWhere(DB::raw("lower(deskripsi)"),'LIKE','%'.$keyword.'%')
             ->orWhere(DB::raw("lower(att_value)"),'LIKE','%'.$keyword.'%')
-            // ->orWhere(DB::SELECT("SELECT att_value FROM katalogs WHERE att_value REGEXP '(?i)((pembimbing1).*?( :keyword ))'",['keyword'=>$keyword]))
+            ->orWhere(DB::SELECT("SELECT att_value FROM katalogs WHERE att_value REGEXP '(?i)((pembimbing1).*?( :keyword ))'",['keyword'=>$keyword]))
             ->paginate(15);
         // dd($katalog);
         // $statement = DB::statement("SET @keyword=$keyword");
@@ -56,62 +56,70 @@ class DashboardController extends Controller
 
     public function searchBy(Request $request)
     {   
-        // $query = DB::table('katalogs')
-        //     ->leftjoin('koleksis','id_koleksi','=','jenis')
-        //     ->leftjoin('lokasis','id_lokasi','=','lokasi');
-        $query = Katalog::with('koleksi','lokasis');
+        // $query = Katalog::with('koleksi','lokasis');
+        // $edisi = strtolower($request->input('Edisi'));
+        // dd($edisi);
+        
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
         $koleksi = Koleksi::get();
-        // $query = Katalog::query()->whereHas('koleksi')->whereHas('lokasis');
-        // dd(input::all());
-        $judul = $request->input('judul');
-        $penulis = $request->input('penulis');
-        $penerbit = $request->input('penerbit');
-        $kota = $request->input('kota');
-        $tahun = $request->input('tahun');
-        $bahasas = $request->input('bahasa');
-        $lokasix = $request->input('lokasi');
-        $koleksis = $request->input('koleksi');
-        $deskripsi = $request->input('deskripsi');
+        
+        $judul = strtolower($request->input('judul'));
+        $penulis = strtolower($request->input('penulis'));
+        $penerbit = strtolower($request->input('penerbit'));
+        $kota = strtolower($request->input('kota'));
+        $tahun = strtolower($request->input('tahun'));
+        $bahasas = strtolower($request->input('bahasa'));
+        $lokasix = strtolower($request->input('lokasi'));
+        $koleksis = strtolower($request->input('koleksi'));
+        $deskripsi = strtolower($request->input('deskripsi'));
+        $edisi = strtolower($request->input('Edisi'));
+        $pembimbing1 = strtolower($request->input('Pembimbing1'));
 
-        // if($request->input(''))
-        // foreach()
-        // $deskripsi = $request->input('deskripsi');
 
         if($judul){
-            $query->where('judul','LIKE','%'.$judul.'%');
+            $query = Katalog::where(DB::raw("lower(judul)"),'LIKE','%'.$judul.'%');
         }
         if($penulis){
-            $query->where('penulis','LIKE','%'.$penulis.'%');
+            $query = Katalog::where(DB::raw("lower(penulis)"),'LIKE','%'.$penulis.'%');
         }
         if($penerbit){
-            $query->where('penerbit','LIKE','%'.$penerbit.'%');
+            $query = Katalog::where(DB::raw("lower(penerbit)"),'LIKE','%'.$penerbit.'%');
         }
         if($kota){
-            $query->where('kota_penerbit','LIKE','%'.$kota.'%');
+            $query = Katalog::where(DB::raw("lower(kota_penerbit)"),'LIKE','%'.$kota.'%');
         }
         if($tahun){
-            $query->where('tahun_terbit','LIKE','%'.$tahun.'%');
+            $query = Katalog::where(DB::raw("lower(tahun_terbit)"),'LIKE','%'.$tahun.'%');
         }
         if($bahasas){
-            $query->where('bahasa','LIKE','%'.$bahasas.'%');
+            $query = Katalog::where(DB::raw("lower(bahasa)"),'LIKE','%'.$bahasas.'%');
+        }
+        if($deskripsi){
+            $query = Katalog::where(DB::raw("lower(deskripsi)"),'LIKE','%'.$deskripsi.'%');
         }
         if($lokasix){
-            $query->where('departemen','LIKE','%'.$lokasix.'%');
+            $query = Katalog::whereHas('lokasis',function($q) use($lokasix){
+                $q->where('departemen','LIKE','%'.$lokasix.'%');
+            });
         }
         if($koleksis){
-            $query->where('jenis_koleksi','LIKE','%'.$koleksis.'%');
+            $query = Katalog::whereHas('koleksi',function($q) use($koleksis){
+                $q->where('jenis_koleksi','LIKE','%'.$koleksis.'%');
+            });
         }
-        // if($pembimbing1){
-        //     $query->where('pembimbing1','LIKE','%'.$pembimbing1.'%');
-        // }
-        if($deskripsi){
-            $query->where('deskripsi','LIKE','%'.$deskripsi.'%');
+        if($edisi){
+            $query = DB::table("katalogs")->select("*")->whereraw("att_value REGEXP '(?i)((edisi).*?(".$edisi."))'");
+            // $query = DB::SELECT("SELECT id_katalog FROM katalogs WHERE att_value REGEXP '(?i)((edisi).*?(".$edisi."))'");
+        }
+        if($pembimbing1){
+            $query = DB::table("katalogs")->select("*")->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");  
+            // $query = DB::SELECT("SELECT att_value FROM katalogs WHERE att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");
         }
 
-        $katalog = $query->where('deleted_at',NULL)->paginate(15);
+        // dd($query);
+        $katalog = $query->paginate(15);
 
         return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }

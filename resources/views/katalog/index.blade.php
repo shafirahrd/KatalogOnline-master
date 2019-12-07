@@ -114,7 +114,7 @@
 <div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none; margin-bottom: 5%;">
   <label class="control-label col-sm-2" for="{{$kfc}}">{{$kfc}} :</label>
   <div class="col-sm-9">          
-    <input type="text" class="form-control" id="{{$kfc}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
+    <input type="text" class="form-control input-khusus input-{{$kg->id_koleksi}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
 </div>
 </div>
 @endforeach
@@ -229,10 +229,11 @@
         // run on change for the selectbox
         $( "#koleksi" ).change(function() {  
             $('.atribut-khusus').hide();
-            
+            $('.input-khusus').prop("disabled",true);
             var divKey = $(this).find('option:selected').data('id');
             // console.log(divKey);
             $('.form-atribut-'+divKey).show();
+            $('.input-'+divKey).prop("disabled",false);
         });
     });
 </script>
@@ -257,7 +258,6 @@
                 }else{
                     tbody.append(`<tr><td align="center" colspan="5">Tidak ada data yang ditemukan</td></tr>`)
                 }
-                
             }
         })
     }

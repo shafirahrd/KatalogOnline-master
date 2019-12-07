@@ -8,6 +8,7 @@ use App\Katalog;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Input;
 use App\Imports\KatalogImport;
+use App\Imports\RawImport;
 use App\Imports\KoleksiImport;
 use App\Http\Requests\CsvImportRequest;
 use Illuminate\Http\Request;
@@ -55,9 +56,65 @@ class HomeController extends Controller
 
     public function upload()
     {
-        Excel::import(new KatalogImport, request()->file('fileExcel'));
+        $array = (new KatalogImport)->toArray(request()->file('fileExcel'));
+        // $header = [];
+        // foreach ($array[0][0] as $key => $value) {
+        //     $header[] = $key;
+        // }
+        // dd($header);
 
-        return redirect('/log')->with('success','File berhasil diunggah');
+
+        if(count($array[0]) > 0){
+            $length = 0;
+            if(request()->has('header')){
+                $excel_header_fields = [];
+                $length = 1;
+
+                foreach ($array[0][0] as $key) {
+                    $excel_header_fields[] = $key;
+                }
+                
+                $temp = [];
+                $flag = 0;
+                // dd($array[0]);
+                foreach($array[0] as $k => $v){
+                    $d = [];
+                    foreach ($array[0][$k] as $key => $value) {
+                        if($flag==0){
+                            $h[] = $key;
+                        }
+                        $d[] = $value;
+                    }
+                    if($flag==0){
+                        array_push($temp,$h);
+                    }
+                    $flag=1;
+                    array_push($temp,$d);
+                }
+            }
+
+            $excel_data = array_slice($array[0],0,3+$length);
+
+            $excel_data_file = Csvdata::create([
+                'csv_filename' => request()->file('fileExcel')->getClientOriginalName(),
+                'csv_header' => request()->has('header'),
+                'csv_data' => json_encode($temp)
+            ]);
+        }else{
+            return redirect()->back();
+        }
+        
+        $column_katalog = Schema::getColumnListing('katalogs');
+        unset($column_katalog[0]);
+
+        if(isset($csv_header_fields)){
+            return view('admin.import_data', compact('excel_header_fields','excel_data','excel_data_file','column_katalog'));
+        }else{
+            return view('admin.import_data', compact('excel_data','excel_data_file','column_katalog'));
+        }
+        // Excel::import(new KatalogImport, request()->file('fileExcel'));
+
+        // return redirect('/log')->with('success','File berhasil diunggah');
     }
 
     public function uploadKoleksi()
@@ -73,6 +130,7 @@ class HomeController extends Controller
         // $fname = $request->file('csv_file')->getClientOriginalName();
         
         $data = \Excel::toArray('', $path, null, \Maatwebsite\Excel\Excel::TSV)[0];
+        // dd($data);
         // if($request->has('header')){
         //     //automatically parse header to lowercase and change space into underscore
         // }else{
@@ -95,7 +153,7 @@ class HomeController extends Controller
             }
 
             $csv_data = array_slice($data,0,3+$length);
-            
+            dd($data);
             $csv_data_file = Csvdata::create([
                 'csv_filename' => $request->file('csv_file')->getClientOriginalName(),
                 'csv_header' => $request->has('header'),
@@ -118,6 +176,7 @@ class HomeController extends Controller
     public function process(Request $request)
     {
         $data = Csvdata::find($request->csv_data_file);
+        // dd($data);
         $csv_data = json_decode($data->csv_data,true);
         if($data->csv_header){
             unset($csv_data[0]);
@@ -131,6 +190,7 @@ class HomeController extends Controller
 
             foreach ($column_katalog as $index => $field) {
                 if($index <= count($row)){
+                    // dd($row);
                     $katalog->$field = $row[$index-1] == '-' ? NULL : $row[$index-1];
                     // if($data->csv_header){
                     // }else{

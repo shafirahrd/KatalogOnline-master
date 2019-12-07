@@ -118,7 +118,7 @@
                                       <div class="col-lg-12" style="margin-left: 4%">
                                         <h3>Pencarian Lanjut</h3><hr>
                                         {{csrf_field()}}
-                                        <form class="form-horizontal" action="/searchAdvanced" method="GET">
+                                        <form class="form-horizontal" action="/searchAdvanced" method="GET" id="advancedSearch">
                                             <div class="form-group">
                                               <label class="control-label col-sm-2" for="judul">Judul:</label>
                                               <div class="col-lg-12">
@@ -197,7 +197,7 @@
                                                       <div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none;">
                                                         <label class="control-label col-sm-2" for="{{$kfc}}">{{$kfc}}: </label>
                                                         <div class="col-lg-12">          
-                                                          <input type="text" class="form-control" id="{{$kfc}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
+                                                          <input type="text" class="form-control input-khusus input-{{$kg->id_koleksi}}" id="{{$kfc}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
                                                         </div>
                                                       </div>
                                                   @endforeach
@@ -336,10 +336,11 @@
                 // run on change for the selectbox
                 $( "#koleksi" ).change(function() {  
                     $('.atribut-khusus').hide();
-                      
+                    $('.input-khusus').prop("disabled",true);
                     var divKey = $(this).find('option:selected').data('id');
                     // console.log(divKey);
                     $('.form-atribut-'+divKey).show();
+                    $('.input-'+divKey).prop("disabled",false);
                 });
             });
         </script>
