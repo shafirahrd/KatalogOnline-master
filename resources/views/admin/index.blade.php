@@ -59,14 +59,14 @@
                                       </div>
                                     </div>
                                 </div>
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                   <center>
                                     <div class="custom-control custom-checkbox">
-                                      <input type="checkbox" class="custom-control-input" id="header" checked>
+                                      <input type="checkbox" class="custom-control-input" name="header" id="header">
                                       <label class="custom-control-label" for="header">File mengandung header?</label>
                                     </div>
                                   </center>
-                                </div> --}}
+                                </div>
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Upload') }}
                                 </button>

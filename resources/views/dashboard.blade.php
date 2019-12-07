@@ -115,7 +115,7 @@
                                 <div class="modal-content">
                                   <div class="modal-body">
                                     <div class="row">
-                                      <div class="col-lg-12" style="margin-left: 4%">
+                                      <div class="col-lg-12" style="margin-left: 4%; margin-bottom: 2%;">
                                         <h3>Pencarian Lanjut</h3><hr>
                                         {{csrf_field()}}
                                         <form class="form-horizontal" action="/searchAdvanced" method="GET" id="advancedSearch">
@@ -194,16 +194,16 @@
                                                       @continue
                                                   @endif
                                                   @foreach($kg->formatted_column as $kfc)
-                                                      <div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none;">
+                                                      <div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none; margin-top:3%;">
                                                         <label class="control-label col-sm-2" for="{{$kfc}}">{{$kfc}}: </label>
                                                         <div class="col-lg-12">          
-                                                          <input type="text" class="form-control input-khusus input-{{$kg->id_koleksi}}" id="{{$kfc}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
+                                                          <input type="text" class="form-control input-khusus input-{{$kg->id_koleksi}}" id="{{$kfc}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}"><br>
                                                         </div>
                                                       </div>
                                                   @endforeach
                                               @endforeach
 
-                                              <br>  
+                                              <br>
                                               <div class="text-center">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                                 <button class="btn btn-primary">Cari
