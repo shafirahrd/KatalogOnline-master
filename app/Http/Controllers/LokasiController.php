@@ -47,7 +47,7 @@ class LokasiController extends Controller
         $lokasi->alamat = $request->Input('alamat');
         $lokasi->tautan = $request->Input('tautan');
         $lokasi->save();
-        return back();
+        return back()->with('message','Data lokasi berhasil ditambah');
     }
 
     /**
@@ -88,7 +88,7 @@ class LokasiController extends Controller
         $data->tautan = Input::get('tautan');
         $data->save();
 
-        return back();
+        return back()->with('message','Data lokasi berhasil diubah');
     }
 
     /**
@@ -102,7 +102,7 @@ class LokasiController extends Controller
         $data = Lokasi::find($request->id);
         $data->delete();
 
-        return back();
+        return back()->with('message','Data lokasi berhasil dihapus');
     }
 
     public function searchByLokasi($lokasis)

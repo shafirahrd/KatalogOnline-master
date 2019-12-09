@@ -20,6 +20,24 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <div class="table-responsive">
+
+                        <div id="modalMessage" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Pesan</h4>
+                              </div>
+                              <div class="modal-body">
+                                    <span class="message-green"><center>{{Session::get('message')}}</center></span>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         <table class="table color-table success-table example">
                             <thead>
                                 <tr>
@@ -267,4 +285,13 @@
         fetch_customer_data(query);
     });
 
-</script>@endsection
+</script>
+
+@if(!empty(Session::get('message')))
+    <script>
+        $(function() {
+            $('#modalMessage').modal('show');
+        });
+    </script>
+@endif
+@endsection

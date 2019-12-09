@@ -113,7 +113,7 @@ class KatalogController extends Controller
         $data->lokasi = Input::get('lokasi');
         $data->save();
 
-        return redirect('/katalog');
+        return redirect('/katalog')->with('message','Data katalog berhasil diubah');
     }
 
     /**
@@ -127,7 +127,7 @@ class KatalogController extends Controller
         $data = Katalog::find($request->id);
         $data->delete();
 
-        return back();
+        return back()->with('message','Data katalog berhasil dihapus');
 
     }
 

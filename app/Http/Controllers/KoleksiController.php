@@ -45,7 +45,7 @@ class KoleksiController extends Controller
         $koleksi->jenis_koleksi = $request->Input('jenis_koleksi');
         $koleksi->deskripsi_koleksi = $request->Input('deskripsi_koleksi');
         $koleksi->save();
-        return back();
+        return back()->with('message','Data koleksi berhasil ditambah');
     }
 
     /**
@@ -84,7 +84,7 @@ class KoleksiController extends Controller
         $data->deskripsi_koleksi = Input::get('deskripsi_koleksi');
         $data->save();
 
-        return back();
+        return back()->with('message','Data koleksi berhasil diubah');
     }
 
     /**
@@ -98,7 +98,7 @@ class KoleksiController extends Controller
         $data = Koleksi::find($request->id);
         $data->delete();
 
-        return back();
+        return back()->with('message','Data koleksi berhasil dihapus');
     }
 
     public function searchByKoleksi($koleksis)

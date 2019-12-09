@@ -86,9 +86,14 @@ span.marginL5 {
   margin-left: 5%;
 }
 
-span.message {
+span.message-green {
   font-weight: 500;
   color: #569e2e;
+}
+
+span.message-blue {
+  font-weight: 500;
+  color: #184967;
 }
 
 .table-borderless {

@@ -21,7 +21,7 @@
                                 <h4 class="modal-title">Pesan</h4>
                               </div>
                               <div class="modal-body">
-                                    <span class="message"><center>{{Session::get('message')}}</center></span>
+                                    <span class="message-green"><center>{{Session::get('message')}}</center></span>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -29,7 +29,7 @@
                             </div>
                           </div>
                         </div>
-                        
+
                         <table class="table color-table success-table example">
                             <thead>
                                 <tr>
@@ -161,7 +161,7 @@
 @endsection
 
 @section('script')
-@if(!empty(Session::get('message')) && Session::get('message') == "File berhasil diunggah")
+@if(!empty(Session::get('message')))
     <script>
         $(function() {
             $('#modalMessage').modal('show');
