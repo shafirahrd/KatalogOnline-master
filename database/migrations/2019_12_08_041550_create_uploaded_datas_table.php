@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCsvdatasTable extends Migration
+class CreateUploadedDatasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateCsvdatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('csvdatas', function (Blueprint $table) {
+        Schema::create('uploaded_data', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('csv_filename');
-            $table->boolean('csv_header')->default(0);
-            $table->json('csv_data');
+            $table->string('filename');
+            $table->boolean('header')->default(0);
+            $table->json('data');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateCsvdatasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('csvdata');
+        Schema::dropIfExists('uploaded_data');
     }
 }

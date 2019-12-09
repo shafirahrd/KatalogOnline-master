@@ -34,18 +34,15 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function ()
 {
-	Route::get('/home','HomeController@admin');
-	Route::get('/log','HomeController@log');
+	Route::get('/home','AdminController@excel');
+	Route::get('/excel','AdminController@excel');
+	Route::get('/csv','AdminController@csv');
+	Route::get('/log','AdminController@log');
 	Route::get('/logout','Auth\LoginController@logout');
 
-	Route::post('/uploadExcel','HomeController@upload');
-	Route::post('/uploadKoleksi','HomeController@uploadKoleksi');
+	Route::post('/uploadExcel','AdminController@parseExcel');
+	Route::post('/uploadCSV','AdminController@parseCSV');
+	Route::post('/uploadKoleksi','AdminController@uploadKoleksi');
 
-	Route::get('/home/uploadcsv','HomeController@csv')->name('uploadcsv');
-	Route::post('/importcsv_parse','HomeController@parse')->name('parsecsv');
-	Route::post('/importcsv','HomeController@process')->name('processcsv');
-	
-	Route::group(['middleware' => 'superAdmin'], function(){
-		Route::get('/tes','AdminController@index');
-	});
+	Route::post('/importFile','AdminController@import')->name('import');
 });

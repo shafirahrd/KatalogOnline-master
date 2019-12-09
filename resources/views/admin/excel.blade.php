@@ -18,15 +18,12 @@
                                 <p>
                                     Tata cara unggah data katalog<br>
                                     [Persyaratan, format file yang dapat diunggah yaitu .xlsx atau .csv]<br>
-                                     1. Pilih jenis file yang akan diunggah, jika excel pilih tombol <a href="/home" class="btn btn-success btn-sm">UNGGAH FILE EXCEL</a>, jika csv tekan tombol <a href="{{ route('uploadcsv') }}" class="btn btn-warning btn-sm">UNGGAH FILE CSV</a><br>
+                                     1. Pilih jenis file yang akan diunggah, jika excel pilih tombol <a href="/excel" class="btn btn-success btn-sm">UNGGAH FILE EXCEL</a>, jika csv tekan tombol <a href="/csv" class="btn btn-warning btn-sm">UNGGAH FILE CSV</a><br>
                                     2. Tekan kotak hijau dibawah dan pilih file yang akan diunggah atau <i>Drag and drop</i> file<br>
                                     {{-- 2. Akan muncul form yang berisi data header/atribut data. Cocokkan dengan atribut yang ada pada sistem Katalog Online. --}}
                                     3. Tekan tombol <i>Upload</i><br>
                                     4. Sistem akan secara otomatis mengecek data yang sudah ada untuk menghindari redundansi dan memasukkan data yang telah diunggah ke basis data Katalog Online.
                                 </p><hr>
-                                <h4>
-                                    Admin bebas mengubah atau menghapus data katalog yang telah diunggah melalui halaman katalog, dan dapat melihat riwayat perubahan yang telah dilakukan pada halaman riwayat unggahan.
-                                </h4>
                             </div>
                             {{-- <a href="/home" class="btn btn-success">UNGGAH FILE EXCEL</a>
                             <a href="{{ route('uploadcsv') }}" class="btn btn-warning">UNGGAH FILE CSV</a> --}}
@@ -44,7 +41,6 @@
                                 <div class="file-upload">
                                   <form action="/uploadExcel" method="POST" enctype="multipart/form-data">
                                     {{csrf_field()}}
-                                    {{-- <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">ADD FILE</button> --}}
 
                                     <div class="image-upload-wrap">
                                       <input class="file-upload-input" type='file' onchange="readURL(this);" name="fileExcel" />

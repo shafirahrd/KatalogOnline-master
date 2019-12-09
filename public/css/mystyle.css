@@ -57,3 +57,44 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+table.table.color-table.success-table.example th.th-header {
+  background-color: white;
+  color: black;
+}
+
+td.vertical-align-middle {
+  vertical-align: middle;
+}
+
+td.text-align-left {
+  text-align: left;
+}
+
+td.w0 {
+  width: 0%;
+}
+
+td.w1 {
+  width: 1%;
+}
+
+span.text-muted {
+  font-weight: 500;
+}
+span.marginL5 {
+  margin-left: 5%;
+}
+
+span.message {
+  font-weight: 500;
+  color: #569e2e;
+}
+
+.table-borderless {
+  table-layout: fixed;
+}
+
+.modal-title {
+  font-weight: 450;
+}

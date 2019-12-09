@@ -15,7 +15,7 @@ class CreateUserValidationsTable extends Migration
     {
         Schema::create('user_validations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nip',20);
+            $table->string('nip',20)->unique();
             $table->string('nama',200)->nullable();
             $table->string('ruang_baca',100)->nullable();
             $table->timestamps();

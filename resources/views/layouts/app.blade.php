@@ -152,12 +152,12 @@
                         <br>
                         <li><center><b>ADMIN</b></center></li>
                         <li>
-                            @if(Request::path() == 'home' || (Request::path() == 'home/uploadcsv'))
-                            <a href="/home" class="waves-effect active">
+                            @if(Request::path() == 'excel' || (Request::path() == 'csv'))
+                            <a href="/excel" class="waves-effect active">
                                 <span class="hide-menu"> UNGGAH DATA KATALOG </span>
                             </a>
                             @else
-                            <a href="/home" class="waves-effect">
+                            <a href="/excel" class="waves-effect">
                                 <span class="hide-menu"> UNGGAH DATA KATALOG </span>
                             </a>
                             @endif
