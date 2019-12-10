@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 
 class katalog extends Model
 {
     use SoftDeletes;
+    use Sortable;
 
     protected $primaryKey = 'id_katalog';
     public $incrementing = true;

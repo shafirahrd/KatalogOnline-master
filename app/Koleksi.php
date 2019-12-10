@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class koleksi extends Model
 {
+    use Sortable;
+    
     protected $primaryKey = 'id_koleksi';
     public $incrementing = true;
     protected $fillable = ['jenis_koleksi','deskripsi_koleksi','att_khusus'];

@@ -85,10 +85,10 @@
                                 </tr>
                                 <tr>
                                     <th class="text-center" style="background-color: white; color: black;">No.</th>
-                                    <th class="text-center" style="background-color: white; color: black;">Departemen</th>
-                                    <th class="text-center" style="background-color: white; color: black;">Fakultas</th>
-                                    <th class="text-center" style="background-color: white; color: black;">Alamat</th>
-                                    <th class="text-center" style="background-color: white; color: black;">Tautan Ruang Baca</th>
+                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Departemen')</th>
+                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Fakultas')</th>
+                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Alamat')</th>
+                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Tautan Ruang Baca')</th>
                                     <th class="text-center" style="background-color: white; color: black;">@if(Auth::check())Aksi @else Lihat Berdasarkan Lokasi @endif</th>
                                 </tr>
                             </thead>

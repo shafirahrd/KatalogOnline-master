@@ -41,11 +41,6 @@ class DashboardController extends Controller
             ->orWhere(DB::raw("lower(att_value)"),'LIKE','%'.$keyword.'%')
             ->orWhere(DB::SELECT("SELECT att_value FROM katalogs WHERE att_value REGEXP '(?i)((pembimbing1).*?( :keyword ))'",['keyword'=>$keyword]))
             ->paginate(15);
-        // dd($katalog);
-        // $statement = DB::statement("SET @keyword=$keyword");
-        // $q = "SELECT judul FROM katalogs WHERE judul LIKE :keyword"
-        // $katalog = DB::select(DB::raw($q,['keyword'=>'%'.$keyword.'%']));
-        // dd($katalog);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
@@ -56,11 +51,6 @@ class DashboardController extends Controller
 
     public function searchBy(Request $request)
     {   
-        // $query = Katalog::with('koleksi','lokasis');
-        // $edisi = strtolower($request->input('Edisi'));
-        // dd($edisi);
-        
-
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
         $koleksi = Koleksi::get();

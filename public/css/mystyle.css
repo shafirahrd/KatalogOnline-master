@@ -103,3 +103,7 @@ span.message-blue {
 .modal-title {
   font-weight: 450;
 }
+
+.collapse-table>.collapse-table {
+    display:none;
+}

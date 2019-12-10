@@ -72,8 +72,8 @@
                                 </tr>
                                 <tr>
                                     <th class="text-center" style="background-color: white; color: black;">No.</th>
-                                    <th class="text-center" style="background-color: white; color: black;">Jenis Koleksi</th>
-                                    <th class="text-center" style="background-color: white; color: black; width:65%;">Deskripsi</th>
+                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Jenis Koleksi')</th>
+                                    <th class="text-center" style="background-color: white; color: black; width:65%;">@sortablelink('Deskripsi')</th>
                                     <th class="text-center" style="background-color: white; color: black;">@if(Auth::check())Aksi @else Lihat Berdasarkan Koleksi @endif</th>
                                 </tr>
                             </thead>

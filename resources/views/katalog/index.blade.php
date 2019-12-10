@@ -38,115 +38,120 @@
                           </div>
                         </div>
 
-                        <table class="table color-table success-table example">
-                            <thead>
-                                <tr>
-                                    <th colspan=6>ADVANCED SEARCH</th>
-                                </tr>
-                            </thead>
-                        </table><br>
-                        <table class="table color-table success-table example">                            
-                            <tbody>
-                                <form class="form-horizontal" action="/searchAdvanced" method="GET">
-                                    {{ csrf_field() }}
+                        <div class="collapse-table">
+                            <table class="table color-table success-table example">
+                                <thead>
+                                    <tr>
+                                        <th colspan=6>ADVANCED SEARCH</th>
+                                    </tr>
+                                </thead>
+                            </table><br>
+                            <div class="collapse-table">
+                                <table class="table color-table success-table example">                            
+                                    <tbody>
+                                        <form class="form-horizontal" action="/searchAdvanced" method="GET">
+                                            {{ csrf_field() }}
+                                            <tr>
+                                                <div class="form-group">
+                                                  <label class="control-label col-sm-2" for="judul">Judul:</label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="judul" placeholder="Masukkan kata kunci judul" name="judul">
+                                                </div>
+                                            </div>
+                                        </tr><br>
+                                        <tr>
+                                            <div class="form-group">
+                                              <label class="control-label col-sm-2" for="penulis">Penulis:</label>
+                                              <div class="col-sm-9">          
+                                                <input type="text" class="form-control" id="penulis" placeholder="Masukkan kata kunci penulis" name="penulis">
+                                            </div>
+                                        </div>
+                                    </tr><br>
                                     <tr>
                                         <div class="form-group">
-                                          <label class="control-label col-sm-2" for="judul">Judul:</label>
-                                          <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="judul" placeholder="Masukkan kata kunci judul" name="judul">
+                                          <label class="control-label col-sm-2" for="penerbit">Penerbit:</label>
+                                          <div class="col-sm-9">          
+                                            <input type="text" class="form-control" id="penerbit" placeholder="Masukkan kata kunci penerbit" name="penerbit">
                                         </div>
                                     </div>
                                 </tr><br>
                                 <tr>
                                     <div class="form-group">
-                                      <label class="control-label col-sm-2" for="penulis">Penulis:</label>
+                                      <label class="control-label col-sm-2" for="kota">Kota Terbit:</label>
                                       <div class="col-sm-9">          
-                                        <input type="text" class="form-control" id="penulis" placeholder="Masukkan kata kunci penulis" name="penulis">
+                                        <input type="text" class="form-control" id="kota" placeholder="Masukkan kata kunci kota" name="kota">
                                     </div>
                                 </div>
                             </tr><br>
                             <tr>
                                 <div class="form-group">
-                                  <label class="control-label col-sm-2" for="penerbit">Penerbit:</label>
+                                  <label class="control-label col-sm-2" for="tahun">Tahun Terbit:</label>
                                   <div class="col-sm-9">          
-                                    <input type="text" class="form-control" id="penerbit" placeholder="Masukkan kata kunci penerbit" name="penerbit">
+                                    <input type="text" class="form-control" id="tahun" placeholder="Masukkan tahun" name="tahun">
                                 </div>
                             </div>
                         </tr><br>
                         <tr>
                             <div class="form-group">
-                              <label class="control-label col-sm-2" for="kota">Kota Terbit:</label>
+                              <label class="control-label col-sm-2" for="deskripsi">Deskripsi:</label>
                               <div class="col-sm-9">          
-                                <input type="text" class="form-control" id="kota" placeholder="Masukkan kata kunci kota" name="kota">
+                                <textarea type="text" class="form-control" id="deskripsi" placeholder="Masukkan Deskripsi" name="deskripsi"></textarea>
                             </div>
                         </div>
-                    </tr><br>
-                    <tr>
-                        <div class="form-group">
-                          <label class="control-label col-sm-2" for="tahun">Tahun Terbit:</label>
-                          <div class="col-sm-9">          
-                            <input type="text" class="form-control" id="tahun" placeholder="Masukkan tahun" name="tahun">
-                        </div>
-                    </div>
-                </tr><br>
-                <tr>
-                    <div class="form-group">
-                      <label class="control-label col-sm-2" for="deskripsi">Deskripsi:</label>
-                      <div class="col-sm-9">          
-                        <textarea type="text" class="form-control" id="deskripsi" placeholder="Masukkan Deskripsi" name="deskripsi"></textarea>
-                    </div>
+                    </tr><br><br>
+
+                    <div class="col-md-3">
+                      <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="bahasa">
+                        <option value="" selected>Bahasa</option>
+                        @foreach($bahasa as $b)
+                        <option value="{{$b->bahasa}}">{{$b->bahasa}}</option>
+                        @endforeach
+                    </select>
                 </div>
-            </tr><br><br>
+
+                <div class="col-md-4">
+                  <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="lokasi">
+                    <option value="" selected>Lokasi Ruang Baca</option>
+                    @foreach($lokasi as $l)
+                    <option value="{{$l->departemen}}">{{$l->departemen}}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="col-md-3">
-              <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="bahasa">
-                <option value="" selected>Bahasa</option>
-                @foreach($bahasa as $b)
-                <option value="{{$b->bahasa}}">{{$b->bahasa}}</option>
+              <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="koleksi" id="koleksi">
+                <option value="" selected>Jenis Koleksi</option>
+                @foreach($koleksi as $k)
+                <option value="{{$k->jenis_koleksi}}" data-id="{{$k->id_koleksi}}">{{$k->jenis_koleksi}}</option>
                 @endforeach
             </select>
+        </div><br><br><br>
+        @foreach($koleksi as $kg)
+        @if(is_null($kg->formatted_column))
+        @continue
+        @endif
+        @foreach($kg->formatted_column as $kfc)
+        <div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none; margin-bottom: 5%;">
+          <label class="control-label col-sm-2" for="{{$kfc}}">{{$kfc}} :</label>
+          <div class="col-sm-9">          
+            <input type="text" class="form-control input-khusus input-{{$kg->id_koleksi}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
         </div>
-
-        <div class="col-md-4">
-          <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="lokasi">
-            <option value="" selected>Lokasi Ruang Baca</option>
-            @foreach($lokasi as $l)
-            <option value="{{$l->departemen}}">{{$l->departemen}}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <div class="col-md-3">
-      <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="koleksi" id="koleksi">
-        <option value="" selected>Jenis Koleksi</option>
-        @foreach($koleksi as $k)
-        <option value="{{$k->jenis_koleksi}}" data-id="{{$k->id_koleksi}}">{{$k->jenis_koleksi}}</option>
+        </div>
         @endforeach
-    </select>
-</div><br><br><br>
-@foreach($koleksi as $kg)
-@if(is_null($kg->formatted_column))
-@continue
-@endif
-@foreach($kg->formatted_column as $kfc)
-<div class="form-group form-atribut-{{$kg->id_koleksi}} atribut-khusus" style="display: none; margin-bottom: 5%;">
-  <label class="control-label col-sm-2" for="{{$kfc}}">{{$kfc}} :</label>
-  <div class="col-sm-9">          
-    <input type="text" class="form-control input-khusus input-{{$kg->id_koleksi}}" placeholder="Masukkan {{$kfc}}" name="{{$kfc}}">
-</div>
-</div>
-@endforeach
-@endforeach
+        @endforeach
 
-<br>
-<div class="text-center">
-    <button class="btn btn-primary">Cari
-        <i class="fa fa-search-plus ml-2" aria-hidden="true"></i>
-    </button>
+        <br>
+        <div class="text-center">
+            <button class="btn btn-primary">Cari
+                <i class="fa fa-search-plus ml-2" aria-hidden="true"></i>
+            </button>
+        </div>
+        </form>
+        </tbody><br>
+        </table>
+    </div>
 </div>
-</form>
-</tbody><br>
-
+<table>
 <thead>
     <tr>
         <th colspan=6></th>
@@ -242,9 +247,15 @@
 @endsection
 
 @section('script')
+
+<script>
+    $(".collapse-table").children("table").click(function () {
+    $(this).parent().children(".collapse-table").slideToggle();
+});
+</script>
+
 <script>
     $(function() {
-        // run on change for the selectbox
         $( "#koleksi" ).change(function() {  
             $('.atribut-khusus').hide();
             $('.input-khusus').prop("disabled",true);
@@ -257,7 +268,7 @@
 </script>
 
 <script>
-    function fetch_customer_data(query = '')
+    function fetch_katalog_data(query = '')
     {
         $.ajax({
             url:"{{ route('katalog.action') }}",
@@ -282,7 +293,7 @@
 
     $(document).on('keyup', '#cari', function(){
         var query = $(this).val();
-        fetch_customer_data(query);
+        fetch_katalog_data(query);
     });
 
 </script>

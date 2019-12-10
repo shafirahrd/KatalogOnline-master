@@ -37,11 +37,11 @@
                                 </tr>
                                 <tr>
                                     <th class="text-center th-header">No.</th>
-                                    <th class="text-center th-header">Admin</th>
-                                    <th class="text-center th-header">Ruang Baca</th>
-                                    <th class="text-center th-header">Perubahan</th>
-                                    <th class="text-center th-header">Tanggal</th>
-                                    <th class="text-center th-header">Waktu</th>
+                                    <th class="text-center th-header">@sortablelink('Admin')</th>
+                                    <th class="text-center th-header">@sortablelink('Ruang Baca')</th>
+                                    <th class="text-center th-header">@sortablelink('Perubahan')</th>
+                                    <th class="text-center th-header">@sortablelink('Tanggal')</th>
+                                    <th class="text-center th-header">@sortablelink('Waktu')</th>
                                     <th class="text-center th-header">Lihat Detail</th>
                                 </tr>
                             </thead>
