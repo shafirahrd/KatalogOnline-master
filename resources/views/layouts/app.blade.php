@@ -96,7 +96,7 @@
             <div class="sidebar-nav slimscrollsidebar">
                 <div class="user-profile">
                     <div>
-                        <img src="{{ asset('asset/image/logo_its.png') }}" alt="logo-its" style="width:50%; height:50%;">
+                        <img src="{{ asset('asset/image/logo_its.png') }}" alt="logo-its" class="w50h50">
                     </div>
                 </div>
                 @if(Auth::check())
@@ -176,7 +176,7 @@
                         <li class="devider"></li><br>
                         <li>
                         <a href="/logout" class="waves-effect">
-                                <span class="hide-menu" style="float: right;">LOGOUT <i class="fa fa-sign-out ml-2" aria-hidden="true"></i></span>
+                                <span class="hide-menu float-right">LOGOUT <i class="fa fa-sign-out ml-2" aria-hidden="true"></i></span>
                             </a>
                         </li>
                     @endif

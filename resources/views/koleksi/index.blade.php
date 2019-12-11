@@ -37,11 +37,11 @@
                                     <th>
                                         @if(Auth::check() && Auth::user()->user_role == 1)
                                         <button type="button" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#tambah-koleksi"><i class="fa fa-plus"></i>  Koleksi</button>
-                                        <div class="modal fade" id="tambah-koleksi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal fade none" id="tambah-koleksi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="myLargeModalLabel" style="text-align: center; font-weight: 450;">Tambah Koleksi</h4>
+                                                        <h4 class="modal-title" id="myLargeModalLabel"><center>Tambah Koleksi</center></h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <form class="form-horizontal form-material" action="{{ route('koleksi.store') }}" method = "POST">
@@ -59,8 +59,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group m-b-0">
-                                                                <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
-                                                                <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Simpan</button>
+                                                                <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
+                                                                <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Simpan</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -71,29 +71,28 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center" style="background-color: white; color: black;">No.</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Jenis Koleksi')</th>
-                                    <th class="text-center" style="background-color: white; color: black; width:65%;">@sortablelink('Deskripsi')</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@if(Auth::check())Aksi @else Lihat Berdasarkan Koleksi @endif</th>
+                                    <th class="text-center th-header">No.</th>
+                                    <th class="text-center th-header">@sortablelink('Jenis Koleksi')</th>
+                                    <th class="text-center th-header width65">@sortablelink('Deskripsi')</th>
+                                    <th class="text-center th-header">@if(Auth::check())Aksi @else Lihat Berdasarkan Koleksi @endif</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
                                 <?php $x=1; ?>
                                 @foreach($koleksi as $ks)
-                                {{-- {{dd($ks->formatted_column[0])}} --}}
                                 <tr class="fuckOffPadding">
-                                    <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
-                                    <td style="vertical-align: middle;">{{$ks->jenis_koleksi}}</td>
-                                    <td style="vertical-align: middle; text-align: left;">{{$ks->deskripsi_koleksi}}</td>
-                                    <td style="vertical-align: middle;">
+                                    <td class="vertical-align-middle"><?php echo $x; $x=$x+1; ?></td>
+                                    <td class="vertical-align-middle">{{$ks->jenis_koleksi}}</td>
+                                    <td class="vertical-align-middle text-align-left">{{$ks->deskripsi_koleksi}}</td>
+                                    <td class="vertical-align-middle">
                                         <a href="{{ url('searchKoleksi/'.$ks->jenis_koleksi) }}" class="btn btn-default"><i class="ti-search" data-toggle="tooltip" data-placement="top" title="Lihat Koleksi"></i></a>
                                         @if(Auth::check() && Auth::user()->user_role == 1)
                                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-{{$ks->id_koleksi}}" data-plaement="top" title="Ubah Data Koleksi"><i class="ti-pencil-alt"></i></button>
-                                            <div class="modal fade" id="edit-{{$ks->id_koleksi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal fade none" id="edit-{{$ks->id_koleksi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">Sunting {{$ks->jenis_koleksi}}</h4>
+                                                            <h4 class="modal-title" id="myLargeModalLabel">Sunting {{$ks->jenis_koleksi}}</h4>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form class="form-horizontal form-material" action="{{ route('koleksi.update', ['koleksi'=>$ks->id_koleksi]) }}" method ="POST">
@@ -110,8 +109,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group m-b-0">
-                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
-                                                                    <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Simpan</button>
+                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
+                                                                    <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Simpan</button>
                                                                 </div>
                                                                 @method('PUT')
                                                                 @csrf
@@ -122,19 +121,19 @@
                                             </div>
 
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-{{$ks->id_koleksi}}" data-plaement="top" title="Hapus Data Koleksi"><i class="ti-trash"></i></button>
-                                            <div class="modal fade" id="delete-{{$ks->id_koleksi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal fade none" id="delete-{{$ks->id_koleksi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">Hapus {{$ks->jenis_koleksi}}</h4> 
+                                                            <h4 class="modal-title" id="myLargeModalLabel">Hapus {{$ks->jenis_koleksi}}</h4> 
                                                         </div>
                                                         <div class="modal-body">
                                                             <form class="form-horizontal form-material" action="{{ route('koleksi.destroy', ['koleksi'=>$ks->id_koleksi]) }}" method = "POST">
                                                             <input type="hidden" name="id" value="{{$ks->id_koleksi}}" />
                                                             <h5> Apakah Anda yakin untuk menghapus data koleksi "{{$ks->jenis_koleksi}}"? </h5>
                                                                 <div class="form-group m-b-0">
-                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
-                                                                    <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Hapus</button>
+                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
+                                                                    <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Hapus</button>
                                                                 </div>
                                                                 @method('delete')
                                                                 @csrf

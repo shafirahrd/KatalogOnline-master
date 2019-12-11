@@ -3,7 +3,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <center><h2 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">{{$kg->judul}}</h2></center>
+            <center><h2 class="modal-title" id="myLargeModalLabel">{{$kg->judul}}</h2></center>
         </div>
         <div class="modal-body">
             <div class="panel panel-default">
@@ -12,42 +12,42 @@
                         <div class="tab-pane active">
                             <div class="row">
                                 <div class="col-sm-12 col-lg-10">
-                                    <table class="table table-borderless" style="table-layout: fixed">
+                                    <table class="table table-borderless fixed">
                                         <tbody class="detail-text text-left">
                                             <tr>
-                                                <td style="width: 1%"><span class="text-muted" style="font-weight: 500;">Judul Koleksi</span></td>
-                                                <td style="width: 0%"><span class="text-muted" style="font-weight: 500;">: </span></td>
-                                                <td style="width: 1%"><span style="margin-left: 5%;"> {{$kg->judul ?? '-'}}</span></td>
+                                                <td class="w1"><span class="text-muted weight-500">Judul Koleksi</span></td>
+                                                            <td class="w0"><span class="text-muted weight-500">: </span></td>
+                                                <td class="w1"><span class="marginL5"> {{$kg->judul ?? '-'}}</span></td>
                                             </tr>
                                             <tr>
-                                                <td><span class="text-muted" style="font-weight: 500">Jenis Koleksi</span></td>
-                                                <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                <td><span style="margin-left: 5%;">{{$kg->koleksi->jenis_koleksi ?? '-'}}</span></td>
+                                                <td><span class="text-muted weight-500">Jenis Koleksi</span></td>
+                                                <td><span class="text-muted weight-500">: </span></td>
+                                                <td><span class="marginL5">{{$kg->koleksi->jenis_koleksi ?? '-'}}</span></td>
                                             </tr>
                                             <tr>
-                                                <td><span class="text-muted" style="font-weight: 500">Penulis</span></td>
-                                                <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                <td><span style="margin-left: 5%;">{{$kg->penulis ?? '-'}}</span></td>
+                                                <td><span class="text-muted weight-500">Penulis</span></td>
+                                                <td><span class="text-muted weight-500">: </span></td>
+                                                <td><span class="marginL5">{{$kg->penulis ?? '-'}}</span></td>
                                             </tr>
                                             <tr>
-                                                <td><span class="text-muted" style="font-weight: 500">Penerbit</span></td>
-                                                <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                <td><span style="margin-left: 5%;">{{$kg->penerbit ?? '-'}}</span></td>
+                                                <td><span class="text-muted weight-500">Penerbit</span></td>
+                                                <td><span class="text-muted weight-500">: </span></td>
+                                                <td><span class="marginL5">{{$kg->penerbit ?? '-'}}</span></td>
                                             </tr>
                                             <tr>
-                                                <td><span class="text-muted" style="font-weight: 500">Kota Penerbit</span></td>
-                                                <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                <td><span style="margin-left: 5%;">{{$kg->kota_penerbit ?? '-'}}</span></td>
+                                                <td><span class="text-muted weight-500">Kota Penerbit</span></td>
+                                                <td><span class="text-muted weight-500">: </span></td>
+                                                <td><span class="marginL5">{{$kg->kota_penerbit ?? '-'}}</span></td>
                                             </tr>
                                             <tr>
-                                                <td><span class="text-muted" style="font-weight: 500">Tahun Terbit</span></td>
-                                                <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                <td><span style="margin-left: 5%;">{{$kg->tahun_terbit ?? '-'}}</span></td>
+                                                <td><span class="text-muted weight-500">Tahun Terbit</span></td>
+                                                <td><span class="text-muted weight-500">: </span></td>
+                                                <td><span class="marginL5">{{$kg->tahun_terbit ?? '-'}}</span></td>
                                             </tr>
                                             <tr>
-                                                <td><span class="text-muted" style="font-weight: 500">Bahasa</span></td>
-                                                <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                <td><span style="margin-left: 5%;">{{$kg->bahasa ?? '-'}}</span></td>
+                                                <td><span class="text-muted weight-500">Bahasa</span></td>
+                                                <td><span class="text-muted weight-500">: </span></td>
+                                                <td><span class="marginL5">{{$kg->bahasa ?? '-'}}</span></td>
                                             </tr>
                                             {{-- @foreach(json_decode($kg->att_value) as $ak=>$as)
                                                 @if(!is_null($ak))
@@ -61,14 +61,14 @@
                                                 @endif
                                                 @endforeach --}}
                                                 <tr>
-                                                    <td><span class="text-muted" style="font-weight: 500">Deskripsi</span></td>
-                                                    <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                    <td><span style="margin-left: 5%;">{{$kg->deskripsi ?? '-'}}</span></td>
+                                                    <td><span class="text-muted weight-500">Deskripsi</span></td>
+                                                    <td><span class="text-muted weight-500">: </span></td>
+                                                    <td><span class="marginL5">{{$kg->deskripsi ?? '-'}}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><span class="text-muted" style="font-weight: 500">Lokasi Koleksi</span></td>
-                                                    <td><span class="text-muted" style="font-weight: 500">: </span></td>
-                                                    <td><span style="margin-left: 5%;">{{$kg->lokasis->departemen ?? '-'}}</span></td>
+                                                    <td><span class="text-muted weight-500">Lokasi Koleksi</span></td>
+                                                    <td><span class="text-muted weight-500">: </span></td>
+                                                    <td><span class="marginL5">{{$kg->lokasis->departemen ?? '-'}}</span></td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -38,11 +38,11 @@
                                     <th>
                                         @if(Auth::check() && Auth::user()->user_role == 1)
                                         <button type="button" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#tambah-lokasi"><i class="fa fa-plus"></i>  Lokasi</button>
-                                        <div class="modal fade" id="tambah-lokasi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal fade none" id="tambah-lokasi" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="myLargeModalLabel" style="text-align: center; font-weight: 450;">Tambah Lokasi</h4>
+                                                        <h4 class="modal-title" id="myLargeModalLabel"><center>Tambah Lokasi</center></h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <form class="form-horizontal form-material" action="{{ route('lokasi.store') }}" method = "POST">
@@ -72,8 +72,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group m-b-0">
-                                                                <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
-                                                                <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Simpan</button>
+                                                                <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
+                                                                <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Simpan</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -84,32 +84,32 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center" style="background-color: white; color: black;">No.</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Departemen')</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Fakultas')</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Alamat')</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@sortablelink('Tautan Ruang Baca')</th>
-                                    <th class="text-center" style="background-color: white; color: black;">@if(Auth::check())Aksi @else Lihat Berdasarkan Lokasi @endif</th>
+                                    <th class="text-center th-header">No.</th>
+                                    <th class="text-center th-header">@sortablelink('Departemen')</th>
+                                    <th class="text-center th-header">@sortablelink('Fakultas')</th>
+                                    <th class="text-center th-header">@sortablelink('Alamat')</th>
+                                    <th class="text-center th-header">@sortablelink('Tautan Ruang Baca')</th>
+                                    <th class="text-center th-header">@if(Auth::check())Aksi @else Lihat Berdasarkan Lokasi @endif</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
                                 <?php $x=1; ?>
                                 @foreach($lokasi as $lk)
                                 <tr class="fuckOffPadding">
-                                    <td style="vertical-align: middle;"><?php echo $x; $x=$x+1; ?></td>
-                                    <td style="text-align: left;">{{$lk->departemen}}</td>
-                                    <td style="vertical-align: middle;">{{$lk->fakultas}}</td>
-                                    <td style="text-align: left;">{{$lk->alamat}}</td>
-                                    <td style="vertical-align: middle;"><a href="http://{{$lk->tautan}}" target="_blank">{{$lk->tautan}}</td>
-                                    <td style="vertical-align: middle;">
+                                    <td class="vertical-align-middle"><?php echo $x; $x=$x+1; ?></td>
+                                    <td class="vertical-align-middle text-align-left">{{$lk->departemen}}</td>
+                                    <td class="vertical-align-middle">{{$lk->fakultas}}</td>
+                                    <td class="vertical-align-middle text-align-left">{{$lk->alamat}}</td>
+                                    <td class="vertical-align-middle"><a href="http://{{$lk->tautan}}" target="_blank">{{$lk->tautan}}</td>
+                                    <td class="vertical-align-middle">
                                         <a href="{{ url('searchLokasi/'.$lk->departemen) }}" class="btn btn-default"><i class="ti-search" data-toggle="tooltip" data-placement="top" title="Lihat Berdasarkan Lokasi"></i></a>
                                         @if(Auth::check() && Auth::user()->user_role == 1)
                                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-{{$lk->id_lokasi}}" data-plaement="top" title="Ubah Data Lokasi"><i class="ti-pencil-alt"></i></button>
-                                            <div class="modal fade" id="edit-{{$lk->id_lokasi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal fade none" id="edit-{{$lk->id_lokasi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">Sunting {{$lk->departemen}}</h4>
+                                                            <h4 class="modal-title" id="myLargeModalLabel">Sunting {{$lk->departemen}}</h4>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form class="form-horizontal form-material" action="{{ route('lokasi.update', ['lokasi'=>$lk->id_lokasi]) }}" method ="POST">
@@ -138,8 +138,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group m-b-0">
-                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
-                                                                    <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Simpan</button>
+                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
+                                                                    <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Simpan</button>
                                                                 </div>
                                                                 @method('PUT')
                                                                 @csrf
@@ -150,19 +150,19 @@
                                             </div>
 
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-{{$lk->id_lokasi}}" data-plaement="top" title="Hapus Data Lokasi"><i class="ti-trash"></i></button>
-                                            <div class="modal fade" id="delete-{{$lk->id_lokasi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal fade none" id="delete-{{$lk->id_lokasi}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="myLargeModalLabel" style="font-weight: 450;">Hapus {{$lk->departemen}}</h4> 
+                                                            <h4 class="modal-title" id="myLargeModalLabel">Hapus {{$lk->departemen}}</h4> 
                                                         </div>
                                                         <div class="modal-body">
                                                             <form class="form-horizontal form-material" action="{{ route('lokasi.destroy', ['lokasi'=>$lk->id_lokasi]) }}" method = "POST">
                                                             <input type="hidden" name="id" value="{{$lk->id_lokasi}}" />
                                                             <h5> Apakah Anda yakin untuk menghapus data lokasi "{{$lk->departemen}}"? </h5>
                                                                 <div class="form-group m-b-0">
-                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10" data-dismiss="modal" style="padding-top: 5.5px; padding-bottom: 5.5px; float: right; margin-left: 10px">Keluar</a>
-                                                                    <button type="submit" style="float: right;" class="btn btn-danger waves-effect waves-light m-t-10">Hapus</button>
+                                                                    <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
+                                                                    <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Hapus</button>
                                                                 </div>
                                                                 @method('delete')
                                                                 @csrf
