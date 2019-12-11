@@ -162,18 +162,23 @@ class AdminController extends Controller
 
 
             foreach ($excel_data as $row) {
-                $katalog = new Katalog();
+                $flag = $this->checkRedundancy($row);
+                if($flag == 1){
+                    $katalog = new Katalog();
 
-                foreach ($request->fields as $index => $field) {
-                    // dd($index);
-                    if($field !== "null"){
-                        $temp = $column_katalog[$index+1];
-                        if($index <= count($row)){
-                            $katalog->$temp = $row[$index] == '-' ? NULL : $row[$index];
+                    foreach ($request->fields as $index => $field) {
+                        if($field !== "null"){
+                            $temp = $column_katalog[$index+1];
+                            if($index <= count($row)){
+                                $katalog->$temp = $row[$index] == '-' ? NULL : $row[$index];
+                            }
                         }
                     }
+                    $katalog->save();
+                }else{
+                    continue;
                 }
-                $katalog->save();
+
             }
         }
         else{
@@ -186,19 +191,42 @@ class AdminController extends Controller
 
 
             foreach ($csv_data as $row) {
-                $katalog = new Katalog();
+                $flag = $this->checkRedundancy($row);
+                if($flag == 1){
+                    $katalog = new Katalog();
 
-                foreach ($request->fields as $index => $field) {
-                    $temp = $column_katalog[$field+1];
-                    if($index <= count($row)){
-                        $katalog->$temp = $row[$index] == '-' ? NULL : $row[$index];
+                    foreach ($request->fields as $index => $field) {
+                        $temp = $column_katalog[$index+1];
+                        if($index <= count($row)){
+                            $katalog->$temp = $row[$index] == '-' ? NULL : $row[$index];
+                        }
                     }
+                    $katalog->save();
+                }else{
+                    continue;
                 }
-                $katalog->save();
             }
         }
 
         return redirect('/log')->with('message','File berhasil diunggah');
+    }
+
+    public function checkRedundancy($katalog)
+    {
+        $flag = 0;
+        $data = Katalog::where('judul',$katalog[0])
+            ->orWhere('judul','LIKE','%'.$katalog[0].'%')->first();
+        // dd($katalog);
+        if($data){
+            if($data->lokasi != $katalog[8]){
+                $flag = 1;
+            }
+
+            return $flag;
+        }else{
+            $flag = 1;
+            return $flag;
+        }
     }
 
     public function uploadKoleksi()
