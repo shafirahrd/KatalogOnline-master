@@ -28,7 +28,7 @@ class KatalogController extends Controller
         }else{
             $katalog = Katalog::with('koleksi','lokasis')->sortable()->paginate(15);
         }
-
+        
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();
         $koleksi = Koleksi::get();
@@ -133,7 +133,7 @@ class KatalogController extends Controller
 
     public function action(Request $request)
     {   
-        $output = '';
+        // $output = '';
         $query = $request->get('query');
         if($query != ''){
 

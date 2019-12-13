@@ -171,7 +171,6 @@
                 <div class="form-group pull-right">
                     <input type="text" id="cari" class="search form-control" placeholder="Cari...">
                 </div>
-                <span class="counter pull-right"></span>
                 <tr>
                     <th class="text-center th-header">No.</th>
                     <th class="text-center th-header">Judul</th>
