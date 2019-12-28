@@ -101,10 +101,10 @@
                 </div>
                 @if(Auth::check())
                     @if(Auth::user()->user_role == 0)
-                        <center><p>Welcome, Admin <b>{{Auth::user()->nama}}</b></p></center>
+                        <center><p>Welcome, Pustakawan <b>{{Auth::user()->nama}}</b></p></center>
                     @endif
                     @if(Auth::user()->user_role == 1)
-                        <center><p>Welcome, Super Admin <b>{{Auth::user()->nama}}</b></p></center>
+                        <center><p>Welcome, Administrator <b>{{Auth::user()->nama}}</b></p></center>
                     @endif
                 @endif
                 <ul class="nav" id="side-menu">
@@ -139,11 +139,11 @@
                     <li>
                         @if(Request::path() == 'lokasi')
                         <a href="/lokasi" class="waves-effect active">
-                            <span class="hide-menu"> RUANG BACA TERINTEGRASI </span>
+                            <span class="hide-menu"> LOKASI RUANG BACA </span>
                         </a>
                         @else
                         <a href="/lokasi" class="waves-effect">
-                            <span class="hide-menu"> RUANG BACA TERINTEGRASI </span>
+                            <span class="hide-menu"> LOKASI RUANG BACA </span>
                         </a>
                         @endif
                     </li>

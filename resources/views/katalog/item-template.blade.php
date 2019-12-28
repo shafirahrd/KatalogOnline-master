@@ -65,10 +65,19 @@
                                                             <td><span class="text-muted weight-500">: </span></td>
                                                             <td><span class="marginL5">${item.deskripsi==null ? '-':item.deskripsi}</span></td>
                                                         </tr>
+                                                        {{-- @if(!is_null($kg->att_value))
+                                                            @foreach(json_decode($kg->att_value) as $ak => $as)
+                                                                <tr>
+                                                                    <td><span class="text-muted weight-500">{{$ak ?? '-'}}</span></td>
+                                                                    <td><span class="text-muted weight-500">: </span></td>
+                                                                    <td><span class="marginL5">{{$as ?? '-'}}</span></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif --}}
                                                         <tr>
                                                             <td><span class="text-muted weight-500">Lokasi Koleksi</span></td>
                                                             <td><span class="text-muted weight-500">: </span></td>
-                                                            <td><span class="marginL5">${item.lokasis.departemen==null ? '-':item.lokasis.departemen}</span></td>
+                                                            <td><span class="marginL5">Departemen ${item.lokasis.departemen==null ? '-':item.lokasis.departemen}</span></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -82,6 +91,7 @@
                 </div>
             </div>
         </div>
+        @if(Auth::check())
         <form class="form-horizontal form-material" action="${katalog_route}/${item.id_katalog}/edit" method = "GET">
             <button type="submit" class="btn btn-warning" title="Ubah Katalog"><i class="ti-pencil-alt"></i></button>
             <input type="hidden" name="id" value="${item.id_katalog}" />
@@ -109,5 +119,6 @@
                 </div>
             </div>
         </div>
+        @endif
     </td>
 </tr>

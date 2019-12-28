@@ -139,31 +139,31 @@
                             <tbody>
                                 <tr>
                                     <td>judul</td>
-                                    <td>: judul koleksi</td>
+                                    <td>: judul koleksi (contoh: Pemrograman Dasar C, Idea Jurnal Desain, dll.)</td>
                                 </tr>
                                 <tr>
                                     <td>jenis</td>
-                                    <td>: jenis koleksi/GMD/media</td>
+                                    <td>: jenis koleksi/GMD/media (contoh: Buku Teks, Jurnal, Majalah, Buku Tugas Akhir, dll.)</td>
                                 </tr>
                                 <tr>
                                     <td>penulis</td>
-                                    <td>: penulis koleksi</td>
+                                    <td>: penulis/pengarang koleksi (contoh: William Stallings, Harvey Deitel, dll.</td>
                                 </tr>
                                 <tr>
                                     <td>penerbit</td>
-                                    <td>: penerbit koleksi</td>
+                                    <td>: penerbit koleksi (contoh: Penerbit Erlangga, Departemen Informatika ITS, dll.</td>
                                 </tr>
                                 <tr>
                                     <td>kota_penerbit</td>
-                                    <td>: kota tempat koleksi diterbitkan</td>
+                                    <td>: kota tempat koleksi diterbitkan (contoh: Surabaya, New York, dll.)</td>
                                 </tr>
                                 <tr>
                                     <td>tahun_terbit</td>
-                                    <td>: tahun koleksi diterbitkan</td>
+                                    <td>: tahun koleksi diterbitkan (contoh: 2018, 2019, 1999, dll.)</td>
                                 </tr>
                                 <tr>
                                     <td>bahasa</td>
-                                    <td>: bahasa koleksi</td>
+                                    <td>: bahasa koleksi (contoh: Indonesia, Inggris, dll.)</td>
                                 </tr>
                                 <tr>
                                     <td>deskripsi</td>
@@ -171,7 +171,35 @@
                                 </tr>
                                 <tr>
                                     <td>lokasi</td>
-                                    <td>: lokasi koleksi berada</td>
+                                    <td>: lokasi koleksi berada (contoh: Informatika, Desain Produk, Perpustakaan Pusat ITS)</td>
+                                </tr>
+                                <tr>
+                                    <td>Pembimbing</td>
+                                    <td>: atribut khusus untuk buku tugas akhir, buku kerja praktik, tesis, dan disertasi</td>
+                                </tr>
+                                <tr>
+                                    <td>Subjek</td>
+                                    <td>: subjek dari koleksi (contoh: Computer Network, Civil Engineering, Technology Innovation, dll.)</td>
+                                </tr>
+                                <tr>
+                                    <td>Edisi</td>
+                                    <td>: edisi/seri dari koleksi (contoh: 4, 2, 1, dll.)</td>
+                                </tr>
+                                <tr>
+                                    <td>ISBN/ISSN</td>
+                                    <td>: nomor buku standar internasional/kode identifikasi buku</td>
+                                </tr>
+                                <tr>
+                                    <td>Bulan</td>
+                                    <td>: atribut khusus untuk jurnal dan majalah, merupakan bulan terbit koleksi</td>
+                                </tr>
+                                <tr>
+                                    <td>Volume</td>
+                                    <td>: atribut khusus untuk jurnal, merupakan nomor edisi jurnal</td>
+                                </tr>
+                                <tr>
+                                    <td>Nomor</td>
+                                    <td>: atribut khusus untuk jurnal dan majalah, merupakan nomor penerbitan jurnal/majalah terkait</td>
                                 </tr>
                             </tbody>
                         </table>

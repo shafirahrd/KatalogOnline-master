@@ -6,6 +6,7 @@ use DB;
 use App\UploadedData;
 use App\Katalog;
 use App\Koleksi;
+use App\Lokasi;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Input;
@@ -50,8 +51,9 @@ class AdminController extends Controller
             ->get();
         $log = DB::table('logs')
             ->leftjoin('katalogs','katalogs.id_katalog','=','logs.id_katalog')
-            ->leftjoin('lokasis as b','b.id_lokasi','=','katalogs.lokasi')
+            ->leftjoin('lokasis','id_lokasi','=','katalogs.lokasi')
             ->leftjoin('koleksis','katalogs.jenis','=','koleksis.id_koleksi')
+            ->select('logs.*','katalogs.judul','katalogs.deleted_at','jenis_koleksi','penulis','penerbit','kota_penerbit','tahun_terbit','bahasa','deskripsi','departemen')
             ->paginate(15);
 
         // $log = DB::SELECT(DB::RAW("SELECT * FROM logs JOIN users ON id_user=id JOIN lokasis a ON user_lokasi=a.id_lokasi
@@ -62,49 +64,53 @@ class AdminController extends Controller
 
     public function parseExcel()
     {
-        $array = (new KatalogImport)->toArray(request()->file('fileExcel'));
+        if(request()->file('fileExcel')){
+            $array = (new KatalogImport)->toArray(request()->file('fileExcel'));
 
-        if(count($array[0]) > 0){
-            $data = [];
-            $length = 0;
-            if(request()->has('header')){
-                $excel_header_fields = [];
-                $length = 1;
+            if(count($array[0]) > 0){
+                $data = [];
+                $length = 0;
+                if(request()->has('header')){
+                    $excel_header_fields = [];
+                    $length = 1;
 
-                foreach ($array[0][0] as $key => $value) {
-                    $excel_header_fields[] = $key;
-                }             
-                array_push($data,$excel_header_fields);
+                    foreach ($array[0][0] as $key => $value) {
+                        $excel_header_fields[] = $key;
+                    }             
+                    array_push($data,$excel_header_fields);
+                }
+                
+                foreach($array[0] as $k => $v){
+                    $d = [];
+                    foreach ($array[0][$k] as $key => $value) {
+                        $d[] = $value;
+                    }
+                    array_push($data,$d);
+                }
+
+                $excel_data = array_slice($data,0,3+$length);
+
+                $excel_data_file = UploadedData::create([
+                    'filename' => request()->file('fileExcel')->getClientOriginalName(),
+                    'header' => request()->has('header'),
+                    'data' => json_encode($data)
+                ]);
+            }else{
+                return redirect()->back();
             }
             
-            foreach($array[0] as $k => $v){
-                $d = [];
-                foreach ($array[0][$k] as $key => $value) {
-                    $d[] = $value;
-                }
-                array_push($data,$d);
+            $column_katalog = $this->getColumn();
+            $column_katalog = array_merge($column_katalog[0],$column_katalog[1]);
+
+            $type = 'excel';
+
+            if(isset($csv_header_fields)){
+                return view('admin.parsing_data', compact('excel_header_fields','excel_data','excel_data_file','column_katalog','type'));
+            }else{
+                return view('admin.parsing_data', compact('excel_data','excel_data_file','column_katalog','type'));
             }
-
-            $excel_data = array_slice($data,0,3+$length);
-
-            $excel_data_file = UploadedData::create([
-                'filename' => request()->file('fileExcel')->getClientOriginalName(),
-                'header' => request()->has('header'),
-                'data' => json_encode($data)
-            ]);
         }else{
-            return redirect()->back();
-        }
-        
-        $column_katalog = $this->getColumn();
-        $column_katalog = array_merge($column_katalog[0],$column_katalog[1]);
-
-        $type = 'excel';
-
-        if(isset($csv_header_fields)){
-            return view('admin.parsing_data', compact('excel_header_fields','excel_data','excel_data_file','column_katalog','type'));
-        }else{
-            return view('admin.parsing_data', compact('excel_data','excel_data_file','column_katalog','type'));
+            return redirect('/excel')->with('message','Tidak file yang dipilih');
         }
     }
 
@@ -150,7 +156,6 @@ class AdminController extends Controller
     public function import(Request $request)
     {      
         $column_katalog = $this->getColumn();
-        
         // $request->fields = array_values(array_filter($request->fields));
         
         if($request->type == "excel"){
@@ -162,27 +167,45 @@ class AdminController extends Controller
             }
 
             foreach ($excel_data as $k => $row) {
+                $kol = Koleksi::where("jenis_koleksi",'LIKE','%'.$row[array_search("jenis",$request->fields)].'%')->select('id_koleksi','att_khusus')->first();
+                // $koleksinya = $kol->id_koleksi;
+                $lokasi = Lokasi::where("departemen",'LIKE','%'.$row[array_search("lokasi",$request->fields)].'%')->select('id_lokasi')->first();
+
                 $flag = $this->checkRedundancy($row,$request->fields);
-                // if($k==19){dd($flag,$row,$request->fields);}
 
                 if($flag == 1){
                     $katalog = new Katalog();
-                    $koleksi = Koleksi::find($row[array_search("jenis",$request->fields)]);
-                    if($koleksi->att_khusus !== "-"){
-                        $koleksi = $koleksi->formatted_column;
-                        $temp = [];
+                    // if($k==6){dd($kol);}
+                    if($kol != NULL){
+                        if($kol->att_khusus !== "-" || $kol->att_khusus != NULL){
+                            $koleksi = $kol->formatted_column;
+                            $temp = [];
+                        }
                     }else{
                         $koleksi = [];
                         $temp = NULL;
                     }
-                    // if($k==19){dd($flag,$koleksi,$temp,$row,$request->fields);}
-
                     foreach ($request->fields as $index => $field) {
+                    // if($k == 6){dd(in_array("",));}
                         if($field !== "null"){
                             if(in_array($field, $column_katalog[0])){
                                 $i = array_search($field, $column_katalog[0]);
                                 $header = $column_katalog[0][$i];
-                                $katalog->$header = $row[$index] == '-' ? NULL : $row[$index];
+                                if($header == "jenis"){
+                                    if($kol != NULL){
+                                        $katalog->$header = $kol->id_koleksi == '-' ? NULL : $kol->id_koleksi;
+                                    }else{
+                                        $katalog->$header = NULL;
+                                    }
+                                }elseif($header == "lokasi"){
+                                    if($lokasi != NULL){
+                                        $katalog->$header = $lokasi->id_lokasi == '-' ? NULL : $lokasi->id_lokasi;
+                                    }else{
+                                        $katalog->$header = NULL;
+                                    }
+                                }else{
+                                    $katalog->$header = $row[$index] == '-' ? NULL : $row[$index];
+                                }
                             }elseif(in_array($field, $koleksi)){
                                 foreach($koleksi as $value){
                                     if($value == $field){
@@ -235,24 +258,34 @@ class AdminController extends Controller
                 }
             }
         }
-
+ 
         return redirect('/log')->with('message','File berhasil diunggah');
     }
 
     public function checkRedundancy($row,$column)
     {   
         $flag = 0;
-
         $judul = array_search("judul", $column);
+        $jenis = array_search("jenis", $column);
         $lokasi = array_search("lokasi", $column);
         $edisi = array_search("Edisi", $column);
         $isbn = array_search("ISBN/ISSN", $column);
+        $volume = array_search("Volume", $column);
+        $nomor = array_search("Nomor", $column);
+        $bulan = array_search("Bulan", $column);
 
         $data = Katalog::where('judul',$row[$judul])
             ->orWhere('judul','LIKE','%'.$row[$judul].'%')->first();
+        // dd($data->jenis);
+        if($data->att_value != NULL || $data->att_value !== "-"){
+            $att_khusus = (array)json_decode($data->att_value);
+        }else{
+            $att_khusus = [];
+        }
+
         if($data){
-            //TEMPORARY second case
-            if($data->lokasi != $row[$lokasi] || $data->att_value == NULL){
+            if($data->lokasi != $row[$lokasi] || $att_khusus['Edisi']!= $row[$edisi] || $att_khusus['ISBN/ISSN'] != $row[$isbn] || $att_khusus['Volume'] != $row[$volume] || $att_khusus['Nomor'] != $row[$nomor] || $att_khusus['Bulan'] != $row[$bulan] || $att_khusus == NULL){
+
                 $flag = 1;
             }
             return $flag;

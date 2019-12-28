@@ -103,15 +103,10 @@ class KoleksiController extends Controller
 
     public function searchByKoleksi($koleksis)
     {
-        // $katalog = Katalog::whereHas('lokasis')
-        // ->whereHas('koleksi', function($query) use($koleksis){
-        //     $query->where('jenis_koleksi','=',$koleksis);
-        // })->paginate(15);
-
-        $katalog = DB::table('katalogs')
-            ->leftjoin('koleksis','id_koleksi','=','jenis')
-            ->leftjoin('lokasis','id_lokasi','=','lokasi')
-            ->where('jenis_koleksi',$koleksis)->paginate(15);
+        $katalog = Katalog::whereHas('lokasis')
+        ->whereHas('koleksi', function($query) use($koleksis){
+            $query->where('jenis_koleksi','=',$koleksis);
+        })->paginate(15);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();

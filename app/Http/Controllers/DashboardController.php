@@ -39,7 +39,6 @@ class DashboardController extends Controller
             ->orWhere(DB::raw("lower(bahasa)"),'LIKE','%'.$keyword.'%')
             ->orWhere(DB::raw("lower(deskripsi)"),'LIKE','%'.$keyword.'%')
             ->orWhere(DB::raw("lower(att_value)"),'LIKE','%'.$keyword.'%')
-            ->orWhere(DB::SELECT("SELECT att_value FROM katalogs WHERE att_value REGEXP '(?i)((pembimbing1).*?( :keyword ))'",['keyword'=>$keyword]))
             ->paginate(15);
 
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
@@ -105,37 +104,64 @@ class DashboardController extends Controller
             $query = $query->whereHas('koleksi',function($q) use($koleksis){
                 $q->where('jenis_koleksi','LIKE','%'.$koleksis.'%');
             });
+
+            // $k = Koleksi::where('jenis_koleksi','LIKE','%'.$koleksis.'%')->first();
+            // $c = $k->formatted_column;
+
+            // dd();
+            // $temp = "att_value REGEXP '(?i)";
+            // foreach ($c as $key => $value) {
+            //     if($key == 0){
+            //         $temp .= "((".$value.").*?(".$value."))";
+            //     }else{
+            //         $temp .= ".*((".$value.").*?(".$value."))";
+            //     }
+            // }
+            // dd($temp);
+
+            if($koleksis == "buku tugas akhir" || $koleksis == "buku kerja praktik" || $koleksis == "tesis" || $koleksis == "disertasi"){
+                $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1.")).*((pembimbing2).*?(".$pembimbing2.")).*((subjek).*?(".$subjek."))'");
+            }
+            if($koleksis == "buku teks"){
+                $query = $query->whereraw("att_value REGEXP '(?i)((edisi).*?(".$edisi.")).*((isbn).*?(".$isbn_issn."))'");
+            }
+            if($koleksis == "buku referensi" || $koleksis == "e-book"){
+                $query = $query->whereraw("att_value REGEXP '(?i)((edisi).*?(".$edisi."))'"); 
+            }
+            if($koleksis == "majalah"){
+                $query = $query->whereraw("att_value REGEXP '(?i)((bulan).*?(".$bulan.")).*((nomor).*?(".$nomor."))'");
+            }
+            if($koleksis == "jurnal"){
+                $query = $query->whereraw("att_value REGEXP '(?i)((bulan).*?(".$bulan.")).*((volume).*?(".$volume.")).*((nomor).*?(".$nomor."))'");
+            }
         }
-        if($edisi){
-            $query = $query->whereraw("att_value REGEXP '(?i)((edisi).*?(".$edisi."))'");
-        }
-        if($pembimbing1){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");
-        }
-        if($pembimbing2){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");
-        }
-        if($pembimbing2){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing2."))'");
-        }
-        if($subjek){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$subjek."))'");
-        }
-        if($isbn_issn){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$isbn_issn."))'");
-        }
-        if($bulan){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$bulan."))'");
-        }
-        if($nomor){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$nomor."))'");
-        }
-        if($volume){
-            $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$volume."))'");
-        }
+        // if($edisi){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((edisi).*?(".$edisi."))'");
+        // }
+        // if($pembimbing1){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing1).*?(".$pembimbing1."))'");
+        // }
+        // if($pembimbing2){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((pembimbing2).*?(".$pembimbing2."))'");
+        // }
+        // if($subjek){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((subjek).*?(".$subjek."))'");
+        // }
+        // if($isbn_issn){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((isbn_issn).*?(".$isbn_issn."))'");
+        // }
+        // if($bulan){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((bulan).*?(".$bulan."))'");
+        // }
+        // if($nomor){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((nomor).*?(".$nomor."))'");
+        // }
+        // if($volume){
+        //     $query = $query->whereraw("att_value REGEXP '(?i)((volume).*?(".$volume."))'");
+        // }
 
         $katalog = $query->paginate(15);
-
+        
         return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
     }
 }

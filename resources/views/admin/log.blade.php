@@ -35,6 +35,9 @@
                                 <tr>
                                     <th colspan=7>RIWAYAT PERUBAHAN DATA KATALOG</th>
                                 </tr>
+                                {{-- <div class="form-group pull-right">
+                                    <input type="text" id="cari" class="search form-control" placeholder="Cari...">
+                                </div> --}}
                                 <tr>
                                     <th class="text-center th-header">No.</th>
                                     <th class="text-center th-header">@sortablelink('Admin')</th>
@@ -56,10 +59,10 @@
                                         @endif
                                     @endforeach
                                     <td class="text-align-middle">{{$lg->log_change}}, {{$lg->judul}}</td>
-                                    @if($lg->log_change == 'CREATED')
+                                    @if($lg->log_change == "CREATED")
                                         <td class="vertical-align-middle">{{ date('d-F-Y',strtotime($lg->created_at)) }}</td>
                                         <td class="vertical-align-middle">{{ date('H:i:s',strtotime($lg->created_at)) }}</td>
-                                    @elseif($lg->log_change == 'UPDATED')
+                                    @elseif($lg->log_change == "UPDATED")
                                         <td class="vertical-align-middle">{{ date('d-F-Y',strtotime($lg->updated_at)) }}</td>
                                         <td class="vertical-align-middle">{{ date('H:i:s',strtotime($lg->updated_at)) }}</td>
                                     @else

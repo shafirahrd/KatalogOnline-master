@@ -37,7 +37,7 @@
                         <div class="col-md-5 col-md-offset-3 col-sm-12 text-right"></div>
                         <div class="col-md-4 col-sm-12">
                             <div class="head_top_social text-right">
-                                <a href="">KATALOG ONLINE TERINTEGRASI</a>
+                                <a href="">KATALOG ONLINE TERINTEGRASI ITS</a>
                             </div>  
                         </div>
                     </div>          
@@ -68,7 +68,7 @@
                                     <ul class="nav navbar-nav navbar-right">
                                         <li><a href="#beranda">Beranda</a></li>
                                         <li><a href="#about">Tentang Katalog Online</a></li>
-                                        <li><a href="#lokasi">Ruang Baca Terintegrasi</a></li>
+                                        <li><a href="#lokasi">Lokasi Ruang Baca</a></li>
                                         <li><h2 style="vertical-align: top;">|</h2></li>
                                         <li><a href="/koleksi">Jenis Koleksi</a></li>
                                         <li><a href="/katalog">Katalog</a></li>
@@ -88,13 +88,14 @@
                         <div class="main_slider text-center">
                             <div class="col-md-12">
                                 <div class="main_slider_content wow zoomIn" data-wow-duration="1s">
-                                    <h1>Katalog Online</h1>
-                                    <p>Katalog terintegarasi yang mencakup semua koleksi dari ruang baca di ITS</p>
+                                    <h1>ITS<br>Integrated Online Catalog</h1>
+                                    <p>Katalog terintegarasi yang mencakup koleksi ruang baca di lingkungan ITS</p>
                                     <div class="form-style">
                                       {{ csrf_field() }}
                                       <form action="/search" method="GET">
                                           <input id="search" name="search" type="text" class="input" placeholder="Apa yang ingin Anda cari?"><br>
                                           <input type="submit" class="button">
+                                          {{-- <button type="submit" class="btn btn-primary">SUBMIT</button> --}}
                                       </form>
                                     </div>
                                 </div>
@@ -207,7 +208,7 @@
                                               <div class="text-center">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                                 <button class="btn btn-primary">Cari
-                                                  <i class="fas fa-cart-plus ml-2" aria-hidden="true"></i>
+                                                  <i class="fa fa-search-plus ml-2" aria-hidden="true"></i>
                                                 </button>
                                               </div>
                                           </div>
@@ -231,7 +232,7 @@
                     <div class="abouts_content">
                         <div class="col-md-6">
                             <div class="single_abouts_text text-center wow slideInLeft" data-wow-duration="1s">
-                                <img src="{{ asset('pelanggan/assets/images/ruangan.jpg') }}" alt="" />
+                                <img style="width: 100%; height: 100%;" src="{{ asset('pelanggan/assets/images/ruangan.jpg') }}" alt="" />
                             </div>
                         </div>
 

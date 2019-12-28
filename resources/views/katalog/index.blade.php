@@ -43,7 +43,7 @@
                                 <thead>
                                     <tr>
                                         <th colspan=6>ADVANCED SEARCH</th>
-                                        <th><i class="fa fa-chevron-circle-down fa-lg"></i></th>
+                                        <th><button class="btn btn-default btn-rounded"><i class="fa fa-arrow-down fa-lg"></i></button></th>
                                     </tr>
                                 </thead>
                             </table><br>

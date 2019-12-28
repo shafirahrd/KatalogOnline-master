@@ -661,11 +661,11 @@ a.navbar-brand.our_logo{
 	
 }
 .main_slider .main_slider_content h1{
-font-size: 6rem;
+    font-size: 4rem;
     font-family: 'Pacifico', cursive;
     color: #fff;
     line-height: 6rem;
-    margin:0px 0px 60px 0px;
+    /*margin:0px 0px 60px 0px;*/
 }	
 .main_slider_content{
 	padding:200px 0px 0px 0px;

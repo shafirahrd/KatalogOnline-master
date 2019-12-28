@@ -33,7 +33,7 @@
                         <table class="table color-table success-table example">
                             <thead>
                                 <tr>
-                                    <th colspan=3>DAFTAR KOLEKSI</th>
+                                    <th colspan=4>DAFTAR KOLEKSI</th>
                                     <th>
                                         @if(Auth::check() && Auth::user()->user_role == 1)
                                         <button type="button" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#tambah-koleksi"><i class="fa fa-plus"></i>  Koleksi</button>
@@ -74,6 +74,7 @@
                                     <th class="text-center th-header">No.</th>
                                     <th class="text-center th-header">@sortablelink('Jenis Koleksi')</th>
                                     <th class="text-center th-header width65">@sortablelink('Deskripsi')</th>
+                                    <th class="text-center th-header">Atribut Khusus</th>
                                     <th class="text-center th-header">@if(Auth::check())Aksi @else Lihat Berdasarkan Koleksi @endif</th>
                                 </tr>
                             </thead>
@@ -84,6 +85,15 @@
                                     <td class="vertical-align-middle"><?php echo $x; $x=$x+1; ?></td>
                                     <td class="vertical-align-middle">{{$ks->jenis_koleksi}}</td>
                                     <td class="vertical-align-middle text-align-left">{{$ks->deskripsi_koleksi}}</td>
+                                    <td class="vertical-align-middle text-align-left">
+                                        <ul>
+                                            @if($ks->id_koleksi !== 8 && $ks->id_koleksi !== 9 && $ks->id_koleksi !== 12 && !is_null($ks->att_khusus))
+                                                @foreach($ks->formatted_column as $ak)
+                                                    <li>{{$ak}}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </td>
                                     <td class="vertical-align-middle">
                                         <a href="{{ url('searchKoleksi/'.$ks->jenis_koleksi) }}" class="btn btn-default"><i class="ti-search" data-toggle="tooltip" data-placement="top" title="Lihat Koleksi"></i></a>
                                         @if(Auth::check() && Auth::user()->user_role == 1)
@@ -108,6 +118,14 @@
                                                                         <textarea class="form-control" rows="5" name="deskripsi_koleksi">{{$ks->deskripsi_koleksi}}</textarea>
                                                                     </div>
                                                                 </div>
+                                                                {{-- @foreach(json_decode($ks->att_value) as $ak)
+                                                                    <div class="form-group">
+                                                                        <label for="{{$ak}}" class="col-sm-3 control-label">{{$ak}}</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="{{$ak}}" value="{{$ak}}" name="{{$ak}}">
+                                                                        </div>
+                                                                    </div>
+                                                                @endif --}}
                                                                 <div class="form-group m-b-0">
                                                                     <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
                                                                     <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Simpan</button>
