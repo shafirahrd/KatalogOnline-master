@@ -41,11 +41,17 @@ class KoleksiController extends Controller
      */
     public function store(Request $request)
     {
-        $koleksi = New Koleksi;
-        $koleksi->jenis_koleksi = $request->Input('jenis_koleksi');
-        $koleksi->deskripsi_koleksi = $request->Input('deskripsi_koleksi');
-        $koleksi->save();
-        return back()->with('message','Data koleksi berhasil ditambah');
+        $kol = Koleksi::where("jenis_koleksi",'LIKE','%'.Input::get('jenis_koleksi').'%')->first();
+        if($kol){
+            return back()->with('message','Data koleksi sudah ada');
+        }else{
+            $koleksi = New Koleksi;
+            $koleksi->jenis_koleksi = $request->Input('jenis_koleksi');
+            $koleksi->deskripsi_koleksi = $request->Input('deskripsi_koleksi');
+            $koleksi->att_khusus = json_encode(Input::get('att_khusus'));
+            $koleksi->save();
+            return back()->with('message','Data koleksi berhasil ditambah');
+        }
     }
 
     /**
@@ -79,12 +85,20 @@ class KoleksiController extends Controller
      */
     public function update(Request $request, koleksi $koleksi)
     {
-        $data = Koleksi::find($koleksi->id_koleksi);
-        $data->jenis_koleksi = Input::get('jenis_koleksi');
-        $data->deskripsi_koleksi = Input::get('deskripsi_koleksi');
-        $data->save();
+        $kol = Koleksi::where("jenis_koleksi",'LIKE','%'.Input::get('jenis_koleksi').'%')->first();
+        
+        if(!is_null($kol) && Input::get('deskripsi_koleksi') == $kol->deskripsi_koleksi || $kol->att_khusus == json_encode(Input::get('att_khusus'))){
+            return back()->with('message','Data koleksi sudah ada');
+        }else{
+            $data = Koleksi::find($koleksi->id_koleksi);
+            $data->jenis_koleksi = Input::get('jenis_koleksi');
+            $data->deskripsi_koleksi = Input::get('deskripsi_koleksi');
+            $att = array_filter(Input::get('att_khusus'));
+            $data->att_khusus = json_encode($att);
+            $data->save();
 
-        return back()->with('message','Data koleksi berhasil diubah');
+            return back()->with('message','Data koleksi berhasil diubah');
+        }
     }
 
     /**

@@ -29,7 +29,7 @@
                                 <h4 class="modal-title">Pesan</h4>
                               </div>
                               <div class="modal-body">
-                                    <span class="message-green"><center>{{Session::get('message')}}</center></span>
+                                    <span class="message-green"><center>@if(!empty($message)) {{$message}} @endif{{Session::get('message')}}</center></span>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -50,7 +50,7 @@
                             <div class="collapse-table">
                                 <table class="table color-table success-table example">                            
                                     <tbody>
-                                        <form class="form-horizontal" action="/searchAdvanced" method="GET">
+                                        <form class="form-horizontal" action="/searchAdvanced" method="GET" id="adsearch">
                                             {{ csrf_field() }}
                                             <tr>
                                                 <div class="form-group">
@@ -88,7 +88,7 @@
                                 <div class="form-group">
                                   <label class="control-label col-sm-2" for="tahun">Tahun Terbit:</label>
                                   <div class="col-sm-9">          
-                                    <input type="text" class="form-control" id="tahun" placeholder="Masukkan tahun" name="tahun">
+                                    <input type="number" class="form-control" id="tahun" placeholder="Masukkan tahun" name="tahun">
                                 </div>
                             </div>
                         </tr><br><br>
@@ -143,6 +143,9 @@
 
         <br>
         <div class="text-center">
+            <button class="btn btn-default" onclick="document.getElementById('adsearch').reset(); document.getElementById('adsearch').value = null; return false;">
+                Reset
+            </button>
             <button class="btn btn-primary">Cari
                 <i class="fa fa-search-plus ml-2" aria-hidden="true"></i>
             </button>
@@ -296,7 +299,7 @@
 
 </script>
 
-@if(!empty(Session::get('message')))
+@if(!empty(Session::get('message')) || !empty($message))
     <script>
         $(function() {
             $('#modalMessage').modal('show');

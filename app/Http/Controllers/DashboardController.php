@@ -161,7 +161,10 @@ class DashboardController extends Controller
         // }
 
         $katalog = $query->paginate(15);
-        
-        return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
+        if($katalog->items()){
+            return view('katalog.index',compact('katalog','bahasa','lokasi','koleksi'));
+        }else{
+            return view('katalog.index')->with(compact('katalog','bahasa','lokasi','koleksi'))->with('message','Tidak ada data yang ditemukan');
+        }
     }
 }

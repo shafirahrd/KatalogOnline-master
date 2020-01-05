@@ -41,13 +41,19 @@ class LokasiController extends Controller
      */
     public function store(Request $request)
     {
-        $lokasi = New Lokasi;
-        $lokasi->departemen = $request->Input('departemen');
-        $lokasi->fakultas = $request->Input('fakultas');
-        $lokasi->alamat = $request->Input('alamat');
-        $lokasi->tautan = $request->Input('tautan');
-        $lokasi->save();
-        return back()->with('message','Data lokasi berhasil ditambah');
+        $lok = Lokasi::where("departemen",'LIKE','%'.Input::get('departemen').'%')->first();
+
+        if($lok && $lok->fakultas != $request->Input('fakultas') || $lok->alamat != $request->Input('alamat') || $lok->tautan != $request->Input('tautan')){
+            return back()->with('message','Data lokasi sudah ada');
+        }else{   
+            $lokasi = New Lokasi;
+            $lokasi->departemen = $request->Input('departemen');
+            $lokasi->fakultas = $request->Input('fakultas');
+            $lokasi->alamat = $request->Input('alamat');
+            $lokasi->tautan = $request->Input('tautan');
+            $lokasi->save();
+            return back()->with('message','Data lokasi berhasil ditambah');
+        }
     }
 
     /**
@@ -81,14 +87,20 @@ class LokasiController extends Controller
      */
     public function update(Request $request, lokasi $lokasi)
     {
-        $data = Lokasi::find($lokasi->id_lokasi);
-        $data->departemen = Input::get('departemen');
-        $data->fakultas = Input::get('fakultas');
-        $data->alamat = Input::get('alamat');
-        $data->tautan = Input::get('tautan');
-        $data->save();
+        $lok = Lokasi::where("departemen",'LIKE','%'.Input::get('departemen').'%')->first();
 
-        return back()->with('message','Data lokasi berhasil diubah');
+        if($lok){
+            return back()->with('message','Data lokasi sudah ada');
+        }else{   
+            $data = Lokasi::find($lokasi->id_lokasi);
+            $data->departemen = Input::get('departemen');
+            $data->fakultas = Input::get('fakultas');
+            $data->alamat = Input::get('alamat');
+            $data->tautan = Input::get('tautan');
+            $data->save();
+
+            return back()->with('message','Data lokasi berhasil diubah');
+        }
     }
 
     /**

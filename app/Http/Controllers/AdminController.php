@@ -177,16 +177,18 @@ class AdminController extends Controller
                     $katalog = new Katalog();
                     // if($k==6){dd($kol);}
                     if($kol != NULL){
-                        if($kol->att_khusus !== "-" || $kol->att_khusus != NULL){
+                        if($kol->att_khusus !== "-" || $kol->att_khusus !== NULL){
                             $koleksi = $kol->formatted_column;
                             $temp = [];
+                        }else{
+                            $temp = NULL;
                         }
                     }else{
-                        $koleksi = [];
                         $temp = NULL;
                     }
+
                     foreach ($request->fields as $index => $field) {
-                    // if($k == 6){dd(in_array("",));}
+                    // if($k == 15){dd($koleksi);}
                         if($field !== "null"){
                             if(in_array($field, $column_katalog[0])){
                                 $i = array_search($field, $column_katalog[0]);
@@ -206,11 +208,12 @@ class AdminController extends Controller
                                 }else{
                                     $katalog->$header = $row[$index] == '-' ? NULL : $row[$index];
                                 }
-                            }elseif(in_array($field, $koleksi)){
+                            }elseif(!is_null($koleksi) && in_array($field, $koleksi)){
+                                // if($k==6){dd("OYEE");}
                                 foreach($koleksi as $value){
                                     if($value == $field){
                                         $i = array_search($field, $column_katalog[1]);
-                                        $header = $column_katalog[1][$i];
+                                    $header = $column_katalog[1][$i];
                                         $temp[$value] = $row[$index] ?? '-';
                                     }
                                 }
@@ -264,6 +267,10 @@ class AdminController extends Controller
 
     public function checkRedundancy($row,$column)
     {   
+        $column_katalog = $this->getColumn();
+        $row = str_replace("-", null, $row);
+        $row = array_map(function($value) {return $value === "" ? NULL : $value;}, $row);
+
         $flag = 0;
         $judul = array_search("judul", $column);
         $jenis = array_search("jenis", $column);
@@ -274,20 +281,29 @@ class AdminController extends Controller
         $nomor = array_search("Nomor", $column);
         $bulan = array_search("Bulan", $column);
 
+        $lokasis = Lokasi::where("departemen",'LIKE','%'.$row[$lokasi].'%')->select('id_lokasi')->first();
+        $lokasi = $lokasis->id_lokasi;
+
         $data = Katalog::where('judul',$row[$judul])
             ->orWhere('judul','LIKE','%'.$row[$judul].'%')->first();
-        // dd($data->jenis);
-        if($data->att_value != NULL || $data->att_value !== "-"){
-            $att_khusus = (array)json_decode($data->att_value);
-        }else{
-            $att_khusus = [];
-        }
-
         if($data){
-            if($data->lokasi != $row[$lokasi] || $att_khusus['Edisi']!= $row[$edisi] || $att_khusus['ISBN/ISSN'] != $row[$isbn] || $att_khusus['Volume'] != $row[$volume] || $att_khusus['Nomor'] != $row[$nomor] || $att_khusus['Bulan'] != $row[$bulan] || $att_khusus == NULL){
-
+            if($data->att_value != NULL || $data->att_value != "[]"){
+                $att_khusus = (array)json_decode($data->att_value);
+                // if($data->judul == "Idea Jurnal Desain"){dd($data);}
+                $att_khusus = preg_replace("/-+/", "", $att_khusus );
+                foreach ($column_katalog[1] as $key => $value) {
+                    if(!array_key_exists($value, $att_khusus)){
+                        $att_khusus[$value] = [];
+                    }
+                }
+            }else{
+                $att_khusus = [];
+            }
+            
+            if($data->lokasi != $lokasi || $att_khusus['Edisi'] != $row[$edisi] || $att_khusus['ISBN/ISSN'] != $row[$isbn] || $att_khusus['Volume'] != $row[$volume] || $att_khusus['Nomor'] != $row[$nomor] || $att_khusus['Bulan'] != $row[$bulan]){
                 $flag = 1;
             }
+            if($flag==1){dd($row,$column,$att_khusus);}
             return $flag;
         }else{
             $flag = 1;

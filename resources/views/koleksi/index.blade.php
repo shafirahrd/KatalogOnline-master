@@ -58,6 +58,13 @@
                                                                     <textarea class="form-control" rows="5" placeholder="Deskripsi Koleksi" name="deskripsi_koleksi"></textarea>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label for="deskripsi_koleksi" class="col-sm-3 control-label">Atribut Khusus</label>
+                                                                <div class="col-sm-9" id="indexA">
+                                                                    <input type="text" class="form-control" id="att_khusus" placeholder="Atribut Khusus" name="att_khusus">
+                                                                    <br><button style="float: left;" type="button" name="addA" id="addA" class="btn btn-info btn-rounded">+Tambah Atribut</button>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group m-b-0">
                                                                 <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
                                                                 <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Simpan</button>
@@ -87,7 +94,7 @@
                                     <td class="vertical-align-middle text-align-left">{{$ks->deskripsi_koleksi}}</td>
                                     <td class="vertical-align-middle text-align-left">
                                         <ul>
-                                            @if($ks->id_koleksi !== 8 && $ks->id_koleksi !== 9 && $ks->id_koleksi !== 12 && !is_null($ks->att_khusus))
+                                            @if(!is_null($ks->formatted_column))
                                                 @foreach($ks->formatted_column as $ak)
                                                     <li>{{$ak}}</li>
                                                 @endforeach
@@ -109,7 +116,7 @@
                                                                 <div class="form-group">
                                                                     <label for="jenis_koleksi" class="col-sm-3 control-label">Jenis Koleksi</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="jenis_koleksi" value="{{$ks->jenis_koleksi}}" name="jenis_koleksi">
+                                                                        <input type="text" class="form-control" id="jenis_koleksi{{$ks->id_koleksi}}" value="{{$ks->jenis_koleksi}}" name="jenis_koleksi">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -118,17 +125,21 @@
                                                                         <textarea class="form-control" rows="5" name="deskripsi_koleksi">{{$ks->deskripsi_koleksi}}</textarea>
                                                                     </div>
                                                                 </div>
-                                                                {{-- @foreach(json_decode($ks->att_value) as $ak)
+                                                                @if(!is_null($ks->formatted_column))
                                                                     <div class="form-group">
-                                                                        <label for="{{$ak}}" class="col-sm-3 control-label">{{$ak}}</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="{{$ak}}" value="{{$ak}}" name="{{$ak}}">
+                                                                        <label for="att_khusus" class="col-sm-3 control-label">Atribut Khusus</label>
+                                                                        <div class="col-sm-9" id="indexU">
+                                                                            @foreach($ks->formatted_column as $ak)
+                                                                            <input type="text" class="form-control" id="att_khusus{{$ks->id_koleksi}}{{$loop->index}}" placeholder="Atribut Khusus" name="att_khusus[]" value="{{$ak}}">
+                                                                            @endforeach
+                                                                            <br><span style="float: left;"><b>(Hapus nama atribut jika ingin menghapus)</b></span><br>
+                                                                            <br><button style="float: left;" type="button" name="addU" id="addU" class="btn btn-info btn-rounded">+Tambah Atribut</button>
                                                                         </div>
                                                                     </div>
-                                                                @endif --}}
+                                                                @endif
                                                                 <div class="form-group m-b-0">
                                                                     <a href="#" class="fcbtn btn btn-default btn-1f m-r-10 m-t-10 padding-f-margin" data-dismiss="modal">Keluar</a>
-                                                                    <button type="submit" class="btn btn-danger waves-effect waves-light m-t-10 float-right">Simpan</button>
+                                                                    <button type="submit" class="btn btn-success waves-effect waves-light m-t-10 float-right">Simpan</button>
                                                                 </div>
                                                                 @method('PUT')
                                                                 @csrf
@@ -184,4 +195,35 @@
         });
     </script>
 @endif
+
+<script>
+$(document).ready(function(){
+    $('#addA').click(function(){
+        var inp = $('#indexA');
+        var i = 0;
+        $('<div id="indexA'+i+'"><input type="text" class="form-control" id="att_khusus" placeholder="Atribut Khusus" name="att_khusus[]" value=""><br><button type="button" style="float:left;" class="btn btn-danger btn-rounded" id="remove">Remove</button></td></tr></div>').appendTo(inp);
+        i++;
+    });
+
+    $('body').on('click','#remove',function(){
+        $(this).parent('div').remove();
+    });        
+});
+</script>
+
+<script>
+$(document).ready(function(){
+    $('#addU').click(function(){
+        var inp = $('#indexU');
+        var i = 0;
+        $('<div id="indexU'+i+'"><input type="text" class="form-control" id="att_khusus" placeholder="Atribut Khusus" name="att_khusus[]" value=""><br><button type="button" style="float:left;" class="btn btn-danger btn-rounded" id="remove">Remove</button></td></tr></div>').appendTo(inp);
+        i++;
+    });
+
+    $('body').on('click','#remove',function(){
+        $(this).parent('div').remove();
+    });        
+});
+</script>
+
 @endsection

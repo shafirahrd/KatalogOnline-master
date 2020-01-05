@@ -115,7 +115,7 @@
                         </a>
                     </li>
                     <li>
-                        @if(Request::path() == 'katalog')
+                        @if(Request::path() == 'katalog' || Request::is('search*') )
                         <a href="/katalog" class="waves-effect active">
                             <span class="hide-menu"> KATALOG </span>
                         </a>
@@ -152,7 +152,7 @@
                         <br>
                         <li><center><b>ADMIN</b></center></li>
                         <li>
-                            @if(Request::path() == 'excel' || (Request::path() == 'csv'))
+                            @if(Request::path() == 'excel' || Request::path() == 'csv' || Request::is('upload*'))
                             <a href="/excel" class="waves-effect active">
                                 <span class="hide-menu"> UNGGAH DATA KATALOG </span>
                             </a>
