@@ -62,11 +62,11 @@ class AdminController extends Controller
         return view('admin.log',compact('user','log'));
     }
 
-    public function downloadTemplate(){
-        $pathfile = public_path()."/download/template.xlsx";
-        dd($pathfile);
-        return response()->download($pathfile);
-    }
+    // public function downloadTemplate(){
+    //     $pathfile = public_path()."/download/template.xlsx";
+    //     dd($pathfile);
+    //     return response()->download($pathfile);
+    // }
 
     public function parseExcel()
     {
@@ -109,11 +109,12 @@ class AdminController extends Controller
             $column_katalog = array_merge($column_katalog[0],$column_katalog[1]);
 
             $type = 'excel';
+            $lokasi = Lokasi::all();
 
             if(isset($csv_header_fields)){
-                return view('admin.parsing_data', compact('excel_header_fields','excel_data','excel_data_file','column_katalog','type'));
+                return view('admin.parsing_data', compact('excel_header_fields','excel_data','excel_data_file','column_katalog','type','lokasi'));
             }else{
-                return view('admin.parsing_data', compact('excel_data','excel_data_file','column_katalog','type'));
+                return view('admin.parsing_data', compact('excel_data','excel_data_file','column_katalog','type','lokasi'));
             }
         }else{
             return redirect('/excel')->with('message','Tidak file yang dipilih');
@@ -144,15 +145,17 @@ class AdminController extends Controller
                 'header' => $request->has('header'),
                 'data' => json_encode($data)
             ]);
+
         }else{
             return redirect()->back();
         }
         
         $column_katalog = $this->getColumn();
+        $column_katalog = array_merge($column_katalog[0],$column_katalog[1]);
 
         $type = 'csv';
-        
         $lokasi = Lokasi::all();
+
         if(isset($csv_header_fields)){
             return view('admin.parsing_data', compact('csv_header_fields','csv_data','csv_data_file','column_katalog','type','lokasi'));
         }else{
@@ -161,10 +164,10 @@ class AdminController extends Controller
     }
     
     public function import(Request $request)
-    {      
-        $column_katalog = $this->getColumn();
-        // $request->fields = array_values(array_filter($request->fields));
-        
+    {   
+        ini_set('max_execution_time', '0');
+        $array = [];
+
         if($request->type == "excel"){
             $data = UploadedData::find($request->excel_data_file);
 
@@ -172,19 +175,37 @@ class AdminController extends Controller
             if($data->header){
                 unset($excel_data[0]);
             }
-
             foreach ($excel_data as $k => $row) {
-                $kol = Koleksi::where("jenis_koleksi",'LIKE','%'.$row[array_search("jenis",$request->fields)].'%')->select('id_koleksi','att_khusus')->first();
-                // $koleksinya = $kol->id_koleksi;
-                $lokasi = Lokasi::where("departemen",'LIKE','%'.$row[array_search("lokasi",$request->fields)].'%')->select('id_lokasi')->first();
 
+                if(!$this->insertData($request,$row)){
+                    array_push($array, $row);
+                }
+            }
+            dd($array);
+        }
+        else{
+            $data = UploadedData::find($request->csv_data_file);
+
+            $csv_data = json_decode($data->data,true);
+            if($data->header){
+                unset($csv_data[0]);
+            }
+
+            foreach ($csv_data as $k => $row) {
+                $kol = $row[array_search("jenis",$request->fields)];
+                if(!is_null($kol)){
+                    $kol = Koleksi::where("jenis_koleksi",'LIKE','%'.$row[array_search("jenis",$request->fields)].'%')->select('id_koleksi','att_khusus')->first();
+                }else{
+                    $kol = NULL;
+                }
+                
                 $flag = $this->checkRedundancy($row,$request->fields);
-
+                
                 if($flag == 1){
                     $katalog = new Katalog();
-                    // if($k==6){dd($kol);}
-                    if($kol != NULL){
-                        if($kol->att_khusus !== "-" || $kol->att_khusus !== NULL){
+
+                    if(!is_null($kol)){
+                        if($kol->formatted_column !== NULL){
                             $koleksi = $kol->formatted_column;
                             $temp = [];
                         }else{
@@ -193,9 +214,8 @@ class AdminController extends Controller
                     }else{
                         $temp = NULL;
                     }
-
+                    
                     foreach ($request->fields as $index => $field) {
-                    // if($k == 15){dd($koleksi);}
                         if($field !== "null"){
                             if(in_array($field, $column_katalog[0])){
                                 $i = array_search($field, $column_katalog[0]);
@@ -206,17 +226,10 @@ class AdminController extends Controller
                                     }else{
                                         $katalog->$header = NULL;
                                     }
-                                }elseif($header == "lokasi"){
-                                    if($lokasi != NULL){
-                                        $katalog->$header = $lokasi->id_lokasi == '-' ? NULL : $lokasi->id_lokasi;
-                                    }else{
-                                        $katalog->$header = NULL;
-                                    }
                                 }else{
                                     $katalog->$header = $row[$index] == '-' ? NULL : $row[$index];
                                 }
                             }elseif(!is_null($koleksi) && in_array($field, $koleksi)){
-                                // if($k==6){dd("OYEE");}
                                 foreach($koleksi as $value){
                                     if($value == $field){
                                         $i = array_search($field, $column_katalog[1]);
@@ -233,35 +246,7 @@ class AdminController extends Controller
                         $temp = json_encode($temp);
                     }
                     $katalog->att_value = $temp;
-                    $katalog->save();
-                }else{
-                    continue;
-                }
-
-            }
-        }
-        else{
-            $data = UploadedData::find($request->csv_data_file);
-
-            $csv_data = json_decode($data->data,true);
-            if($data->header){
-                unset($csv_data[0]);
-            }
-
-
-            foreach ($csv_data as $row) {
-                $flag = $this->checkRedundancy($row,$request->fields);
-                if($flag == 1){
-                    $katalog = new Katalog();
-
-                    foreach ($request->fields as $index => $field) {
-                        if($field !== "null"){
-                            $temp = $column_katalog[$index+1];
-                            if($index <= count($row)){
-                                $katalog->$temp = $row[$index] == '-' ? NULL : $row[$index];
-                            }
-                        }
-                    }
+                    $katalog->lokasi = $request->lokasi;
                     $katalog->save();
                 }else{
                     continue;
@@ -270,6 +255,79 @@ class AdminController extends Controller
         }
  
         return redirect('/log')->with('message','File berhasil diunggah');
+    }
+
+    public function insertData($request,$row)
+    {
+        try {
+            $column_katalog = $this->getColumn();
+            $kol = $row[array_search("jenis",$request->fields)];
+            if(!is_null($kol)){
+                $kol = Koleksi::where("jenis_koleksi",'LIKE','%'.$row[array_search("jenis",$request->fields)].'%')->select('id_koleksi','att_khusus')->first();
+            }else{
+                $kol = NULL;
+            }
+
+            // $flag = $this->checkRedundancy($row,$request->fields);
+
+            // if($flag == 1){
+            $katalog = new Katalog();
+            
+            if(!is_null($kol)){
+                if($kol->formatted_column !== NULL){
+                    $koleksi = $kol->formatted_column;
+                    $temp = [];
+                }else{
+                    $temp = NULL;
+                }
+            }else{
+                $koleksi = NULL;
+                $temp = NULL;
+            }
+
+            foreach ($request->fields as $index => $field) {
+                if($field !== "null"){
+                    if(in_array($field, $column_katalog[0])){
+                        $i = array_search($field, $column_katalog[0]);
+                        $header = $column_katalog[0][$i];
+                        if($header == "jenis"){
+                            if($kol != NULL){
+                                $katalog->$header = $kol->id_koleksi == '-' ? NULL : $kol->id_koleksi;
+                            }else{
+                                $katalog->$header = NULL;
+                            }
+                        }else{
+                            $katalog->$header = $row[$index] == '-' ? NULL : $row[$index];
+                        }
+                    }elseif(!is_null($koleksi) && in_array($field, $koleksi)){
+                        foreach($koleksi as $value){
+                            if($value == $field){
+                                $i = array_search($field, $column_katalog[1]);
+                            $header = $column_katalog[1][$i];
+                                $temp[$value] = $row[$index] ?? '-';
+                            }
+                        }
+                    }else{
+                        continue;
+                    }
+                }
+            }
+            if(!is_null($temp)){
+                $temp = json_encode($temp);
+                $katalog->att_value = $temp;    
+            }else{
+                $katalog->att_value = "[]";
+            }
+            $katalog->lokasi = $request->lokasi;
+
+            
+            $katalog->save();
+            return true;
+            // }
+
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function checkRedundancy($row,$column)
@@ -289,10 +347,14 @@ class AdminController extends Controller
         $bulan = array_search("Bulan", $column);
 
         $lokasis = Lokasi::where("departemen",'LIKE','%'.$row[$lokasi].'%')->select('id_lokasi')->first();
-        $lokasi = $lokasis->id_lokasi;
-
+        if($lokasis){
+            $lokasi = $lokasis->id_lokasi;
+        }else{
+            $lokasi = NULL;
+        }
         $data = Katalog::where('judul',$row[$judul])
             ->orWhere('judul','LIKE','%'.$row[$judul].'%')->first();
+        // dd($data);
         if($data){
             if($data->att_value != NULL || $data->att_value != "[]"){
                 $att_khusus = (array)json_decode($data->att_value);
@@ -310,7 +372,7 @@ class AdminController extends Controller
             if($data->lokasi != $lokasi || $att_khusus['Edisi'] != $row[$edisi] || $att_khusus['ISBN/ISSN'] != $row[$isbn] || $att_khusus['Volume'] != $row[$volume] || $att_khusus['Nomor'] != $row[$nomor] || $att_khusus['Bulan'] != $row[$bulan]){
                 $flag = 1;
             }
-            if($flag==1){dd($row,$column,$att_khusus);}
+            // if($flag==1){dd($row,$column,$att_khusus);}
             return $flag;
         }else{
             $flag = 1;
@@ -321,21 +383,21 @@ class AdminController extends Controller
     public function getColumn()
     {
         $column_katalog = Schema::getColumnListing('katalogs');
-        unset($column_katalog[0],$column_katalog[10],$column_katalog[11],$column_katalog[12],$column_katalog[13]);
+        unset($column_katalog[0],$column_katalog[12],$column_katalog[13],$column_katalog[14]);
 
         $koleksi = json_decode(Koleksi::select('att_khusus')->distinct()->get());
         $att_khusus = [];
-        
         foreach ($koleksi as $key => $value) {
             $temp = array_values((array)$value);
             $temp = json_decode($temp[0]);
-            if(count((array)$temp)>1){
+            $temp = array_filter($temp);
+            if(count($temp)>1){
                 foreach ($temp as $key => $value){
                     if(!in_array($value,$att_khusus)){
                         array_push($att_khusus,$value);
                     }
                 }
-            }else{
+            }elseif(count($temp) && !is_null($temp)){
                 if(!in_array($temp[0],$att_khusus) && $temp !== "-" && $temp !== NULL){
                     array_push($att_khusus,$temp[0]);
                 }

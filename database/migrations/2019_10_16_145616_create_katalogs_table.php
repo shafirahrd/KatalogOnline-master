@@ -25,13 +25,12 @@ class CreateKatalogsTable extends Migration
             $table->text('subjek')->nullable();
             $table->string('bahasa',30)->nullable();
             $table->text('deskripsi')->nullable();
+            $table->text('foto')->nullable();
             $table->integer('lokasi')->unsigned()->nullable();
             $table->json('att_value')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-
-        DB::statement("ALTER TABLE katalogs ADD foto MEDIUMBLOB");
 
         Schema::table('katalogs',function($table){
             $table->foreign('jenis')->references('id_koleksi')->on('koleksis')->onUpdate('cascade')->onDelete('set null');

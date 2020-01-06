@@ -69,8 +69,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $nip = DB::table('user_validations')->where('nip','=',$data['nip'])->first();
-        // UserValidation::find($data['nip'])->tosql();
-        // dd($nip);
+        ;
         if($nip){
             return User::create([
             'nama' => $data['nama'],
@@ -79,9 +78,6 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'user_lokasi' => $data['lokasi']
             ]);
-        }
-        else{
-            return back();
         }
     }
 }

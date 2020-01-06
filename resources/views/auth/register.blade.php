@@ -1,31 +1,40 @@
 @extends('layouts.app')
 
+@section('link')
+<script src="{{asset('asset/js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{asset('pelanggan/assets/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('pelanggan/assets/js/bootstrap.js')}}"></script>
+@endsection
+
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid"><br><br>
         <div class="row justify-content-center">
             <div class="col-sm-12">
                 <div class="white-box">
+
+                    <div id="modalMessage" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Pesan</h4>
+                          </div>
+                          <div class="modal-body">
+                                <span class="message-blue"><center>@if(!empty($message)) {{$message}} @endif{{Session::get('message')}}</center></span>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="card-header"><h1>{{ __('Register') }}</h1><hr></div><br><br>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
-
-                            {{-- <div class="form-group row">
-                                <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                    @error('username')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
- --}}
                             <div class="form-group row">
                                 <label for="nama" class="col-md-4 col-form-label text-md-right">{{ __('Nama') }}</label>
 
@@ -123,4 +132,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+@if(!empty(Session::get('message')) || !empty($message))
+    <script>
+        $(function() {
+            $('#modalMessage').modal('show');
+        });
+    </script>
+@endif
 @endsection

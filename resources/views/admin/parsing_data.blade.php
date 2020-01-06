@@ -59,7 +59,6 @@
                                           @endforeach
 
                                           <tr>
-                                            
                                             @foreach($excel_data[0] as $key => $value)
                                               <td>
                                                 <select name="fields[{{$key}}]">
@@ -97,7 +96,6 @@
                                           @endforeach
 
                                           <tr>
-                                            
                                             @foreach($csv_data[0] as $key => $value)
                                               <td>
                                                 <select name="fields[{{$key}}]">
@@ -113,30 +111,33 @@
                                         </table>
                                     @endif
 
-                                    <div class="form-group">
+                                    <div class="form-group row mb-0">
                                         <label class="control-label col-sm-2" for="lokasi">Lokasi Koleksi:</label>
                                         <div class="col-md-3">
                                             <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="lokasi">
+                                                @if(Auth::user()->user_role==1)
                                                 <option value="">Lokasi</option>
-                                                @foreach($lokasi as $l)
-                                                    <option value="{{$l->id_lokasi}}">{{$l->departemen}}</option>
-                                                @endforeach
+                                                    @foreach($lokasi as $l)
+                                                        <option value="{{$l->id_lokasi}}">{{$l->departemen}}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="{{Auth::user()->user_lokasi}}" selected>{{Auth::user()->lokasiuser->departemen}}</option>
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
 
                                     <input type="hidden" name="type" value="{{ $type }}">
-
-                                    <button type="submit" class="btn btn-primary">
-                                      {{ __('Import Data') }}
-                                    </button>
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                              {{ __('Import Data') }}
+                                            </button>
+                                        </div>
+                                    </div>
                                   </form>
                             </tbody>
-                            <br><br><thead>
-                                <tr>
-                                    <th colspan=6></th>
-                                </tr>
-                            </thead>
+                            <br><br>
                         </table>
                     </div>
                 </div>

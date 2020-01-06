@@ -21,13 +21,14 @@ class KatalogController extends Controller
     public function index()
     {
 
-        if(Auth::check() && Auth::user()->user_role == 0){
-            $katalog = Katalog::with('koleksi','lokasis')
-                        ->where('lokasi',Auth::user()->user_lokasi)
-                        ->sortable()->paginate(15);
-        }else{
-            $katalog = Katalog::with('koleksi','lokasis')->sortable()->paginate(15);
-        }
+        // if(Auth::check() && Auth::user()->user_role == 0){
+        //     $katalog = Katalog::with('koleksi','lokasis')
+        //                 ->where('lokasi',Auth::user()->user_lokasi)
+        //                 ->sortable()->paginate(15);
+        // }else{
+        //     $katalog = Katalog::with('koleksi','lokasis')->sortable()->paginate(15);
+        // }
+        $katalog = Katalog::with('koleksi','lokasis')->sortable()->paginate(15);
         
         $bahasa = Katalog::select('bahasa')->groupBy('bahasa')->get();
         $lokasi = Lokasi::select('departemen')->get();

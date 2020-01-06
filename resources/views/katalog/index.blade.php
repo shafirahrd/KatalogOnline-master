@@ -3,10 +3,6 @@
 @section('link')
 <link href="{{asset('css/search.css')}}" rel="stylesheet">
 
-{{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> --}}
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> --}}
-
 <script src="{{asset('asset/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('pelanggan/assets/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('pelanggan/assets/js/bootstrap.js')}}"></script>
@@ -201,7 +197,7 @@
                             <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Lihat Detail Koleksi"><i class="fa fa-folder-open"></i></button>
                         </span>
 
-                        @if(Auth::check())
+                        @if(Auth::check() && Auth::user()->user_lokasi==$kg->lokasi)
                         <form class="form-horizontal form-material" action="{{ route('katalog.edit', ['katalog'=>$kg->id_katalog]) }}" method = "GET">
                             <button type="submit" class="btn btn-warning" title="Ubah Katalog"><i class="ti-pencil-alt"></i></button>
                             <input type="hidden" name="id" value="{{$kg->id_katalog}}" />
