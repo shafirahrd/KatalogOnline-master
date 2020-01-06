@@ -61,7 +61,7 @@
                                                             <div class="form-group">
                                                                 <label for="deskripsi_koleksi" class="col-sm-3 control-label">Atribut Khusus</label>
                                                                 <div class="col-sm-9" id="indexA">
-                                                                    <input type="text" class="form-control" id="att_khusus" placeholder="Atribut Khusus" name="att_khusus">
+                                                                    <input type="text" class="form-control" id="att_khusus" placeholder="Atribut Khusus" name="att_khusus[]">
                                                                     <br><button style="float: left;" type="button" name="addA" id="addA" class="btn btn-info btn-rounded">+Tambah Atribut</button>
                                                                 </div>
                                                             </div>

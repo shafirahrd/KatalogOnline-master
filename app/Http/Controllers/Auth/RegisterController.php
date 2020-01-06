@@ -52,7 +52,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => ['required', 'string', 'min:6', 'max:20'],
             'nama' => ['required', 'string', 'max:255'],
             'nip' => ['required', 'string', 'min:18'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -74,7 +73,6 @@ class RegisterController extends Controller
         // dd($nip);
         if($nip){
             return User::create([
-            'username' => $data['username'],
             'nama' => $data['nama'],
             'nip' => $data['nip'],
             'email' => $data['email'],

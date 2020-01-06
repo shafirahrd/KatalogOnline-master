@@ -88,7 +88,7 @@
                         <div class="main_slider text-center">
                             <div class="col-md-12">
                                 <div class="main_slider_content wow zoomIn" data-wow-duration="1s">
-                                    <h1>ITS<br>Integrated Online Catalog</h1>
+                                    <h1>Integrated Online Catalog<br>ITS</h1>
                                     <p>Katalog terintegarasi yang mencakup koleksi ruang baca di lingkungan ITS</p>
                                     <div class="form-style">
                                       {{ csrf_field() }}

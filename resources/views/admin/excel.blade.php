@@ -37,9 +37,9 @@
                                     Tata cara unggah data katalog<br>
                                     [Persyaratan, format file yang dapat diunggah yaitu .xlsx atau .csv]<br>
                                     1. Pilih jenis file yang akan diunggah, jika excel pilih tombol <a href="/excel" class="btn btn-success btn-sm">UNGGAH FILE EXCEL</a>, jika csv tekan tombol <a href="/csv" class="btn btn-warning btn-sm">UNGGAH FILE CSV</a><br>
-                                    2. <a href="" class="btn btn-info btn-sm">UNDUH TEMPLATE</a> dan sesuaikan format file dengan template.<br>
-                                    3. Tekan kotak hijau dibawah dan pilih file yang akan diunggah atau <i>Drag and drop</i> file<br>
-                                    4. Tekan tombol <i>Upload</i><br>
+                                    {{-- 2. <a href="" class="btn btn-info btn-sm">UNDUH TEMPLATE</a> dan sesuaikan format file dengan template.<br> --}}
+                                    2. Tekan kotak hijau dibawah dan pilih file yang akan diunggah atau <i>Drag and drop</i> file<br>
+                                    3. Tekan tombol <i>Upload</i><br>
                                     {{-- 5. Akan muncul data hasil upload dan formulir header/field. Cocokkan atribut tiap kolom dengan atribut yang ada pada sistem Integrated Online Catalog ITS. --}}
                                 </p><hr>
                             </div>

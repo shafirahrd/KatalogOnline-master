@@ -62,6 +62,12 @@ class AdminController extends Controller
         return view('admin.log',compact('user','log'));
     }
 
+    public function downloadTemplate(){
+        $pathfile = public_path()."/download/template.xlsx";
+        dd($pathfile);
+        return response()->download($pathfile);
+    }
+
     public function parseExcel()
     {
         if(request()->file('fileExcel')){
@@ -146,10 +152,11 @@ class AdminController extends Controller
 
         $type = 'csv';
         
+        $lokasi = Lokasi::all();
         if(isset($csv_header_fields)){
-            return view('admin.parsing_data', compact('csv_header_fields','csv_data','csv_data_file','column_katalog','type'));
+            return view('admin.parsing_data', compact('csv_header_fields','csv_data','csv_data_file','column_katalog','type','lokasi'));
         }else{
-            return view('admin.parsing_data', compact('csv_data','csv_data_file','column_katalog','type'));
+            return view('admin.parsing_data', compact('csv_data','csv_data_file','column_katalog','type','lokasi'));
         }
     }
     

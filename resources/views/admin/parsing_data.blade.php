@@ -112,6 +112,19 @@
                                           </tr>
                                         </table>
                                     @endif
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="lokasi">Lokasi Koleksi:</label>
+                                        <div class="col-md-3">
+                                            <select class="md-form mdb-select colorful-select dropdown-primary form-control" name="lokasi">
+                                                <option value="">Lokasi</option>
+                                                @foreach($lokasi as $l)
+                                                    <option value="{{$l->id_lokasi}}">{{$l->departemen}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <input type="hidden" name="type" value="{{ $type }}">
 
                                     <button type="submit" class="btn btn-primary">

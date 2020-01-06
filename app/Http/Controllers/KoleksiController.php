@@ -85,11 +85,11 @@ class KoleksiController extends Controller
      */
     public function update(Request $request, koleksi $koleksi)
     {
-        $kol = Koleksi::where("jenis_koleksi",'LIKE','%'.Input::get('jenis_koleksi').'%')->first();
+        /*$kol = Koleksi::where("jenis_koleksi",'LIKE','%'.Input::get('jenis_koleksi').'%')->first();
         
         if(!is_null($kol) && Input::get('deskripsi_koleksi') == $kol->deskripsi_koleksi || $kol->att_khusus == json_encode(Input::get('att_khusus'))){
             return back()->with('message','Data koleksi sudah ada');
-        }else{
+        }else{*/
             $data = Koleksi::find($koleksi->id_koleksi);
             $data->jenis_koleksi = Input::get('jenis_koleksi');
             $data->deskripsi_koleksi = Input::get('deskripsi_koleksi');
@@ -98,7 +98,7 @@ class KoleksiController extends Controller
             $data->save();
 
             return back()->with('message','Data koleksi berhasil diubah');
-        }
+        // }
     }
 
     /**

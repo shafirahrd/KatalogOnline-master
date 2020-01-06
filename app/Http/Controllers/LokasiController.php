@@ -43,7 +43,7 @@ class LokasiController extends Controller
     {
         $lok = Lokasi::where("departemen",'LIKE','%'.Input::get('departemen').'%')->first();
 
-        if($lok && $lok->fakultas != $request->Input('fakultas') || $lok->alamat != $request->Input('alamat') || $lok->tautan != $request->Input('tautan')){
+        if($lok){
             return back()->with('message','Data lokasi sudah ada');
         }else{   
             $lokasi = New Lokasi;
@@ -89,9 +89,9 @@ class LokasiController extends Controller
     {
         $lok = Lokasi::where("departemen",'LIKE','%'.Input::get('departemen').'%')->first();
 
-        if($lok){
-            return back()->with('message','Data lokasi sudah ada');
-        }else{   
+        // if($lok && $lok->fakultas != $request->Input('fakultas') || $lok->alamat != $request->Input('alamat') || $lok->tautan != $request->Input('tautan')){
+        //     return back()->with('message','Data lokasi sudah ada');
+        // }else{   
             $data = Lokasi::find($lokasi->id_lokasi);
             $data->departemen = Input::get('departemen');
             $data->fakultas = Input::get('fakultas');
@@ -100,7 +100,7 @@ class LokasiController extends Controller
             $data->save();
 
             return back()->with('message','Data lokasi berhasil diubah');
-        }
+        // }
     }
 
     /**
