@@ -238,12 +238,10 @@
 
                         <div class="col-md-6">
                             <div class="single_abouts_text wow slideInRight" data-wow-duration="1s">
-                                <h4>Tentang Katalog Online</h4>
-                                <p>ITS merupakan perguruan tinggi yang saat ini memiliki 35 departemen dalam 10 fakultas, dimana beberapa departemen memiliki ruang baca dan berada di lokasi yang berbeda.</p>
-
-                                <p>Dalam memenuhi sarana literasi, civitas akademika ITS membutuhkan referensi tulis. Dan untuk memudahkan pencarian referensi tersebut, diciptakanlah katalog online terintegrasi.</p>
-
-                                <p>Katalog Online Terintegrasi merupakan daftar koleksi setiap ruang baca yang ada di ITS. Dengan adanya katalog online, dapat memudahkan pencarian koleksi ruang baca di seluruh ITS.</p>
+                                <h4>Tentang <i>Integrated Online Catalog</i> ITS</h4>
+                                <p> ITS merupakan perguruan tinggi yang saat ini memiliki 35 departemen dalam 10 fakultas, dimana beberapa departemen memiliki ruang baca dan berada di lokasi yang berbeda.</p>
+                                <p> Dalam memenuhi sarana literasi, civitas akademika ITS membutuhkan referensi tulis. Dan untuk memudahkan pencarian referensi tersebut, diciptakanlah katalog daring terintegrasi.</p>
+                                <i>Integrated Online Catalog</i> merupakan daftar koleksi setiap ruang baca yang ada di ITS dan perpustakaan umum ITS. Dengan adanya katalog daring, dapat memudahkan pencarian koleksi ruang baca di seluruh ITS.</p>
                             </div>
                         </div>
                     </div>
@@ -257,8 +255,8 @@
                     <div class="portfolio_content text-center  wow fadeIn" data-wow-duration="5s">
                         <div class="col-md-12">
                             <div class="head_title text-center">
-                                <h4>Ruang Baca ITS Terintegrasi</h4>
-                                <p>Daftar ruang baca yang data koleksinya telah terintegrasi</p>
+                                <h4>Ruang Baca ITS</h4>
+                                <p>Daftar ruang baca di lingkungan ITS</p>
                             </div>
 
                             <div class="price-table-wrapper">

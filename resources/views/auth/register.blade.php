@@ -39,7 +39,7 @@
                                 <label for="nama" class="col-md-4 col-form-label text-md-right">{{ __('Nama') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="nama" type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" value="{{ old('nama') }}" required autocomplete="nama" autofocus>
+                                    <input placholder="Masukkan Nama" id="nama" type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" required autocomplete="nama">
 
                                     @error('nama')
                                         <span class="invalid-feedback" role="alert">

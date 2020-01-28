@@ -54,6 +54,20 @@ class DashboardController extends Controller
         $lokasi = Lokasi::select('departemen')->get();
         $koleksi = Koleksi::get();
         
+
+        // $query = Katalog::with('koleksi','lokasis');
+        // dd($request->all());
+        // $input = array_filter($request->all());
+        // foreach ($input as $key => $value) {
+        //     if($key=="lokasi"){
+
+        //     }elseif($key=="koleksi"){
+
+        //     }else{
+        //         $query = $query->where(DB::raw("lower(".$key.")"),'LIKE','%'.strtolower($value).'%');
+        //     }
+        // }
+        
         $judul = strtolower($request->input('judul'));
         $penulis = strtolower($request->input('penulis'));
         $penerbit = strtolower($request->input('penerbit'));

@@ -33,7 +33,11 @@
                         <table class="table color-table success-table example">
                             <thead>
                                 <tr>
-                                    <th colspan=4>DAFTAR KOLEKSI</th>
+                                    @if(Auth::check())
+                                        <th colspan=5>DAFTAR KOLEKSI</th>
+                                    @else
+                                        <th colspan=4>DAFTAR KOLEKSI</th>
+                                    @endif
                                     <th>
                                         @if(Auth::check() && Auth::user()->user_role == 1)
                                         <button type="button" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#tambah-koleksi"><i class="fa fa-plus"></i>  Koleksi</button>
@@ -47,6 +51,12 @@
                                                         <form class="form-horizontal form-material" action="{{ route('koleksi.store') }}" method = "POST">
                                                             {{ csrf_field() }}
                                                             <div class="form-group">
+                                                                <label for="kode_koleksi" class="col-sm-3 control-label">Kode Koleksi</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="kode_koleksi" placeholder="Kode Koleksi" name="kode_koleksi">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="jenis_koleksi" class="col-sm-3 control-label">Jenis Koleksi</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control" id="jenis_koleksi" placeholder="Jenis Koleksi" name="jenis_koleksi">
@@ -55,14 +65,14 @@
                                                             <div class="form-group">
                                                                 <label for="deskripsi_koleksi" class="col-sm-3 control-label">Deskripsi Koleksi</label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea class="form-control" rows="5" placeholder="Deskripsi Koleksi" name="deskripsi_koleksi"></textarea>
+                                                                    <textarea lass="form-control" rows="5" placeholder="Deskripsi Koleksi" name="deskripsi_koleksi"></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="deskripsi_koleksi" class="col-sm-3 control-label">Atribut Khusus</label>
                                                                 <div class="col-sm-9" id="indexA">
                                                                     <input type="text" class="form-control" id="att_khusus" placeholder="Atribut Khusus" name="att_khusus[]">
-                                                                    <br><button style="float: left;" type="button" name="addA" id="addA" class="btn btn-info btn-rounded">+Tambah Atribut</button>
+                                                                    <br><button style="float: left;" type="button" name="addA" id="addA" class="btn btn-info btn-rounded">+Tambah Atribut</b></button>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group m-b-0">
@@ -79,6 +89,7 @@
                                 </tr>
                                 <tr>
                                     <th class="text-center th-header">No.</th>
+                                    @if(Auth::check())<th class="text-center th-header">Kode Koleksi</th>@endif
                                     <th class="text-center th-header">@sortablelink('Jenis Koleksi')</th>
                                     <th class="text-center th-header width65">@sortablelink('Deskripsi')</th>
                                     <th class="text-center th-header">Atribut Khusus</th>
@@ -90,7 +101,8 @@
                                 @foreach($koleksi as $ks)
                                 <tr class="fuckOffPadding">
                                     <td class="vertical-align-middle"><?php echo $x; $x=$x+1; ?></td>
-                                    <td class="vertical-align-middle">{{$ks->jenis_koleksi}}</td>
+                                    @if(Auth::check())<td class="vertical-align-middle"{{$ks->kode_koleksi}}></td>@endif
+                                    <td class="vertical-align-middle">{{$ks->jenis_koleksi}}</b></td>
                                     <td class="vertical-align-middle text-align-left">{{$ks->deskripsi_koleksi}}</td>
                                     <td class="vertical-align-middle text-align-left">
                                         <ul>
@@ -114,6 +126,12 @@
                                                         <div class="modal-body">
                                                             <form class="form-horizontal form-material" action="{{ route('koleksi.update', ['koleksi'=>$ks->id_koleksi]) }}" method ="POST">
                                                                 <div class="form-group">
+                                                                    <label for="kode_koleksi" class="col-sm-3 control-label">Kode Koleksi</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" id="kode_koleksi{{$ks->id_koleksi}}" value="{{$ks->kode_koleksi}}" name="kode_koleksi">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="jenis_koleksi" class="col-sm-3 control-label">Jenis Koleksi</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control" id="jenis_koleksi{{$ks->id_koleksi}}" value="{{$ks->jenis_koleksi}}" name="jenis_koleksi">
@@ -132,7 +150,7 @@
                                                                             @foreach($ks->formatted_column as $ak)
                                                                             <input type="text" class="form-control" id="att_khusus{{$ks->id_koleksi}}{{$loop->index}}" placeholder="Atribut Khusus" name="att_khusus[]" value="{{$ak}}">
                                                                             @endforeach
-                                                                            <br><span style="float: left;"><b>(Hapus nama atribut jika ingin menghapus)</b></span><br>
+                                                                            <br><span style="float: left;">(Hapus nama atribut jika ingin menghapus)</span><br>
                                                                             <br><button style="float: left;" type="button" name="addU" id="addU" class="btn btn-info btn-rounded">+Tambah Atribut</button>
                                                                         </div>
                                                                     </div>

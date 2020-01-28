@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\UploadedData;
 use App\Katalog;
+use App\Temp;
 use App\Koleksi;
 use App\Lokasi;
 use Illuminate\Notifications\Notifiable;
@@ -27,6 +28,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $data_to_insert = [];
     }
 
     /**
@@ -69,10 +71,14 @@ class AdminController extends Controller
     // }
 
     public function parseExcel()
-    {
+    {   
         if(request()->file('fileExcel')){
             $array = (new KatalogImport)->toArray(request()->file('fileExcel'));
 
+            $file = request()->file('fileExcel');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_data',$nama_file);
+            
             if(count($array[0]) > 0){
                 $data = [];
                 $length = 0;
@@ -86,21 +92,15 @@ class AdminController extends Controller
                     array_push($data,$excel_header_fields);
                 }
                 
-                foreach($array[0] as $k => $v){
+                for($i=0;$i<2+$length;$i++){
                     $d = [];
-                    foreach ($array[0][$k] as $key => $value) {
+                    foreach ($array[0][$i] as $key => $value) {
                         $d[] = $value;
                     }
                     array_push($data,$d);
                 }
-
-                $excel_data = array_slice($data,0,3+$length);
-
-                $excel_data_file = UploadedData::create([
-                    'filename' => request()->file('fileExcel')->getClientOriginalName(),
-                    'header' => request()->has('header'),
-                    'data' => json_encode($data)
-                ]);
+                
+                $excel_data = $data;
             }else{
                 return redirect()->back();
             }
@@ -109,17 +109,41 @@ class AdminController extends Controller
             $column_katalog = array_merge($column_katalog[0],$column_katalog[1]);
 
             $type = 'excel';
+            $header = request()->has('header');
             $lokasi = Lokasi::all();
-
-            if(isset($csv_header_fields)){
-                return view('admin.parsing_data', compact('excel_header_fields','excel_data','excel_data_file','column_katalog','type','lokasi'));
+            
+            if(isset($excel_header_fields)){
+                return view('admin.parsing_data', compact('excel_header_fields','excel_data','column_katalog','type','header','lokasi','nama_file'));
             }else{
-                return view('admin.parsing_data', compact('excel_data','excel_data_file','column_katalog','type','lokasi'));
+                return view('admin.parsing_data', compact('excel_data','column_katalog','type','header','lokasi','nama_file'));
             }
         }else{
             return redirect('/excel')->with('message','Tidak file yang dipilih');
         }
     }
+
+    // public function import_excel(Request $request)
+    // {
+    //     // validasi
+    //     $this->validate($request, [
+    //         'fileExcel' => 'required|mimes:csv,xls,xlsx'
+    //     ]);
+ 
+    //     // menangkap file excel
+    //     $file = $request->file('fileExcel');
+ 
+    //     // membuat nama file unik
+    //     $nama_file = rand().$file->getClientOriginalName();
+ 
+    //     // upload ke folder file_siswa di dalam folder public
+    //     $file->move('file_data',$nama_file);
+        
+    //     // import data
+    //     // Excel::import(new SiswaImport, public_path('/file_siswa/'.$nama_file));
+        
+    //     // return
+    //     return $this->parseExcel($request);
+    // }
 
     public function parseCSV(CsvImportRequest $request)
     {
@@ -169,21 +193,24 @@ class AdminController extends Controller
         $array = [];
 
         if($request->type == "excel"){
-            $data = UploadedData::find($request->excel_data_file);
+            // $data = UploadedData::find($request->excel_data_file);
+            $data = (new KatalogImport)->toArray(public_path('file_data/').$request->excel_data_file);
 
-            $excel_data = json_decode($data->data);
-        
-            if($data->header){
-                unset($excel_data[0]);
+            $excel_data = [];
+            foreach($data[0] as $k => $v){
+                $d = [];
+                foreach ($data[0][$k] as $key => $value) {
+                    $d[] = $value;
+                }
+                array_push($excel_data,$d);
             }
+
             foreach ($excel_data as $k => $row) {
                 if(!$this->insertData($request,$row)){
                     array_push($array, $row);
                 }
             }
-            // dd($array);
-        }
-        else{
+        }else{
             $data = UploadedData::find($request->csv_data_file);
 
             $csv_data = json_decode($data->data,true);
@@ -259,13 +286,13 @@ class AdminController extends Controller
             }
             if(!is_null($temp)){
                 $temp = json_encode($temp);
-                $katalog->att_value = $temp;    
+                $katalog->att_value = $temp;
             }else{
                 $katalog->att_value = "[]";
             }
             $katalog->lokasi = $request->lokasi;
 
-            
+            // dd($katalog);
             $katalog->save();
             return true;
             // }

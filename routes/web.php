@@ -40,9 +40,11 @@ Route::group(['middleware' => ['auth']], function ()
 	Route::get('/log','AdminController@log');
 	Route::get('/logout','Auth\LoginController@logout');
 
+	// Route::post('/importExcel','AdminController@import_excel');
+
 	Route::post('/uploadExcel','AdminController@parseExcel');
 	Route::post('/uploadCSV','AdminController@parseCSV');
-	Route::post('/uploadKoleksi','AdminController@uploadKoleksi');
+	// Route::post('/uploadKoleksi','AdminController@uploadKoleksi');
 
 	Route::post('/importFile','AdminController@import')->name('import');
 });

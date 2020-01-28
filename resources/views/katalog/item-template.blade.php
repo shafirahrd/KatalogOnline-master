@@ -1,7 +1,7 @@
 <tr>
     <td>${index+1}</td>
     <td>${item.judul}</td>
-    <td>${item.koleksi.jenis_koleksi==null ? '-':item.koleksi.jenis_koleksi}</td>
+    <td>${item.jenis==null ? '-':item.koleksi.jenis_koleksi}</td>
     <td>${item.penulis==null ? '-':item.penulis}</td>
     <td>${item.tahun_terbit==null ? '-':item.tahun_terbit}</td>
     <td>${item.lokasis.departemen}</td>
@@ -17,6 +17,7 @@
                     <div class="modal-body">
                         <div class="panel panel-default">
                             <div class="panel-body">
+                                <img src="/images/default.jpg" style="width: 30%; height: 30%;">
                                 <div class="tab-content br-n pn">
                                     <div class="tab-pane active">
                                         <div class="row">
@@ -32,7 +33,7 @@
                                                             <td><span class="text-muted weight-500">Jenis Koleksi</span></td>
                                                             <td><span class="text-muted weight-500">: </span></td>
                                                             <td><span class="marginL5">
-                                                                ${item.koleksi.jenis_koleksi==null ? '-':item.koleksi.jenis_koleksi}
+                                                                ${item.jenis==null ? '-':item.koleksi.jenis_koleksi}
                                                             </span></td>
                                                         </tr>
                                                         <tr>

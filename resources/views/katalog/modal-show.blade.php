@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                    <img src="/images/default.jpg" style="width: 30%; height: 30%;">
+                        <img src="/images/default.jpg" style="width: 30%; height: 30%;">
                         <div class="tab-content br-n pn">
                             <div class="tab-pane active">
                                 <div class="row">

@@ -15,6 +15,7 @@ class CreateKoleksisTable extends Migration
     {
         Schema::create('koleksis', function (Blueprint $table) {
             $table->increments('id_koleksi');
+            $table->string('kode_koleksi',5)->unique();
             $table->string('jenis_koleksi',30)->nullable();
             $table->text('deskripsi_koleksi',500)->nullable();
             $table->json('att_khusus')->nullable();

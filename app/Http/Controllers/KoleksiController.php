@@ -46,6 +46,7 @@ class KoleksiController extends Controller
             return back()->with('message','Data koleksi sudah ada');
         }else{
             $koleksi = New Koleksi;
+            $koleksi->kode_koleksi = $request->Input('kode_koleksi');
             $koleksi->jenis_koleksi = $request->Input('jenis_koleksi');
             $koleksi->deskripsi_koleksi = $request->Input('deskripsi_koleksi');
             $koleksi->att_khusus = json_encode(Input::get('att_khusus'));
@@ -91,6 +92,7 @@ class KoleksiController extends Controller
             return back()->with('message','Data koleksi sudah ada');
         }else{*/
             $data = Koleksi::find($koleksi->id_koleksi);
+            $data->kode_koleksi = Input::get('kode_koleksi');
             $data->jenis_koleksi = Input::get('jenis_koleksi');
             $data->deskripsi_koleksi = Input::get('deskripsi_koleksi');
             $att = array_filter(Input::get('att_khusus'));
