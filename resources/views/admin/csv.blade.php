@@ -14,14 +14,17 @@
                     <div class="table-responsive">
                         <div class="white-box">
                             <div class="table-responsive">
-                                <h3>PENGANTAR</h3>
+                                <h3>PETUNJUK</h3>
                                 <p>
                                     Tata cara unggah data katalog<br>
-                                    [Persyaratan, format file yang dapat diunggah yaitu .xlsx, .sql, dan .csv]<br>
-                                    1. Pilih jenis file yang akan diunggah, jika excel pilih tombol <a href="/excel" class="btn btn-success btn-sm">UNGGAH FILE EXCEL</a>, jika csv tekan tombol <a href="/csv" class="btn btn-warning btn-sm">UNGGAH FILE CSV</a><br>
+                                    1. Persyaratan format file yang dapat diunggah yaitu <b>excel</b> dan <b>csv</b><br>
+                                    2. <b>Jika terdapat kolom jenis koleksi/tipe koleksi/GMD, pastikan namanya sesuai dengan kode koleksi yang terdapat pada halaman jenis koleksi.</b><br>
+                                    3. <b>Jika terdapat kolom bahasa</b>, apabila Bahasa Indonesia tulis namanya dengan <b>Indonesia</b>, apabila Bahasa Inggris tulis namanya dengan <b>Inggris</b>.<br>
+
+                                    4. Pilih jenis file yang akan diunggah, jika excel pilih tombol <a href="/excel" class="btn btn-success btn-sm">UNGGAH FILE EXCEL</a>, jika csv tekan tombol <a href="/csv" class="btn btn-warning btn-sm">UNGGAH FILE CSV</a><br>
                                     {{-- 2. <a href="" class="btn btn-info btn-sm">UNDUH TEMPLATE</a> dan sesuaikan format file dengan template.<br> --}}
-                                    2. Tekan kotak oranye dibawah dan pilih file yang akan diunggah atau <i>Drag and drop</i> file<br>
-                                    3. Tekan tombol <i>Upload</i><br>
+                                    5. Tekan kotak hijau dibawah dan pilih file yang akan diunggah atau <i>Drag and drop</i> file<br>
+                                    6. Tekan tombol <i>Upload</i><br>
                                     {{-- 5. Akan muncul data hasil upload dan formulir header/field. Cocokkan atribut tiap kolom dengan atribut yang ada pada sistem Integrated Online Catalog ITS. --}}
                                 </p><hr>
                             </div>
